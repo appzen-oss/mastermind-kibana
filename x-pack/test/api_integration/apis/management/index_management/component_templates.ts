@@ -146,6 +146,9 @@ export default function ({ getService }: FtrProviderContext) {
                 id: 10,
               },
             },
+            _kbnMeta: {
+              usedBy: [],
+            },
           })
           .expect(200);
 
@@ -162,6 +165,9 @@ export default function ({ getService }: FtrProviderContext) {
           .send({
             name: REQUIRED_FIELDS_COMPONENT_NAME,
             template: {},
+            _kbnMeta: {
+              usedBy: [],
+            },
           })
           .expect(200);
 
@@ -177,6 +183,9 @@ export default function ({ getService }: FtrProviderContext) {
           .send({
             name: COMPONENT_NAME,
             template: {},
+            _kbnMeta: {
+              usedBy: [],
+            },
           })
           .expect(409);
 
@@ -233,7 +242,11 @@ export default function ({ getService }: FtrProviderContext) {
           .set('kbn-xsrf', 'xxx')
           .send({
             ...COMPONENT,
+            name: COMPONENT_NAME,
             version: 1,
+            _kbnMeta: {
+              usedBy: [],
+            },
           })
           .expect(200);
 
@@ -250,7 +263,11 @@ export default function ({ getService }: FtrProviderContext) {
           .set('kbn-xsrf', 'xxx')
           .send({
             ...COMPONENT,
+            name: 'component_does_not_exist',
             version: 1,
+            _kbnMeta: {
+              usedBy: [],
+            },
           })
           .expect(404);
 
@@ -336,6 +353,21 @@ export default function ({ getService }: FtrProviderContext) {
         expect(body.itemsDeleted).to.eql([componentTemplateName]);
         expect(body.errors[0].name).to.eql(COMPONENT_DOES_NOT_EXIST);
         expect(body.errors[0].error.msg).to.contain('index_template_missing_exception');
+      });
+    });
+
+    describe('Privileges', () => {
+      it('should return privileges result', async () => {
+        const uri = `${API_BASE_PATH}/component_templates/privileges`;
+
+        const { body } = await supertest.get(uri).set('kbn-xsrf', 'xxx').expect(200);
+
+        expect(body).to.eql({
+          hasAllPrivileges: true,
+          missingPrivileges: {
+            cluster: [],
+          },
+        });
       });
     });
   });

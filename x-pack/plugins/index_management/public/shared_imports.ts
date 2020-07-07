@@ -10,6 +10,8 @@ export {
   UseRequestConfig,
   sendRequest,
   useRequest,
+  Forms,
+  extractQueryParams,
 } from '../../../../src/plugins/es_ui_shared/public/';
 
 export {
@@ -28,7 +30,11 @@ export {
   serializers,
 } from '../../../../src/plugins/es_ui_shared/static/forms/helpers';
 
-export { getFormRow, Field } from '../../../../src/plugins/es_ui_shared/static/forms/components';
+export {
+  getFormRow,
+  Field,
+  JsonEditorField,
+} from '../../../../src/plugins/es_ui_shared/static/forms/components';
 
 export { isJSON } from '../../../../src/plugins/es_ui_shared/static/validators/string';
 

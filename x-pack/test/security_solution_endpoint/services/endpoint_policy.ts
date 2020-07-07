@@ -3,15 +3,16 @@
  * or more contributor license agreements. Licensed under the Elastic License;
  * you may not use this file except in compliance with the Elastic License.
  */
-
 import { FtrProviderContext } from '../ftr_provider_context';
 import {
   CreateAgentConfigRequest,
   CreateAgentConfigResponse,
-  CreateDatasourceRequest,
-  CreateDatasourceResponse,
+  CreatePackageConfigRequest,
+  CreatePackageConfigResponse,
+  PACKAGE_CONFIG_SAVED_OBJECT_TYPE,
   DeleteAgentConfigRequest,
-  DeleteDatasourcesRequest,
+  DeletePackageConfigsRequest,
+  GetPackageConfigsResponse,
   GetFullAgentConfigResponse,
   GetPackagesResponse,
 } from '../../../plugins/ingest_manager/common';
@@ -21,8 +22,8 @@ import { Immutable } from '../../../plugins/security_solution/common/endpoint/ty
 const INGEST_API_ROOT = '/api/ingest_manager';
 const INGEST_API_AGENT_CONFIGS = `${INGEST_API_ROOT}/agent_configs`;
 const INGEST_API_AGENT_CONFIGS_DELETE = `${INGEST_API_AGENT_CONFIGS}/delete`;
-const INGEST_API_DATASOURCES = `${INGEST_API_ROOT}/datasources`;
-const INGEST_API_DATASOURCES_DELETE = `${INGEST_API_DATASOURCES}/delete`;
+const INGEST_API_PACKAGE_CONFIGS = `${INGEST_API_ROOT}/package_configs`;
+const INGEST_API_PACKAGE_CONFIGS_DELETE = `${INGEST_API_PACKAGE_CONFIGS}/delete`;
 const INGEST_API_EPM_PACKAGES = `${INGEST_API_ROOT}/epm/packages`;
 
 const SECURITY_PACKAGES_ROUTE = `${INGEST_API_EPM_PACKAGES}?category=security`;
@@ -33,29 +34,76 @@ const SECURITY_PACKAGES_ROUTE = `${INGEST_API_EPM_PACKAGES}?category=security`;
 export interface PolicyTestResourceInfo {
   /** The Ingest agent configuration created */
   agentConfig: Immutable<CreateAgentConfigResponse['item']>;
-  /** The Ingest datasource created and added to agent configuration.
+  /** The Ingest Package Config created and added to agent configuration.
    * This is where Endpoint Policy is stored.
    */
-  datasource: Immutable<CreateDatasourceResponse['item']>;
+  packageConfig: Immutable<CreatePackageConfigResponse['item']>;
   /**
    * Information about the endpoint package
    */
   packageInfo: Immutable<GetPackagesResponse['response'][0]>;
-  /** will clean up (delete) the objects created (agent config + datasource) */
+  /** will clean up (delete) the objects created (agent config + Package Config) */
   cleanup: () => Promise<void>;
 }
 
 export function EndpointPolicyTestResourcesProvider({ getService }: FtrProviderContext) {
   const supertest = getService('supertest');
   const log = getService('log');
+  const retry = getService('retry');
 
-  const logSupertestApiErrorAndThrow = (message: string, error: any) => {
+  const logSupertestApiErrorAndThrow = (message: string, error: any): never => {
     const responseBody = error?.response?.body;
     const responseText = error?.response?.text;
+    log.error(`Error occurred at ${Date.now()} | ${new Date().toISOString()}`);
     log.error(JSON.stringify(responseBody || responseText, null, 2));
     log.error(error);
     throw new Error(message);
   };
+  const retrieveEndpointPackageInfo = (() => {
+    // Retrieve information about the Endpoint security package
+    // EPM does not currently have an API to get the "lastest" information for a page given its name,
+    // so we'll retrieve a list of packages for a category of Security, and will then find the
+    // endpoint package info. in the list. The request is kicked off here, but handled below after
+    // agent config creation so that they can be executed concurrently
+    let apiRequest: Promise<GetPackagesResponse['response'][0] | undefined>;
+
+    return () => {
+      if (!apiRequest) {
+        log.info(`Setting up call to retrieve Endpoint package from ${SECURITY_PACKAGES_ROUTE}`);
+
+        // Currently (as of 2020-june) the package registry used in CI is the public one and
+        // at times it encounters network connection issues. We use `retry.try` below to see if
+        // subsequent requests get through.
+        apiRequest = retry.try(() => {
+          return supertest
+            .get(SECURITY_PACKAGES_ROUTE)
+            .set('kbn-xsrf', 'xxx')
+            .expect(200)
+            .catch((error) => {
+              return logSupertestApiErrorAndThrow(
+                `Unable to retrieve Endpoint package via Ingest!`,
+                error
+              );
+            })
+            .then((response: { body: GetPackagesResponse }) => {
+              const { body: secPackages } = response;
+              const endpointPackageInfo = secPackages.response.find(
+                (epmPackage) => epmPackage.name === 'endpoint'
+              );
+              if (!endpointPackageInfo) {
+                throw new Error(
+                  `Endpoint package was not in response from ${SECURITY_PACKAGES_ROUTE}`
+                );
+              }
+              return Promise.resolve(endpointPackageInfo);
+            });
+        });
+      } else {
+        log.info('Using cached retrieval of endpoint package');
+      }
+      return apiRequest;
+    };
+  })();
 
   return {
     /**
@@ -71,27 +119,17 @@ export function EndpointPolicyTestResourcesProvider({ getService }: FtrProviderC
 
         fullAgentConfig = apiResponse.body.item;
       } catch (error) {
-        logSupertestApiErrorAndThrow('Unable to get full Agent Configuration', error);
+        return logSupertestApiErrorAndThrow('Unable to get full Agent Configuration', error);
       }
 
       return fullAgentConfig!;
     },
 
     /**
-     * Creates an Ingest Agent Configuration and adds to it the Endpoint Datasource that
+     * Creates an Ingest Agent Configuration and adds to it the Endpoint Package Config that
      * stores the Policy configuration data
      */
     async createPolicy(): Promise<PolicyTestResourceInfo> {
-      // Retrieve information about the Endpoint security package
-      // EPM does not currently have an API to get the "lastest" information for a page given its name,
-      // so we'll retrieve a list of packages for a category of Security, and will then find the
-      // endpoint package info. in the list. The request is kicked off here, but handled below after
-      // agent config creation so that they can be executed concurrently
-      const secPackagesRequest = supertest
-        .get(SECURITY_PACKAGES_ROUTE)
-        .set('kbn-xsrf', 'xxx')
-        .expect(200);
-
       // create agent config
       let agentConfig: CreateAgentConfigResponse['item'];
       try {
@@ -107,27 +145,16 @@ export function EndpointPolicyTestResourcesProvider({ getService }: FtrProviderC
           .expect(200);
         agentConfig = createResponse.item;
       } catch (error) {
-        logSupertestApiErrorAndThrow(`Unable to create Agent Config via Ingest!`, error);
+        return logSupertestApiErrorAndThrow(`Unable to create Agent Config via Ingest!`, error);
       }
 
       // Retrieve the Endpoint package information
-      let endpointPackageInfo: GetPackagesResponse['response'][0] | undefined;
-      try {
-        const { body: secPackages }: { body: GetPackagesResponse } = await secPackagesRequest;
-        endpointPackageInfo = secPackages.response.find(
-          (epmPackage) => epmPackage.name === 'endpoint'
-        );
-        if (!endpointPackageInfo) {
-          throw new Error(`Endpoint package was not found via ${SECURITY_PACKAGES_ROUTE}`);
-        }
-      } catch (error) {
-        logSupertestApiErrorAndThrow(`Unable to retrieve Endpoint package via Ingest!`, error);
-      }
+      const endpointPackageInfo = await retrieveEndpointPackageInfo();
 
-      // create datasource and associated it to agent config
-      let datasource: CreateDatasourceResponse['item'];
+      // create Package Config and associated it to agent config
+      let packageConfig: CreatePackageConfigResponse['item'];
       try {
-        const newDatasourceData: CreateDatasourceRequest['body'] = {
+        const newPackageConfigData: CreatePackageConfigRequest['body'] = {
           name: 'Protect East Coast',
           description: 'Protect the worlds data - but in the East Coast',
           config_id: agentConfig!.id,
@@ -152,33 +179,35 @@ export function EndpointPolicyTestResourcesProvider({ getService }: FtrProviderC
             version: endpointPackageInfo?.version ?? '',
           },
         };
-        const { body: createResponse }: { body: CreateDatasourceResponse } = await supertest
-          .post(INGEST_API_DATASOURCES)
+        const {
+          body: createResponse,
+        }: { body: CreatePackageConfigResponse } = await supertest
+          .post(INGEST_API_PACKAGE_CONFIGS)
           .set('kbn-xsrf', 'xxx')
-          .send(newDatasourceData)
+          .send(newPackageConfigData)
           .expect(200);
-        datasource = createResponse.item;
+        packageConfig = createResponse.item;
       } catch (error) {
-        logSupertestApiErrorAndThrow(`Unable to create Datasource via Ingest!`, error);
+        return logSupertestApiErrorAndThrow(`Unable to create Package Config via Ingest!`, error);
       }
 
       return {
-        agentConfig: agentConfig!,
-        datasource: datasource!,
+        agentConfig,
+        packageConfig,
         packageInfo: endpointPackageInfo!,
         async cleanup() {
-          // Delete Datasource
+          // Delete Package Config
           try {
-            const deleteDatasourceData: DeleteDatasourcesRequest['body'] = {
-              datasourceIds: [datasource.id],
+            const deletePackageConfigData: DeletePackageConfigsRequest['body'] = {
+              packageConfigIds: [packageConfig.id],
             };
             await supertest
-              .post(INGEST_API_DATASOURCES_DELETE)
+              .post(INGEST_API_PACKAGE_CONFIGS_DELETE)
               .set('kbn-xsrf', 'xxx')
-              .send(deleteDatasourceData)
+              .send(deletePackageConfigData)
               .expect(200);
           } catch (error) {
-            logSupertestApiErrorAndThrow('Unable to delete Datasource via Ingest!', error);
+            logSupertestApiErrorAndThrow('Unable to delete Package Config via Ingest!', error);
           }
 
           // Delete Agent config
@@ -196,6 +225,51 @@ export function EndpointPolicyTestResourcesProvider({ getService }: FtrProviderC
           }
         },
       };
+    },
+
+    /**
+     * Deletes a policy (Package Config) by using the policy name
+     * @param name
+     */
+    async deletePolicyByName(name: string) {
+      let packageConfigList: GetPackageConfigsResponse['items'];
+      try {
+        const {
+          body: packageConfigsResponse,
+        }: { body: GetPackageConfigsResponse } = await supertest
+          .get(INGEST_API_PACKAGE_CONFIGS)
+          .set('kbn-xsrf', 'xxx')
+          .query({ kuery: `${PACKAGE_CONFIG_SAVED_OBJECT_TYPE}.name: ${name}` })
+          .send()
+          .expect(200);
+        packageConfigList = packageConfigsResponse.items;
+      } catch (error) {
+        return logSupertestApiErrorAndThrow(
+          `Unable to get list of Package Configs with name=${name}`,
+          error
+        );
+      }
+
+      if (packageConfigList.length === 0) {
+        throw new Error(`Policy named '${name}' was not found!`);
+      }
+
+      if (packageConfigList.length > 1) {
+        throw new Error(`Found ${packageConfigList.length} Policies - was expecting only one!`);
+      }
+
+      try {
+        const deletePackageConfigData: DeletePackageConfigsRequest['body'] = {
+          packageConfigIds: [packageConfigList[0].id],
+        };
+        await supertest
+          .post(INGEST_API_PACKAGE_CONFIGS_DELETE)
+          .set('kbn-xsrf', 'xxx')
+          .send(deletePackageConfigData)
+          .expect(200);
+      } catch (error) {
+        logSupertestApiErrorAndThrow('Unable to delete Package Config via Ingest!', error);
+      }
     },
   };
 }

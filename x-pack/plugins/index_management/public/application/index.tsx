@@ -10,7 +10,7 @@ import { render, unmountComponentAtNode } from 'react-dom';
 
 import { CoreStart } from '../../../../../src/core/public';
 
-import { API_BASE_PATH, BASE_PATH } from '../../common';
+import { API_BASE_PATH } from '../../common';
 
 import { AppContextProvider, AppDependencies } from './app_context';
 import { App } from './app';
@@ -27,15 +27,15 @@ export const renderApp = (
 
   const { i18n, docLinks, notifications } = core;
   const { Context: I18nContext } = i18n;
-  const { services, history } = dependencies;
+  const { services, history, setBreadcrumbs } = dependencies;
 
   const componentTemplateProviderValues = {
     httpClient: services.httpService.httpClient,
     apiBasePath: API_BASE_PATH,
-    appBasePath: BASE_PATH,
     trackMetric: services.uiMetricService.trackMetric.bind(services.uiMetricService),
     docLinks,
     toasts: notifications.toasts,
+    setBreadcrumbs,
   };
 
   render(
