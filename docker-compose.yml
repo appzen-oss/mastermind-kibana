@@ -64,7 +64,7 @@ services:
       - elastic
 
   kib01:
-    image: 186266557194.dkr.ecr.us-east-1.amazonaws.com/appzeneng/platform-app:0.2.1
+    image: 186266557194.dkr.ecr.us-east-1.amazonaws.com/appzeneng/platform-app:0.2.5
     container_name: kib01
     ports:
       - 5601:5601
