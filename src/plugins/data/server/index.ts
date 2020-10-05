@@ -133,16 +133,17 @@ export {
   IndexPatternsFetcher,
   FieldDescriptor as IndexPatternFieldDescriptor,
   shouldReadFieldFromDocValues, // used only in logstash_fields fixture
+  FieldDescriptor,
 } from './index_patterns';
 
 export {
-  IIndexPattern,
   IFieldType,
   IFieldSubType,
   ES_FIELD_TYPES,
   KBN_FIELD_TYPES,
   IndexPatternAttributes,
   UI_SETTINGS,
+  IndexPattern,
 } from '../common';
 
 /**
@@ -201,6 +202,7 @@ export {
   ISearchOptions,
   IEsSearchRequest,
   IEsSearchResponse,
+  ES_SEARCH_STRATEGY,
   // tabify
   TabbedAggColumn,
   TabbedAggRow,
@@ -211,9 +213,14 @@ export {
   ISearchStrategy,
   ISearchSetup,
   ISearchStart,
+  toSnakeCase,
+  getAsyncOptions,
   getDefaultSearchParams,
+  getShardTimeout,
   getTotalLoaded,
+  shimHitsTotal,
   usageProvider,
+  shimAbortSignal,
   SearchUsage,
 } from './search';
 
@@ -282,6 +289,9 @@ export {
 export const config: PluginConfigDescriptor<ConfigSchema> = {
   exposeToBrowser: {
     autocomplete: true,
+    search: true,
   },
   schema: configSchema,
 };
+
+export type { IndexPatternsService } from './index_patterns';

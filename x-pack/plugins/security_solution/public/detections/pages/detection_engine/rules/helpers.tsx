@@ -9,9 +9,11 @@ import moment from 'moment';
 import memoizeOne from 'memoize-one';
 import { useLocation } from 'react-router-dom';
 
+import styled from 'styled-components';
+import { EuiFlexItem } from '@elastic/eui';
 import { ActionVariable } from '../../../../../../triggers_actions_ui/public';
 import { RuleAlertAction } from '../../../../../common/detection_engine/types';
-import { isMlRule } from '../../../../../common/machine_learning/helpers';
+import { assertUnreachable } from '../../../../../common/utility_types';
 import { transformRuleToAlertAction } from '../../../../../common/detection_engine/transform_actions';
 import { Filter } from '../../../../../../../../src/plugins/data/public';
 import { ENDPOINT_LIST_ID } from '../../../../shared_imports';
@@ -27,6 +29,7 @@ import {
 import {
   SeverityMapping,
   Type,
+  Severity,
 } from '../../../../../common/detection_engine/schemas/common/schemas';
 import { severityOptions } from '../../../components/rules/step_about_rule/data';
 
@@ -67,7 +70,6 @@ export const getActionsStepsData = (
 
   return {
     actions: actions?.map(transformRuleToAlertAction),
-    isNew: false,
     throttle,
     kibanaSiemAppUrl: meta?.kibana_siem_app_url,
     enabled,
@@ -75,11 +77,17 @@ export const getActionsStepsData = (
 };
 
 export const getDefineStepsData = (rule: Rule): DefineStepRule => ({
-  isNew: false,
   ruleType: rule.type,
   anomalyThreshold: rule.anomaly_threshold ?? 50,
   machineLearningJobId: rule.machine_learning_job_id ?? '',
   index: rule.index ?? [],
+  threatIndex: rule.threat_index ?? [],
+  threatQueryBar: {
+    query: { query: rule.threat_query ?? '', language: rule.threat_language ?? '' },
+    filters: (rule.threat_filters ?? []) as Filter[],
+    saved_id: undefined,
+  },
+  threatMapping: rule.threat_mapping ?? [],
   queryBar: {
     query: { query: rule.query ?? '', language: rule.language ?? '' },
     filters: (rule.filters ?? []) as Filter[],
@@ -100,7 +108,6 @@ export const getScheduleStepsData = (rule: Rule): ScheduleStepRule => {
   const fromHumanizedValue = getHumanizedDuration(from, interval);
 
   return {
-    isNew: false,
     interval,
     from: fromHumanizedValue,
   };
@@ -142,7 +149,6 @@ export const getAboutStepsData = (rule: Rule, detailsView: boolean): AboutStepRu
   } = rule;
 
   return {
-    isNew: false,
     author,
     isAssociatedToEndpointList: exceptionsList?.some(({ id }) => id === ENDPOINT_LIST_ID) ?? false,
     isBuildingBlock: buildingBlockType !== undefined,
@@ -154,7 +160,7 @@ export const getAboutStepsData = (rule: Rule, detailsView: boolean): AboutStepRu
     note: note!,
     references,
     severity: {
-      value: severity,
+      value: severity as Severity,
       mapping: fillEmptySeverityMappings(severityMapping),
       isMappingChecked: severityMapping.length > 0,
     },
@@ -313,15 +319,18 @@ export const redirectToDetections = (
 const getRuleSpecificRuleParamKeys = (ruleType: Type) => {
   const queryRuleParams = ['index', 'filters', 'language', 'query', 'saved_id'];
 
-  if (isMlRule(ruleType)) {
-    return ['anomaly_threshold', 'machine_learning_job_id'];
+  switch (ruleType) {
+    case 'machine_learning':
+      return ['anomaly_threshold', 'machine_learning_job_id'];
+    case 'threshold':
+      return ['threshold', ...queryRuleParams];
+    case 'threat_match':
+    case 'query':
+    case 'saved_query':
+    case 'eql':
+      return queryRuleParams;
   }
-
-  if (ruleType === 'threshold') {
-    return ['threshold', ...queryRuleParams];
-  }
-
-  return queryRuleParams;
+  assertUnreachable(ruleType);
 };
 
 export const getActionMessageRuleParams = (ruleType: Type): string[] => {
@@ -341,7 +350,6 @@ export const getActionMessageRuleParams = (ruleType: Type): string[] => {
     'threat',
     'type',
     'version',
-    // 'lists',
   ];
 
   const ruleParamsKeys = [
@@ -371,3 +379,8 @@ export const getActionMessageParams = memoizeOne((ruleType: Type | undefined): A
 // typed as null not undefined as the initial state for this value is null.
 export const userHasNoPermissions = (canUserCRUD: boolean | null): boolean =>
   canUserCRUD != null ? !canUserCRUD : false;
+
+export const MaxWidthEuiFlexItem = styled(EuiFlexItem)`
+  max-width: 1000px;
+  overflow: hidden;
+`;

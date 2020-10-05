@@ -71,7 +71,7 @@ export interface PaginationInputPaginated {
 
 export interface DocValueFields {
   field: string;
-  format: string;
+  format?: string | null;
 }
 
 export interface Explanation {
@@ -80,10 +80,6 @@ export interface Explanation {
   details: Explanation[];
 }
 
-export interface TotalValue {
-  value: number;
-  relation: string;
-}
 export interface ShardsResponse {
   total: number;
   successful: number;
@@ -117,3 +113,13 @@ export interface GenericBuckets {
 }
 
 export type StringOrNumber = string | number;
+
+export interface TimerangeFilter {
+  range: {
+    [timestamp: string]: {
+      gte: string;
+      lte: string;
+      format: string;
+    };
+  };
+}

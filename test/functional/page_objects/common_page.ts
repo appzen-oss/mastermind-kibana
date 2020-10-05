@@ -346,6 +346,10 @@ export function CommonPageProvider({ getService, getPageObjects }: FtrProviderCo
       await browser.pressKeys(browser.keys.ENTER);
     }
 
+    async pressTabKey() {
+      await browser.pressKeys(browser.keys.TAB);
+    }
+
     // Pause the browser at a certain place for debugging
     // Not meant for usage in CI, only for dev-usage
     async pause() {
@@ -491,6 +495,10 @@ export function CommonPageProvider({ getService, getPageObjects }: FtrProviderCo
       log.debug(`Setting the path '${path}' on the file input`);
       const input = await find.byCssSelector('.euiFilePicker__input');
       await input.type(path);
+    }
+
+    async scrollKibanaBodyTop() {
+      await browser.setScrollToById('kibana-body', 0, 0);
     }
   }
 
