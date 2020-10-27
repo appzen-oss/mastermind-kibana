@@ -202,7 +202,7 @@ export function CollapsibleNav({
       </EuiFlexItem>
 
       {/* Recently viewed */}
-      {/* <EuiCollapsibleNavGroup
+      <EuiCollapsibleNavGroup
         key="recentlyViewed"
         background="light"
         title={i18n.translate('core.ui.recentlyViewed', { defaultMessage: 'Recently viewed' })}
@@ -252,13 +252,13 @@ export function CollapsibleNav({
             </p>
           </EuiText>
         )}
-      </EuiCollapsibleNavGroup> */}
+      </EuiCollapsibleNavGroup>
 
       <EuiHorizontalRule margin="none" />
 
       <EuiFlexItem className="eui-yScroll">
         {/* Kibana, Observability, Security, and Management sections */}
-        {/* {orderedCategories.map((categoryName) => {
+        {orderedCategories.map((categoryName) => {
           const category = categoryDictionary[categoryName]!;
 
           return (
@@ -284,7 +284,7 @@ export function CollapsibleNav({
               />
             </EuiCollapsibleNavGroup>
           );
-        })} */}
+        })}
 
         {/* Things with no category (largely for custom plugins) */}
         {unknowns.map((link, i) => (
