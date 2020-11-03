@@ -106,7 +106,7 @@ export function HeaderLogo({ href, navigateToApp, ...observables }: Props) {
         defaultMessage: 'Go to home page',
       })}
     >
-      Elastic
+      Appzen
     </EuiHeaderLogo>
   );
 }

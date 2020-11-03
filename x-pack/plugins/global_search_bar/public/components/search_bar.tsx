@@ -209,7 +209,7 @@ export function SearchBar({ globalSearch, navigateToUrl, basePathUrl, darkMode }
         inputRef: setSearchRef,
         compressed: true,
         placeholder: i18n.translate('xpack.globalSearchBar.searchBar.placeholder', {
-          defaultMessage: 'Search Elastic',
+          defaultMessage: 'Search Appzen',
         }),
       }}
       popoverProps={{
