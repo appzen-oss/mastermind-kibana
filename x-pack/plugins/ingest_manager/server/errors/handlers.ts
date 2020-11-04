@@ -4,7 +4,7 @@
  * you may not use this file except in compliance with the Elastic License.
  */
 
-import Boom, { isBoom } from 'boom';
+import Boom, { isBoom } from '@hapi/boom';
 import {
   RequestHandlerContext,
   KibanaRequest,
@@ -17,6 +17,7 @@ import {
   IngestManagerError,
   RegistryError,
   PackageNotFoundError,
+  AgentPolicyNameExistsError,
   PackageUnsupportedMediaTypeError,
 } from './index';
 
@@ -56,6 +57,9 @@ const getHTTPResponseCode = (error: IngestManagerError): number => {
   }
   if (error instanceof PackageNotFoundError) {
     return 404; // Not Found
+  }
+  if (error instanceof AgentPolicyNameExistsError) {
+    return 409; // Conflict
   }
   if (error instanceof PackageUnsupportedMediaTypeError) {
     return 415; // Unsupported Media Type

@@ -6,7 +6,9 @@
 
 const alwaysImportedTests = [
   require.resolve('../test/functional/config.js'),
+  require.resolve('../test/functional_basic/config.ts'),
   require.resolve('../test/security_solution_endpoint/config.ts'),
+  require.resolve('../test/plugin_functional/config.ts'),
   require.resolve('../test/functional_with_es_ssl/config.ts'),
   require.resolve('../test/functional/config_security_basic.ts'),
   require.resolve('../test/security_functional/login_selector.config.ts'),
@@ -19,6 +21,7 @@ const onlyNotInCoverageTests = [
   require.resolve('../test/api_integration/config_security_basic.ts'),
   require.resolve('../test/api_integration/config_security_trial.ts'),
   require.resolve('../test/api_integration/config.ts'),
+  require.resolve('../test/api_integration_basic/config.ts'),
   require.resolve('../test/alerting_api_integration/basic/config.ts'),
   require.resolve('../test/alerting_api_integration/spaces_only/config.ts'),
   require.resolve('../test/alerting_api_integration/security_and_spaces/config.ts'),
@@ -35,6 +38,7 @@ const onlyNotInCoverageTests = [
   require.resolve('../test/security_api_integration/session_idle.config.ts'),
   require.resolve('../test/security_api_integration/session_lifespan.config.ts'),
   require.resolve('../test/security_api_integration/login_selector.config.ts'),
+  require.resolve('../test/security_api_integration/audit.config.ts'),
   require.resolve('../test/token_api_integration/config.js'),
   require.resolve('../test/oidc_api_integration/config.ts'),
   require.resolve('../test/oidc_api_integration/implicit_flow.config.ts'),

@@ -7,6 +7,7 @@
 // Follow pattern from https://github.com/elastic/kibana/pull/52447
 // TODO: Update when https://github.com/elastic/kibana/issues/53021 is closed
 import { SavedObject, SavedObjectAttributes, SavedObjectReference } from 'src/core/public';
+import { dataTypes, requiredPackages } from '../../constants';
 
 export enum InstallationStatus {
   installed = 'installed',
@@ -43,6 +44,8 @@ export enum ElasticsearchAssetType {
   ilmPolicy = 'ilm_policy',
   transform = 'transform',
 }
+
+export type DataType = typeof dataTypes;
 
 export enum AgentAssetType {
   input = 'input',
@@ -271,6 +274,8 @@ export type KibanaAssetReference = Pick<SavedObjectReference, 'id'> & {
 export type EsAssetReference = Pick<SavedObjectReference, 'id'> & {
   type: ElasticsearchAssetType;
 };
+
+export type RequiredPackage = typeof requiredPackages;
 
 export enum DefaultPackages {
   system = 'system',
