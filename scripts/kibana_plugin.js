@@ -17,4 +17,4 @@
  * under the License.
  */
 
-require('../src/cli_plugin/dev');
+require('../src/cli_plugin/dist');
