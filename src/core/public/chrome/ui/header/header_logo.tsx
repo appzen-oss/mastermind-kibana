@@ -24,9 +24,9 @@ import useObservable from 'react-use/lib/useObservable';
 import { Observable } from 'rxjs';
 import Url from 'url';
 import { ChromeNavLink } from '../..';
-import { ElasticMark } from './elastic_mark';
 import { HttpStart } from '../../../http';
 import { LoadingIndicator } from '../loading_indicator';
+import { EuiText, EuiTextColor } from '@elastic/eui';
 
 function findClosestAnchor(element: HTMLElement): HTMLAnchorElement | void {
   let current = element;
@@ -103,7 +103,7 @@ export function HeaderLogo({ href, navigateToApp, loadingCount$, ...observables 
   return (
     <a
       onClick={(e) => onClick(e, forceNavigation, navLinks, navigateToApp)}
-      className="logoAppzen"
+      className="euiHeaderLogo"
       href={href}
       data-test-subj="logo"
       aria-label={i18n.translate('core.ui.chrome.headerGlobalNav.goHomePageIconAriaLabel', {
@@ -111,7 +111,10 @@ export function HeaderLogo({ href, navigateToApp, loadingCount$, ...observables 
       })}
     >
       <LoadingIndicator loadingCount$={loadingCount$!} />
-      <ElasticMark className="chrHeaderLogo__mark" aria-hidden={true} />
+      <EuiText size="s" style={{ paddingLeft:"8px" }}>
+        <h3><EuiTextColor color="ghost">Appzen Mastermind</EuiTextColor></h3>
+      </EuiText>
+      {/* <ElasticMark className="chrHeaderLogo__mark" aria-hidden={true} /> */}
     </a>
   );
 }

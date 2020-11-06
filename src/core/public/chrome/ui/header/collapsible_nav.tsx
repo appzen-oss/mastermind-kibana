@@ -112,7 +112,8 @@ export function CollapsibleNav({
   const groupedNavLinks = groupBy(navLinks, (link) => link?.category?.id);
   const { undefined: unknowns = [], ...allCategorizedLinks } = groupedNavLinks;
   const categoryDictionary = getAllCategories(allCategorizedLinks);
-  const orderedCategories = getOrderedCategories(allCategorizedLinks, categoryDictionary);
+  //const orderedCategories = getOrderedCategories(allCategorizedLinks, categoryDictionary);
+  const orderedCategories:string[] = [];
   const readyForEUI = (link: ChromeNavLink, needsIcon: boolean = false) => {
     return createEuiListItem({
       link,

@@ -121,9 +121,9 @@ export function Header({
               {
                 ...(observables.navControlsCenter$ && {
                   items: [
-                    <EuiShowFor sizes={['m', 'l', 'xl']}>
-                      <HeaderNavControls navControls$={observables.navControlsCenter$} />
-                    </EuiShowFor>,
+                    // <EuiShowFor sizes={['m', 'l', 'xl']}>
+                    //   <HeaderNavControls navControls$={observables.navControlsCenter$} />
+                    // </EuiShowFor>,
                   ],
                 }),
                 borders: 'none',
@@ -133,13 +133,13 @@ export function Header({
                   <EuiHideFor sizes={['m', 'l', 'xl']}>
                     <HeaderNavControls navControls$={observables.navControlsCenter$} />
                   </EuiHideFor>,
-                  <HeaderHelpMenu
-                    helpExtension$={observables.helpExtension$}
-                    helpSupportUrl$={observables.helpSupportUrl$}
-                    kibanaDocLink={kibanaDocLink}
-                    kibanaVersion={kibanaVersion}
-                  />,
-                  <HeaderNavControls navControls$={observables.navControlsRight$} />,
+                  // <HeaderHelpMenu
+                  //   helpExtension$={observables.helpExtension$}
+                  //   helpSupportUrl$={observables.helpSupportUrl$}
+                  //   kibanaDocLink={kibanaDocLink}
+                  //   kibanaVersion={kibanaVersion}
+                  // />,
+                  // <HeaderNavControls navControls$={observables.navControlsRight$} />,
                 ],
                 borders: 'none',
               },

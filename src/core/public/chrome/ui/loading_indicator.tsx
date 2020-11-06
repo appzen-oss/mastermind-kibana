@@ -86,12 +86,12 @@ export class LoadingIndicator extends React.Component<LoadingIndicatorProps, { v
       />
     ) : (
       <EuiIcon
-        type="logoElastic"
+        type="logoAppzen"
         size="l"
         data-test-subj={testSubj}
         className="chrHeaderLogo__cluster"
         aria-label={i18n.translate('core.ui.chrome.headerGlobalNav.logoAriaLabel', {
-          defaultMessage: 'Elastic Logo',
+          defaultMessage: 'Appzen Logo',
         })}
       />
     );
