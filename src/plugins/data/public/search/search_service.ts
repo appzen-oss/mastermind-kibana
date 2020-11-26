@@ -19,14 +19,18 @@
 
 import { Plugin, CoreSetup, CoreStart, PluginInitializerContext } from 'src/core/public';
 import { BehaviorSubject } from 'rxjs';
+import { BfetchPublicSetup } from 'src/plugins/bfetch/public';
 import { ISearchSetup, ISearchStart, SearchEnhancements } from './types';
 
 import { handleResponse } from './fetch';
 import {
+  kibana,
+  kibanaContext,
+  kibanaContextFunction,
   ISearchGeneric,
-  SearchSourceService,
-  SearchSourceDependencies,
   ISessionService,
+  SearchSourceDependencies,
+  SearchSourceService,
 } from '../../common/search';
 import { getCallMsearch } from './legacy';
 import { AggsService, AggsStartDependencies } from './aggs';
@@ -46,6 +50,7 @@ import { aggShardDelay } from '../../common/search/aggs/buckets/shard_delay_fn';
 
 /** @internal */
 export interface SearchServiceSetupDependencies {
+  bfetch: BfetchPublicSetup;
   expressions: ExpressionsSetup;
   usageCollection?: UsageCollectionSetup;
 }
@@ -67,7 +72,7 @@ export class SearchService implements Plugin<ISearchSetup, ISearchStart> {
 
   public setup(
     { http, getStartServices, notifications, uiSettings }: CoreSetup,
-    { expressions, usageCollection }: SearchServiceSetupDependencies
+    { bfetch, expressions, usageCollection }: SearchServiceSetupDependencies
   ): ISearchSetup {
     this.usageCollector = createUsageCollector(getStartServices, usageCollection);
 
@@ -77,6 +82,7 @@ export class SearchService implements Plugin<ISearchSetup, ISearchStart> {
      * all pending search requests, as well as getting the number of pending search requests.
      */
     this.searchInterceptor = new SearchInterceptor({
+      bfetch,
       toasts: notifications.toasts,
       http,
       uiSettings,
@@ -84,6 +90,10 @@ export class SearchService implements Plugin<ISearchSetup, ISearchStart> {
       usageCollector: this.usageCollector!,
       session: this.sessionService,
     });
+
+    expressions.registerFunction(kibana);
+    expressions.registerFunction(kibanaContextFunction);
+    expressions.registerType(kibanaContext);
 
     expressions.registerFunction(esdsl);
     expressions.registerType(esRawResponse);
