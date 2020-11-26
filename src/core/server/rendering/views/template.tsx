@@ -71,7 +71,7 @@ export const Template: FunctionComponent<Props> = ({
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <meta name="viewport" content="width=device-width" />
-        <title>Appzen Mastermind</title>
+        <title>AppZen Mastermind</title>
         <Fonts url={uiPublicUrl} />
         {/* Favicons (generated from http://realfavicongenerator.net/) */}
         <link
@@ -126,7 +126,7 @@ export const Template: FunctionComponent<Props> = ({
                   'Elastic did not load properly. Check the server output for more information.',
               })}
             >
-              {i18n('core.ui.welcomeMessage', { defaultMessage: 'Loading Appzen Mastermind' })}
+              {i18n('core.ui.welcomeMessage', { defaultMessage: 'Loading AppZen Mastermind' })}
             </div>
             <div className="kbnProgress" />
           </div>

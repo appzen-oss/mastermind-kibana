@@ -107,12 +107,12 @@ export function HeaderLogo({ href, navigateToApp, loadingCount$, ...observables 
       href={href}
       data-test-subj="logo"
       aria-label={i18n.translate('core.ui.chrome.headerGlobalNav.goHomePageIconAriaLabel', {
-        defaultMessage: 'Appzen home',
+        defaultMessage: 'AppZen home',
       })}
     >
       <LoadingIndicator loadingCount$={loadingCount$!} />
       <EuiText size="s" style={{ paddingLeft:"8px" }}>
-        <h3><EuiTextColor color="ghost">Appzen Mastermind</EuiTextColor></h3>
+        <h3><EuiTextColor color="ghost">AppZen Mastermind</EuiTextColor></h3>
       </EuiText>
       {/* <ElasticMark className="chrHeaderLogo__mark" aria-hidden={true} /> */}
     </a>

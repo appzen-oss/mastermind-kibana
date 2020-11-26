@@ -249,7 +249,7 @@ export function SearchBar({
         inputRef: setSearchRef,
         compressed: true,
         placeholder: i18n.translate('xpack.globalSearchBar.searchBar.placeholder', {
-          defaultMessage: 'Search Appzen',
+          defaultMessage: 'Search AppZen',
         }),
         onFocus: () => {
           trackUiMetric(METRIC_TYPE.COUNT, 'search_focus');
