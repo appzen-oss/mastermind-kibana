@@ -4,17 +4,14 @@
  * you may not use this file except in compliance with the Elastic License.
  */
 
-import '../../../__mocks__/shallow_usecontext.mock';
+import { mockTelemetryActions } from '../../../__mocks__';
 import './__mocks__/overview_logic.mock';
 import { setMockValues } from './__mocks__';
 
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { ORG_SOURCES_PATH, USERS_PATH } from '../../routes';
-
-jest.mock('../../../shared/telemetry', () => ({ sendTelemetry: jest.fn() }));
-import { sendTelemetry } from '../../../shared/telemetry';
+import { SOURCES_PATH, USERS_PATH } from '../../routes';
 
 import { OnboardingSteps, OrgNameOnboarding } from './onboarding_steps';
 import { OnboardingCard } from './onboarding_card';
@@ -25,6 +22,7 @@ const account = {
   canCreatePersonalSources: true,
   groups: [],
   isCurated: false,
+  canCreateInvitations: true,
 };
 
 describe('OnboardingSteps', () => {
@@ -34,7 +32,7 @@ describe('OnboardingSteps', () => {
       const wrapper = shallow(<OnboardingSteps />);
 
       expect(wrapper.find(OnboardingCard)).toHaveLength(1);
-      expect(wrapper.find(OnboardingCard).prop('actionPath')).toBe(ORG_SOURCES_PATH);
+      expect(wrapper.find(OnboardingCard).prop('actionPath')).toBe(SOURCES_PATH);
       expect(wrapper.find(OnboardingCard).prop('description')).toBe(
         'Add shared sources for your organization to start searching.'
       );
@@ -60,9 +58,8 @@ describe('OnboardingSteps', () => {
   describe('Users & Invitations', () => {
     it('renders 0 users when not on federated auth', () => {
       setMockValues({
-        canCreateInvitations: true,
         isFederatedAuth: false,
-        fpAccount: account,
+        account,
         accountsCount: 0,
         hasUsers: false,
       });
@@ -78,7 +75,7 @@ describe('OnboardingSteps', () => {
     it('renders completed users state', () => {
       setMockValues({
         isFederatedAuth: false,
-        fpAccount: account,
+        account,
         accountsCount: 1,
         hasUsers: true,
       });
@@ -90,7 +87,13 @@ describe('OnboardingSteps', () => {
     });
 
     it('disables link when the user cannot create invitations', () => {
-      setMockValues({ isFederatedAuth: false, canCreateInvitations: false });
+      setMockValues({
+        isFederatedAuth: false,
+        account: {
+          ...account,
+          canCreateInvitations: false,
+        },
+      });
       const wrapper = shallow(<OnboardingSteps />);
       expect(wrapper.find(OnboardingCard).last().prop('actionPath')).toBe(undefined);
     });
@@ -98,6 +101,12 @@ describe('OnboardingSteps', () => {
 
   describe('Org Name', () => {
     it('renders button to change name', () => {
+      setMockValues({
+        organization: {
+          name: 'foo',
+          defaultOrgName: 'foo',
+        },
+      });
       const wrapper = shallow(<OnboardingSteps />);
 
       const button = wrapper
@@ -106,7 +115,7 @@ describe('OnboardingSteps', () => {
         .find('[data-test-subj="orgNameChangeButton"]');
 
       button.simulate('click');
-      expect(sendTelemetry).toHaveBeenCalled();
+      expect(mockTelemetryActions.sendWorkplaceSearchTelemetry).toHaveBeenCalled();
     });
 
     it('hides card when name has been changed', () => {

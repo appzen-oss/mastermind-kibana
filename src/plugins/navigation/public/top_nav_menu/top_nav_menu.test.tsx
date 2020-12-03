@@ -23,7 +23,7 @@ import { act } from 'react-dom/test-utils';
 import { MountPoint } from 'kibana/public';
 import { TopNavMenu } from './top_nav_menu';
 import { TopNavMenuData } from './top_nav_menu_data';
-import { shallowWithIntl, mountWithIntl } from 'test_utils/enzyme_helpers';
+import { shallowWithIntl, mountWithIntl } from '@kbn/test/jest';
 
 const dataShim = {
   ui: {
@@ -164,7 +164,6 @@ describe('TopNavMenu', () => {
 
       // menu is rendered outside of the component
       expect(component.find(TOP_NAV_ITEM_SELECTOR).length).toBe(0);
-      expect(portalTarget.getElementsByTagName('BUTTON').length).toBe(menuItems.length);
     });
   });
 });

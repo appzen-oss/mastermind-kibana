@@ -4,18 +4,40 @@
  * you may not use this file except in compliance with the Elastic License.
  */
 
-import { IAccount as IAppSearchAccount } from './app_search';
-import { IWorkplaceSearchInitialData } from './workplace_search';
+import {
+  Account as AppSearchAccount,
+  ConfiguredLimits as AppSearchConfiguredLimits,
+} from './app_search';
+import {
+  WorkplaceSearchInitialData,
+  ConfiguredLimits as WorkplaceSearchConfiguredLimits,
+} from './workplace_search';
 
-export interface IInitialAppData {
+export interface InitialAppData {
   readOnlyMode?: boolean;
   ilmEnabled?: boolean;
-  configuredLimits?: IConfiguredLimits;
-  appSearch?: IAppSearchAccount;
-  workplaceSearch?: IWorkplaceSearchInitialData;
+  isFederatedAuth?: boolean;
+  configuredLimits?: ConfiguredLimits;
+  access?: {
+    hasAppSearchAccess: boolean;
+    hasWorkplaceSearchAccess: boolean;
+  };
+  appSearch?: AppSearchAccount;
+  workplaceSearch?: WorkplaceSearchInitialData;
 }
 
-export interface IConfiguredLimits {
-  maxDocumentByteSize: number;
-  maxEnginesPerMetaEngine: number;
+export interface ConfiguredLimits {
+  appSearch: AppSearchConfiguredLimits;
+  workplaceSearch: WorkplaceSearchConfiguredLimits;
+}
+
+export interface MetaPage {
+  current: number;
+  size: number;
+  total_pages: number;
+  total_results: number;
+}
+
+export interface Meta {
+  page: MetaPage;
 }

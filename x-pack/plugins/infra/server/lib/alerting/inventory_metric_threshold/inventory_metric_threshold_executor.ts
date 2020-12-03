@@ -9,6 +9,7 @@ import moment from 'moment';
 import { getCustomMetricLabel } from '../../../../common/formatters/get_custom_metric_label';
 import { toMetricOpt } from '../../../../common/snapshot_metric_i18n';
 import { AlertStates, InventoryMetricConditions } from './types';
+import { ResolvedActionGroup } from '../../../../../alerts/common';
 import { AlertExecutorOptions } from '../../../../../alerts/server';
 import { InventoryItemType, SnapshotMetricType } from '../../../../common/inventory_models/types';
 import { InfraBackendLibs } from '../../infra_types';
@@ -18,6 +19,7 @@ import {
   buildErrorAlertReason,
   buildFiredAlertReason,
   buildNoDataAlertReason,
+  buildRecoveredAlertReason,
   stateToAlertMessage,
 } from '../common/messages';
 import { evaluateCondition } from './evaluate_condition';
@@ -50,14 +52,13 @@ export const createInventoryMetricThresholdExecutor = (libs: InfraBackendLibs) =
   );
 
   const results = await Promise.all(
-    criteria.map((c) =>
-      evaluateCondition(c, nodeType, source.configuration, services.callCluster, filterQuery)
-    )
+    criteria.map((c) => evaluateCondition(c, nodeType, source, services.callCluster, filterQuery))
   );
 
   const inventoryItems = Object.keys(first(results)!);
   for (const item of inventoryItems) {
     const alertInstance = services.alertInstanceFactory(`${item}`);
+    const prevState = alertInstance.getState();
     // AND logic; all criteria must be across the threshold
     const shouldAlertFire = results.every((result) =>
       // Grab the result of the most recent bucket
@@ -82,6 +83,10 @@ export const createInventoryMetricThresholdExecutor = (libs: InfraBackendLibs) =
       reason = results
         .map((result) => buildReasonWithVerboseMetricName(result[item], buildFiredAlertReason))
         .join('\n');
+    } else if (nextState === AlertStates.OK && prevState?.alertState === AlertStates.ALERT) {
+      reason = results
+        .map((result) => buildReasonWithVerboseMetricName(result[item], buildRecoveredAlertReason))
+        .join('\n');
     }
     if (alertOnNoData) {
       if (nextState === AlertStates.NO_DATA) {
@@ -97,7 +102,9 @@ export const createInventoryMetricThresholdExecutor = (libs: InfraBackendLibs) =
       }
     }
     if (reason) {
-      alertInstance.scheduleActions(FIRED_ACTIONS.id, {
+      const actionGroupId =
+        nextState === AlertStates.OK ? ResolvedActionGroup.id : FIRED_ACTIONS.id;
+      alertInstance.scheduleActions(actionGroupId, {
         group: item,
         alertState: stateToAlertMessage[nextState],
         reason,
@@ -150,8 +157,10 @@ export const FIRED_ACTIONS = {
 
 const formatMetric = (metric: SnapshotMetricType, value: number) => {
   const metricFormatter = get(METRIC_FORMATTERS, metric, METRIC_FORMATTERS.count);
-  if (value == null) {
-    return '';
+  if (isNaN(value)) {
+    return i18n.translate('xpack.infra.metrics.alerting.inventory.noDataFormattedValue', {
+      defaultMessage: '[NO DATA]',
+    });
   }
   const formatter = createFormatter(metricFormatter.formatter, metricFormatter.template);
   return formatter(value);

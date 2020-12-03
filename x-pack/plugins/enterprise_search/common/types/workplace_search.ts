@@ -4,23 +4,29 @@
  * you may not use this file except in compliance with the Elastic License.
  */
 
-export interface IAccount {
+export interface Account {
   id: string;
   groups: string[];
   isAdmin: boolean;
   isCurated: boolean;
   canCreatePersonalSources: boolean;
+  canCreateInvitations?: boolean;
   viewedOnboardingPage: boolean;
 }
 
-export interface IOrganization {
+export interface Organization {
   name: string;
   defaultOrgName: string;
 }
 
-export interface IWorkplaceSearchInitialData {
-  canCreateInvitations: boolean;
-  isFederatedAuth: boolean;
-  organization: IOrganization;
-  fpAccount: IAccount;
+export interface WorkplaceSearchInitialData {
+  organization: Organization;
+  account: Account;
+}
+
+export interface ConfiguredLimits {
+  customApiSource: {
+    maxDocumentByteSize: number;
+    totalFields: number;
+  };
 }

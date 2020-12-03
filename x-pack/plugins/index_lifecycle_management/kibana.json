@@ -5,9 +5,12 @@
   "ui": true,
   "requiredPlugins": [
     "licensing",
-    "management"
+    "management",
+    "features",
+    "share"
   ],
   "optionalPlugins": [
+    "cloud",
     "usageCollection",
     "indexManagement",
     "home"

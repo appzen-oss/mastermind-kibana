@@ -4,14 +4,16 @@
  * you may not use this file except in compliance with the Elastic License.
  */
 
-import { IndexPatternColumn } from './operations';
+import { IFieldType } from 'src/plugins/data/common';
+import { IndexPatternColumn, IncompleteColumn } from './operations';
 import { IndexPatternAggRestrictions } from '../../../../../src/plugins/data/public';
 
 export interface IndexPattern {
   id: string;
   fields: IndexPatternField[];
+  getFieldByName(name: string): IndexPatternField | undefined;
   title: string;
-  timeFieldName?: string | null;
+  timeFieldName?: string;
   fieldFormatMap?: Record<
     string,
     {
@@ -22,22 +24,19 @@ export interface IndexPattern {
   hasRestrictions: boolean;
 }
 
-export interface IndexPatternField {
-  name: string;
+export type IndexPatternField = IFieldType & {
   displayName: string;
-  type: string;
-  esTypes?: string[];
-  aggregatable: boolean;
-  scripted?: boolean;
-  searchable: boolean;
   aggregationRestrictions?: Partial<IndexPatternAggRestrictions>;
-}
+  meta?: boolean;
+};
 
 export interface IndexPatternLayer {
   columnOrder: string[];
   columns: Record<string, IndexPatternColumn>;
   // Each layer is tied to the index pattern that created it
   indexPatternId: string;
+  // Partial columns represent the temporary invalid states
+  incompleteColumns?: Record<string, IncompleteColumn>;
 }
 
 export interface IndexPatternPersistedState {

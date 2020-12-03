@@ -12,7 +12,6 @@ import {
   addProvider,
   addTimeline,
   applyDeltaToColumnWidth,
-  applyDeltaToWidth,
   applyKqlFilterQuery,
   clearEventsDeleted,
   clearEventsLoading,
@@ -34,6 +33,7 @@ import {
   showCallOutUnauthorizedMsg,
   showTimeline,
   startTimelineSaving,
+  toggleExpandedEvent,
   unPinEvent,
   updateAutoSaveMsg,
   updateColumns,
@@ -43,7 +43,7 @@ import {
   updateDataProviderType,
   updateDescription,
   updateEventType,
-  updateHighlightedDropAndProviderId,
+  updateIndexNames,
   updateIsFavorite,
   updateIsLive,
   updateIsLoading,
@@ -66,7 +66,6 @@ import {
   addTimelineNoteToEvent,
   addTimelineProvider,
   addTimelineToStore,
-  applyDeltaToCurrentWidth,
   applyDeltaToTimelineColumnWidth,
   applyKqlFilterQueryDraft,
   pinTimelineEvent,
@@ -77,7 +76,6 @@ import {
   setSelectedTimelineEvents,
   unPinTimelineEvent,
   updateExcludedRowRenderersIds,
-  updateHighlightedDropAndProvider,
   updateKqlFilterQueryDraft,
   updateTimelineColumns,
   updateTimelineDescription,
@@ -135,6 +133,7 @@ export const timelineReducer = reducerWithInitialState(initialTimelineState)
         show,
         columns,
         itemsPerPage,
+        indexNames,
         kqlQuery,
         sort,
         showCheckboxes,
@@ -152,6 +151,7 @@ export const timelineReducer = reducerWithInitialState(initialTimelineState)
           filters,
           id,
           itemsPerPage,
+          indexNames,
           kqlQuery,
           sort,
           show,
@@ -177,6 +177,16 @@ export const timelineReducer = reducerWithInitialState(initialTimelineState)
   .case(addNoteToEvent, (state, { id, noteId, eventId }) => ({
     ...state,
     timelineById: addTimelineNoteToEvent({ id, noteId, eventId, timelineById: state.timelineById }),
+  }))
+  .case(toggleExpandedEvent, (state, { timelineId, event }) => ({
+    ...state,
+    timelineById: {
+      ...state.timelineById,
+      [timelineId]: {
+        ...state.timelineById[timelineId],
+        expandedEvent: event,
+      },
+    },
   }))
   .case(addProvider, (state, { id, provider }) => ({
     ...state,
@@ -215,20 +225,6 @@ export const timelineReducer = reducerWithInitialState(initialTimelineState)
       timelineById: state.timelineById,
     }),
   }))
-  .case(
-    applyDeltaToWidth,
-    (state, { id, delta, bodyClientWidthPixels, minWidthPixels, maxWidthPercent }) => ({
-      ...state,
-      timelineById: applyDeltaToCurrentWidth({
-        id,
-        delta,
-        bodyClientWidthPixels,
-        minWidthPixels,
-        maxWidthPercent,
-        timelineById: state.timelineById,
-      }),
-    })
-  )
   .case(pinEvent, (state, { id, eventId }) => ({
     ...state,
     timelineById: pinTimelineEvent({ id, eventId, timelineById: state.timelineById }),
@@ -386,7 +382,7 @@ export const timelineReducer = reducerWithInitialState(initialTimelineState)
     ...state,
     timelineById: updateTimelineKqlMode({ id, kqlMode, timelineById: state.timelineById }),
   }))
-  .case(updateTitle, (state, { id, title }) => ({
+  .case(updateTitle, (state, { id, title, disableAutoSave }) => ({
     ...state,
     timelineById: updateTimelineTitle({ id, title, timelineById: state.timelineById }),
   }))
@@ -482,14 +478,6 @@ export const timelineReducer = reducerWithInitialState(initialTimelineState)
       timelineById: state.timelineById,
     }),
   }))
-  .case(updateHighlightedDropAndProviderId, (state, { id, providerId }) => ({
-    ...state,
-    timelineById: updateHighlightedDropAndProvider({
-      id,
-      providerId,
-      timelineById: state.timelineById,
-    }),
-  }))
   .case(updateAutoSaveMsg, (state, { timelineId, newTimelineModel }) => ({
     ...state,
     autoSavedWarningMsg: {
@@ -520,5 +508,15 @@ export const timelineReducer = reducerWithInitialState(initialTimelineState)
   .case(setInsertTimeline, (state, insertTimeline) => ({
     ...state,
     insertTimeline,
+  }))
+  .case(updateIndexNames, (state, { id, indexNames }) => ({
+    ...state,
+    timelineById: {
+      ...state.timelineById,
+      [id]: {
+        ...state.timelineById[id],
+        indexNames,
+      },
+    },
   }))
   .build();

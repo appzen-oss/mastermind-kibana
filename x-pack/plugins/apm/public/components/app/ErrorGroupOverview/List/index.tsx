@@ -10,9 +10,8 @@ import { i18n } from '@kbn/i18n';
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import { EuiIconTip } from '@elastic/eui';
+import { APIReturnType } from '../../../../services/rest/createCallApmApi';
 import { NOT_AVAILABLE_LABEL } from '../../../../../common/i18n';
-// eslint-disable-next-line @kbn/eslint/no-restricted-paths
-import { ErrorGroupListAPIResponse } from '../../../../../server/lib/errors/get_error_groups';
 import {
   fontFamilyCode,
   fontSizes,
@@ -49,18 +48,16 @@ const Culprit = styled.div`
   font-family: ${fontFamilyCode};
 `;
 
+type ErrorGroupListAPIResponse = APIReturnType<'GET /api/apm/services/{serviceName}/errors'>;
+
 interface Props {
   items: ErrorGroupListAPIResponse;
+  serviceName: string;
 }
 
-function ErrorGroupList(props: Props) {
-  const { items } = props;
+function ErrorGroupList({ items, serviceName }: Props) {
   const { urlParams } = useUrlParams();
-  const { serviceName } = urlParams;
 
-  if (!serviceName) {
-    throw new Error('Service name is required');
-  }
   const columns = useMemo(
     () => [
       {
@@ -111,7 +108,7 @@ function ErrorGroupList(props: Props) {
               query={
                 {
                   ...urlParams,
-                  kuery: `error.exception.type:${type}`,
+                  kuery: `error.exception.type:"${type}"`,
                 } as APMQueryParams
               }
             >

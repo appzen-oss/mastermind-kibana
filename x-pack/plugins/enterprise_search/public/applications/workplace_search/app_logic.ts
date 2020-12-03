@@ -6,25 +6,64 @@
 
 import { kea, MakeLogicType } from 'kea';
 
-import { IInitialAppData } from '../../../common/types';
-import { IWorkplaceSearchInitialData } from '../../../common/types/workplace_search';
+import { InitialAppData } from '../../../common/types';
+import {
+  Organization,
+  WorkplaceSearchInitialData,
+  Account,
+} from '../../../common/types/workplace_search';
 
-export interface IAppValues extends IWorkplaceSearchInitialData {
+interface AppValues extends WorkplaceSearchInitialData {
   hasInitialized: boolean;
+  isFederatedAuth: boolean;
+  isOrganization: boolean;
 }
-export interface IAppActions {
-  initializeAppData(props: IInitialAppData): void;
+interface AppActions {
+  initializeAppData(props: InitialAppData): InitialAppData;
+  setContext(isOrganization: boolean): boolean;
 }
 
-export const AppLogic = kea<MakeLogicType<IAppValues, IAppActions>>({
+const emptyOrg = {} as Organization;
+const emptyAccount = {} as Account;
+
+export const AppLogic = kea<MakeLogicType<AppValues, AppActions>>({
+  path: ['enterprise_search', 'workplace_search', 'app_logic'],
   actions: {
-    initializeAppData: ({ workplaceSearch }) => workplaceSearch,
+    initializeAppData: ({ workplaceSearch, isFederatedAuth }) => ({
+      workplaceSearch,
+      isFederatedAuth,
+    }),
+    setContext: (isOrganization) => isOrganization,
   },
   reducers: {
     hasInitialized: [
       false,
       {
         initializeAppData: () => true,
+      },
+    ],
+    isFederatedAuth: [
+      true,
+      {
+        initializeAppData: (_, { isFederatedAuth }) => !!isFederatedAuth,
+      },
+    ],
+    isOrganization: [
+      false,
+      {
+        setContext: (_, isOrganization) => isOrganization,
+      },
+    ],
+    organization: [
+      emptyOrg,
+      {
+        initializeAppData: (_, { workplaceSearch }) => workplaceSearch?.organization || emptyOrg,
+      },
+    ],
+    account: [
+      emptyAccount,
+      {
+        initializeAppData: (_, { workplaceSearch }) => workplaceSearch?.account || emptyAccount,
       },
     ],
   },

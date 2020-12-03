@@ -5,9 +5,10 @@
  */
 
 import { ApplicationStart } from 'kibana/public';
-import { NewPackagePolicy, PackagePolicy } from '../../../../ingest_manager/common';
+import { NewPackagePolicy, PackagePolicy } from '../../../../fleet/common';
 import { ManifestSchema } from '../schema/manifest';
 
+export * from './os';
 export * from './trusted_apps';
 
 /**
@@ -78,6 +79,56 @@ export interface EventStats {
 }
 
 /**
+ * Represents the object structure of a returned document when using doc value fields to filter the fields
+ * returned in a document from an Elasticsearch query.
+ *
+ * Here is an example:
+ *
+ * {
+ *  "_index": ".ds-logs-endpoint.events.process-default-000001",
+ *  "_id": "bc7brnUBxO0aE7QcCVHo",
+ *  "_score": null,
+ *  "fields": { <----------- The FieldsObject represents this portion
+ *    "@timestamp": [
+ *      "2020-11-09T21:13:25.246Z"
+ *    ],
+ *    "process.name": "explorer.exe",
+ *    "process.parent.entity_id": [
+ *      "0i17c2m22c"
+ *    ],
+ *    "process.Ext.ancestry": [ <------------ Notice that the keys are flattened
+ *      "0i17c2m22c",
+ *      "2z9j8dlx72",
+ *      "oj61pr6g62",
+ *      "x0leonbrc9"
+ *    ],
+ *    "process.entity_id": [
+ *      "6k8waczi22"
+ *    ]
+ *  },
+ *  "sort": [
+ *    0,
+ *    1604956405246
+ *  ]
+ * }
+ */
+export interface FieldsObject {
+  [key: string]: ECSField<number | string>;
+}
+
+/**
+ * A node in a resolver graph.
+ */
+export interface ResolverNode {
+  data: FieldsObject;
+  id: string | number;
+  // the very root node might not have the parent field defined
+  parent?: string | number;
+  name?: string;
+  stats: EventStats;
+}
+
+/**
  * Statistical information for a node in a resolver tree.
  */
 export interface ResolverNodeStats {
@@ -95,6 +146,27 @@ export interface ResolverNodeStats {
  * A child node can also have additional children so we need to provide a pagination cursor.
  */
 export interface ResolverChildNode extends ResolverLifecycleNode {
+  /**
+   * nextChild can have 3 different states:
+   *
+   * undefined: This indicates that you should not use this node for additional queries. It does not mean that node does
+   * not have any more direct children. The node could have more direct children but to determine that, use the
+   * ResolverChildren node's nextChild.
+   *
+   * null: Indicates that we have received all the children of the node. There may be more descendants though.
+   *
+   * string: Indicates this is a leaf node and it can be used to continue querying for additional descendants
+   * using this node's entity_id
+   *
+   * For more information see the resolver docs on pagination [here](../../server/endpoint/routes/resolver/docs/README.md#L129)
+   */
+  nextChild?: string | null;
+}
+
+/**
+ * Safe version of `ResolverChildNode`.
+ */
+export interface SafeResolverChildNode extends SafeResolverLifecycleNode {
   /**
    * nextChild can have 3 different states:
    *
@@ -132,6 +204,24 @@ export interface ResolverChildren {
 }
 
 /**
+ * Safe version of `ResolverChildren`.
+ */
+export interface SafeResolverChildren {
+  childNodes: SafeResolverChildNode[];
+  /**
+   * nextChild can have 2 different states:
+   *
+   * null: Indicates that we have received all the descendants that can be retrieved using this node. To retrieve more
+   * nodes in the tree use a cursor provided in one of the returned children. If no other cursor exists then the tree
+   * is complete.
+   *
+   * string: Indicates this node has more descendants that can be retrieved, pass this cursor in while using this node's
+   * entity_id for the request.
+   */
+  nextChild: string | null;
+}
+
+/**
  * A flattened tree representing the nodes in a resolver graph.
  */
 export interface ResolverTree {
@@ -144,7 +234,23 @@ export interface ResolverTree {
   relatedEvents: Omit<ResolverRelatedEvents, 'entityID'>;
   relatedAlerts: Omit<ResolverRelatedAlerts, 'entityID'>;
   ancestry: ResolverAncestry;
-  lifecycle: ResolverEvent[];
+  lifecycle: SafeResolverEvent[];
+  stats: ResolverNodeStats;
+}
+
+/**
+ * Safe version of `ResolverTree`.
+ */
+export interface SafeResolverTree {
+  /**
+   * Origin of the tree. This is in the middle of the tree. Typically this would be the same
+   * process node that generated an alert.
+   */
+  entityID: string;
+  children: SafeResolverChildren;
+  relatedAlerts: Omit<ResolverRelatedAlerts, 'entityID'>;
+  ancestry: SafeResolverAncestry;
+  lifecycle: SafeResolverEvent[];
   stats: ResolverNodeStats;
 }
 
@@ -153,7 +259,19 @@ export interface ResolverTree {
  */
 export interface ResolverLifecycleNode {
   entityID: string;
-  lifecycle: ResolverEvent[];
+  lifecycle: SafeResolverEvent[];
+  /**
+   * stats are only set when the entire tree is being fetched
+   */
+  stats?: ResolverNodeStats;
+}
+
+/**
+ * Safe version of `ResolverLifecycleNode`.
+ */
+export interface SafeResolverLifecycleNode {
+  entityID: string;
+  lifecycle: SafeResolverEvent[];
   /**
    * stats are only set when the entire tree is being fetched
    */
@@ -176,19 +294,34 @@ export interface ResolverAncestry {
 }
 
 /**
+ * Safe version of `ResolverAncestry`.
+ */
+export interface SafeResolverAncestry {
+  /**
+   * An array of ancestors with the lifecycle events grouped together
+   */
+  ancestors: SafeResolverLifecycleNode[];
+  /**
+   * A cursor for retrieving additional ancestors for a particular node. `null` indicates that there were no additional
+   * ancestors when the request returned. More could have been ingested by ES after the fact though.
+   */
+  nextAncestor: string | null;
+}
+
+/**
  * Response structure for the related events route.
  */
 export interface ResolverRelatedEvents {
   entityID: string;
-  events: ResolverEvent[];
+  events: SafeResolverEvent[];
   nextEvent: string | null;
 }
 
 /**
- * Safe version of `ResolverRelatedEvents`
+ * Response structure for the events route.
+ * `nextEvent` will be set to null when at the time of querying there were no more results to retrieve from ES.
  */
-export interface SafeResolverRelatedEvents {
-  entityID: string;
+export interface ResolverPaginatedEvents {
   events: SafeResolverEvent[];
   nextEvent: string | null;
 }
@@ -198,7 +331,7 @@ export interface SafeResolverRelatedEvents {
  */
 export interface ResolverRelatedAlerts {
   entityID: string;
-  alerts: ResolverEvent[];
+  alerts: SafeResolverEvent[];
   nextAlert: string | null;
 }
 
@@ -214,6 +347,19 @@ export interface HostResultList {
   request_page_size: number;
   /* the page index requested */
   request_page_index: number;
+  /* the version of the query strategy */
+  query_strategy_version: MetadataQueryStrategyVersions;
+  /* policy IDs and versions */
+  policy_info?: HostInfo['policy_info'];
+}
+
+/**
+ * The data_stream fields in an elasticsearch document.
+ */
+export interface DataStream {
+  dataset: string;
+  namespace: string;
+  type: string;
 }
 
 /**
@@ -251,152 +397,133 @@ export interface Host {
 /**
  * A record of hashes for something. Provides hashes in multiple formats. A favorite structure of the Elastic Endpoint.
  */
-interface Hashes {
+type Hashes = Partial<{
   /**
    * A hash in MD5 format.
    */
-  md5: string;
+  md5: ECSField<string>;
   /**
    * A hash in SHA-1 format.
    */
-  sha1: string;
+  sha1: ECSField<string>;
   /**
    * A hash in SHA-256 format.
    */
-  sha256: string;
-}
+  sha256: ECSField<string>;
+}>;
 
-interface MalwareClassification {
-  identifier: string;
-  score: number;
-  threshold: number;
-  version: string;
-}
+type MalwareClassification = Partial<{
+  identifier: ECSField<string>;
+  score: ECSField<number>;
+  threshold: ECSField<number>;
+  version: ECSField<string>;
+}>;
 
-interface ThreadFields {
-  id: number;
-  Ext: {
-    service_name: string;
-    start: number;
-    start_address: number;
-    start_address_module: string;
-  };
-}
+type ThreadFields = Partial<{
+  id: ECSField<number>;
+  Ext: Partial<{
+    service_name: ECSField<string>;
+    start: ECSField<number>;
+    start_address: ECSField<number>;
+    start_address_module: ECSField<string>;
+  }>;
+}>;
 
-interface DllFields {
+type DllFields = Partial<{
   hash: Hashes;
-  path: string;
-  pe: {
-    architecture: string;
-  };
-  code_signature: {
-    subject_name: string;
-    trusted: boolean;
-  };
-  Ext: {
-    compile_time: number;
+  path: ECSField<string>;
+  pe: Partial<{
+    architecture: ECSField<string>;
+  }>;
+  code_signature: Partial<{
+    subject_name: ECSField<string>;
+    trusted: ECSField<boolean>;
+  }>;
+  Ext: Partial<{
+    compile_time: ECSField<number>;
     malware_classification: MalwareClassification;
-    mapped_address: number;
-    mapped_size: number;
-  };
-}
+    mapped_address: ECSField<number>;
+    mapped_size: ECSField<number>;
+  }>;
+}>;
 
 /**
  * Describes an Alert Event.
  */
-export interface AlertEvent {
-  '@timestamp': number;
-  agent: {
-    id: string;
-    version: string;
-    type: string;
-  };
-  ecs: {
-    version: string;
-  };
-  event: {
-    id: string;
-    action: string;
-    category: string;
-    kind: string;
-    dataset: string;
-    module: string;
-    type: string;
-    sequence: number;
-  };
-  Endpoint: {
-    policy: {
-      applied: {
-        id: string;
-        status: HostPolicyResponseActionStatus;
-        name: string;
-      };
-    };
-  };
-  process: {
-    command_line?: string;
-    pid: number;
-    ppid?: number;
-    entity_id: string;
-    parent?: {
-      pid: number;
-      entity_id: string;
-    };
-    name: string;
-    hash: Hashes;
-    executable: string;
-    start: number;
-    thread?: ThreadFields[];
-    uptime: number;
-    Ext?: {
-      /*
-       * The array has a special format. The entity_ids towards the beginning of the array are closer ancestors and the
-       * values towards the end of the array are more distant ancestors (grandparents). Therefore
-       * ancestry_array[0] == process.parent.entity_id and ancestry_array[1] == process.parent.parent.entity_id
-       */
-      ancestry?: string[];
-      code_signature: Array<{
-        subject_name: string;
-        trusted: boolean;
+export type AlertEvent = Partial<{
+  event: Partial<{
+    action: ECSField<string>;
+    dataset: ECSField<string>;
+    module: ECSField<string>;
+  }>;
+  Endpoint: Partial<{
+    policy: Partial<{
+      applied: Partial<{
+        id: ECSField<string>;
+        status: ECSField<HostPolicyResponseActionStatus>;
+        name: ECSField<string>;
       }>;
-      malware_classification?: MalwareClassification;
-      token: {
-        domain: string;
-        type: string;
-        user: string;
-        sid: string;
-        integrity_level: number;
-        integrity_level_name: string;
-        privileges?: Array<{
-          description: string;
-          name: string;
-          enabled: boolean;
-        }>;
-      };
-      user: string;
-    };
-  };
-  file: {
-    owner: string;
-    name: string;
-    path: string;
-    accessed: number;
-    mtime: number;
-    created: number;
-    size: number;
-    hash: Hashes;
-    Ext: {
+    }>;
+  }>;
+  process: Partial<{
+    command_line: ECSField<string>;
+    ppid: ECSField<number>;
+    start: ECSField<number>;
+    // Using ECSField as the outer because the object is expected to be an array
+    thread: ECSField<ThreadFields>;
+    uptime: ECSField<number>;
+    Ext: Partial<{
+      // Using ECSField as the outer because the object is expected to be an array
+      code_signature: ECSField<
+        Partial<{
+          subject_name: ECSField<string>;
+          trusted: ECSField<boolean>;
+        }>
+      >;
       malware_classification: MalwareClassification;
-      temp_file_path: string;
-      code_signature: Array<{
-        trusted: boolean;
-        subject_name: string;
+      token: Partial<{
+        domain: ECSField<string>;
+        type: ECSField<string>;
+        user: ECSField<string>;
+        sid: ECSField<string>;
+        integrity_level: ECSField<number>;
+        integrity_level_name: ECSField<string>;
+        // Using ECSField as the outer because the object is expected to be an array
+        privileges: ECSField<
+          Partial<{
+            description: ECSField<string>;
+            name: ECSField<string>;
+            enabled: ECSField<boolean>;
+          }>
+        >;
       }>;
-    };
-  };
-  host: Host;
-  dll?: DllFields[];
-}
+      user: ECSField<string>;
+    }>;
+  }>;
+  file: Partial<{
+    owner: ECSField<string>;
+    name: ECSField<string>;
+    accessed: ECSField<number>;
+    mtime: ECSField<number>;
+    created: ECSField<number>;
+    size: ECSField<number>;
+    hash: Hashes;
+    Ext: Partial<{
+      malware_classification: MalwareClassification;
+      temp_file_path: ECSField<string>;
+      // Using ECSField as the outer because the object is expected to be an array
+      code_signature: ECSField<
+        Partial<{
+          trusted: ECSField<boolean>;
+          subject_name: ECSField<string>;
+        }>
+      >;
+    }>;
+  }>;
+  // Using ECSField as the outer because the object is expected to be an array
+  dll: ECSField<DllFields>;
+}> &
+  SafeEndpointEvent;
 
 /**
  * The status of the Endpoint Agent as reported by the Agent or the
@@ -440,9 +567,44 @@ export enum HostStatus {
   UNENROLLING = 'unenrolling',
 }
 
+export enum MetadataQueryStrategyVersions {
+  VERSION_1 = 'v1',
+  VERSION_2 = 'v2',
+}
+
+export type PolicyInfo = Immutable<{
+  revision: number;
+  id: string;
+}>;
+
 export type HostInfo = Immutable<{
   metadata: HostMetadata;
   host_status: HostStatus;
+  policy_info?: {
+    agent: {
+      /**
+       * As set in Kibana
+       */
+      configured: PolicyInfo;
+      /**
+       * Last reported running in agent (may lag behind configured)
+       */
+      applied: PolicyInfo;
+    };
+    /**
+     * Current intended 'endpoint' package policy
+     */
+    endpoint: PolicyInfo;
+  };
+  /* the version of the query strategy */
+  query_strategy_version: MetadataQueryStrategyVersions;
+}>;
+
+export type HostMetadataDetails = Immutable<{
+  agent: {
+    id: string;
+  };
+  HostDetails: HostMetadata;
 }>;
 
 export type HostMetadata = Immutable<{
@@ -469,6 +631,8 @@ export type HostMetadata = Immutable<{
         id: string;
         status: HostPolicyResponseActionStatus;
         name: string;
+        endpoint_policy_version: number;
+        version: number;
       };
     };
   };
@@ -477,6 +641,7 @@ export type HostMetadata = Immutable<{
     version: string;
   };
   host: Host;
+  data_stream: DataStream;
 }>;
 
 export interface LegacyEndpointEvent {
@@ -578,7 +743,7 @@ export type ResolverEvent = EndpointEvent | LegacyEndpointEvent;
  * All mappings in Elasticsearch support arrays. They can also return null values or be missing. For example, a `keyword` mapping could return `null` or `[null]` or `[]` or `'hi'`, or `['hi', 'there']`. We need to handle these cases in order to avoid throwing an error.
  * When dealing with an value that comes from ES, wrap the underlying type in `ECSField`. For example, if you have a `keyword` or `text` value coming from ES, cast it to `ECSField<string>`.
  */
-export type ECSField<T> = T | null | Array<T | null>;
+export type ECSField<T> = T | null | undefined | Array<T | null>;
 
 /**
  * A more conservative version of `ResolverEvent` that treats fields as optional and use `ECSField` to type all ECS fields.
@@ -595,6 +760,11 @@ export type SafeEndpointEvent = Partial<{
     id: ECSField<string>;
     version: ECSField<string>;
     type: ECSField<string>;
+  }>;
+  data_stream: Partial<{
+    type: ECSField<string>;
+    dataset: ECSField<string>;
+    namespace: ECSField<string>;
   }>;
   ecs: Partial<{
     version: ECSField<string>;
@@ -629,7 +799,10 @@ export type SafeEndpointEvent = Partial<{
     forwarded_ip: ECSField<string>;
   }>;
   dns: Partial<{
-    question: Partial<{ name: ECSField<string> }>;
+    question: Partial<{
+      name: ECSField<string>;
+      type: ECSField<string>;
+    }>;
   }>;
   process: Partial<{
     entity_id: ECSField<string>;
@@ -641,9 +814,7 @@ export type SafeEndpointEvent = Partial<{
       subject_name: ECSField<string>;
     }>;
     pid: ECSField<number>;
-    hash: Partial<{
-      md5: ECSField<string>;
-    }>;
+    hash: Hashes;
     parent: Partial<{
       entity_id: ECSField<string>;
       name: ECSField<string>;
@@ -700,9 +871,46 @@ export interface SafeLegacyEndpointEvent {
 }
 
 /**
+ * The fields to use to identify nodes within a resolver tree.
+ */
+export interface ResolverSchema {
+  /**
+   * the ancestry field should be set to a field that contains an order array representing
+   * the ancestors of a node.
+   */
+  ancestry?: string;
+  /**
+   * id represents the field to use as the unique ID for a node.
+   */
+  id: string;
+  /**
+   * field to use for the name of the node
+   */
+  name?: string;
+  /**
+   * parent represents the field that is the edge between two nodes.
+   */
+  parent: string;
+}
+
+/**
  * The response body for the resolver '/entity' index API
  */
-export type ResolverEntityIndex = Array<{ entity_id: string }>;
+export type ResolverEntityIndex = Array<{
+  /**
+   * A name for the schema that is being used (e.g. endpoint, winlogbeat, etc)
+   */
+  name: string;
+  /**
+   * The schema to pass to the /tree api and other backend requests, based on the contents of the document found using
+   * the _id
+   */
+  schema: ResolverSchema;
+  /**
+   * Unique ID value for the requested document using the `_id` field passed to the /entity route
+   */
+  id: string;
+}>;
 
 /**
  * Takes a @kbn/config-schema 'schema' type and returns a type that represents valid inputs.
@@ -720,9 +928,7 @@ export type ResolverEntityIndex = Array<{ entity_id: string }>;
  * `Type` types, we process the result of `TypeOf` instead, as this will be consistent.
  */
 export type KbnConfigSchemaInputTypeOf<T> = T extends Record<string, unknown>
-  ? KbnConfigSchemaInputObjectTypeOf<
-      T
-    > /** `schema.number()` accepts strings, so this type should accept them as well. */
+  ? KbnConfigSchemaInputObjectTypeOf<T> /** `schema.number()` accepts strings, so this type should accept them as well. */
   : number extends T
   ? T | string
   : T;
@@ -765,6 +971,7 @@ type KbnConfigSchemaNonOptionalProps<Props extends Record<string, unknown>> = Pi
  */
 export interface PolicyConfig {
   windows: {
+    advanced?: {};
     events: {
       dll_and_driver_load: boolean;
       dns: boolean;
@@ -778,19 +985,36 @@ export interface PolicyConfig {
     logging: {
       file: string;
     };
+    popup: {
+      malware: {
+        message: string;
+        enabled: boolean;
+      };
+    };
+    antivirus_registration: {
+      enabled: boolean;
+    };
   };
   mac: {
+    advanced?: {};
     events: {
       file: boolean;
       process: boolean;
       network: boolean;
     };
     malware: MalwareFields;
+    popup: {
+      malware: {
+        message: string;
+        enabled: boolean;
+      };
+    };
     logging: {
       file: string;
     };
   };
   linux: {
+    advanced?: {};
     events: {
       file: boolean;
       process: boolean;
@@ -809,15 +1033,18 @@ export interface UIPolicyConfig {
   /**
    * Windows-specific policy configuration that is supported via the UI
    */
-  windows: Pick<PolicyConfig['windows'], 'events' | 'malware'>;
+  windows: Pick<
+    PolicyConfig['windows'],
+    'events' | 'malware' | 'popup' | 'antivirus_registration' | 'advanced'
+  >;
   /**
    * Mac-specific policy configuration that is supported via the UI
    */
-  mac: Pick<PolicyConfig['mac'], 'malware' | 'events'>;
+  mac: Pick<PolicyConfig['mac'], 'malware' | 'events' | 'popup' | 'advanced'>;
   /**
    * Linux-specific policy configuration that is supported via the UI
    */
-  linux: Pick<PolicyConfig['linux'], 'events'>;
+  linux: Pick<PolicyConfig['linux'], 'events' | 'advanced'>;
 }
 
 /** Policy: Malware protection fields */
@@ -922,6 +1149,7 @@ interface HostPolicyResponseAppliedArtifact {
  */
 export interface HostPolicyResponse {
   '@timestamp': number;
+  data_stream: DataStream;
   elastic: {
     agent: {
       id: string;
@@ -950,7 +1178,8 @@ export interface HostPolicyResponse {
   Endpoint: {
     policy: {
       applied: {
-        version: string;
+        version: number;
+        endpoint_policy_version: number;
         id: string;
         name: string;
         status: HostPolicyResponseActionStatus;
@@ -983,4 +1212,15 @@ export interface HostPolicyResponse {
  */
 export interface GetHostPolicyResponse {
   policy_response: HostPolicyResponse;
+}
+
+/**
+ * REST API response for retrieving agent summary
+ */
+export interface GetAgentSummaryResponse {
+  summary_response: {
+    package: string;
+    policy_id?: string;
+    versions_count: { [key: string]: number };
+  };
 }

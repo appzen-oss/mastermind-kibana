@@ -37,7 +37,17 @@ import {
   SeverityMappingOrUndefined,
   TimestampOverrideOrUndefined,
   Type,
+  EventCategoryOverrideOrUndefined,
 } from '../../../common/detection_engine/schemas/common/schemas';
+import {
+  ThreatIndexOrUndefined,
+  ThreatQueryOrUndefined,
+  ThreatMappingOrUndefined,
+  ThreatLanguageOrUndefined,
+  ConcurrentSearchesOrUndefined,
+  ItemsPerSearchOrUndefined,
+} from '../../../common/detection_engine/schemas/types/threat_mapping';
+
 import { LegacyCallAPIOptions } from '../../../../../../src/core/server';
 import { Filter } from '../../../../../../src/plugins/data/server';
 import { ListArrayOrUndefined } from '../../../common/detection_engine/schemas/types';
@@ -50,6 +60,7 @@ export interface RuleTypeParams {
   buildingBlockType: BuildingBlockTypeOrUndefined;
   description: Description;
   note: NoteOrUndefined;
+  eventCategoryOverride: EventCategoryOverrideOrUndefined;
   falsePositives: FalsePositives;
   from: From;
   ruleId: RuleId;
@@ -73,12 +84,19 @@ export interface RuleTypeParams {
   severityMapping: SeverityMappingOrUndefined;
   threat: ThreatOrUndefined;
   threshold: ThresholdOrUndefined;
+  threatFilters: PartialFilter[] | undefined;
+  threatIndex: ThreatIndexOrUndefined;
+  threatQuery: ThreatQueryOrUndefined;
+  threatMapping: ThreatMappingOrUndefined;
+  threatLanguage: ThreatLanguageOrUndefined;
   timestampOverride: TimestampOverrideOrUndefined;
   to: To;
   type: Type;
   references: References;
   version: Version;
   exceptionsList: ListArrayOrUndefined;
+  concurrentSearches: ConcurrentSearchesOrUndefined;
+  itemsPerSearch: ItemsPerSearchOrUndefined;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

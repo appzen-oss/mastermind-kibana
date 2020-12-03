@@ -16,8 +16,8 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-
-import { EnvironmentService, InternalEnvironmentServiceSetup } from './environment_service';
+import type { PublicMethodsOf } from '@kbn/utility-types';
+import type { EnvironmentService, InternalEnvironmentServiceSetup } from './environment_service';
 
 const createSetupContractMock = () => {
   const setupContract: jest.Mocked<InternalEnvironmentServiceSetup> = {

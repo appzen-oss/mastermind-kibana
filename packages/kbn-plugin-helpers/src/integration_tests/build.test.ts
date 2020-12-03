@@ -21,7 +21,8 @@ import Path from 'path';
 import Fs from 'fs';
 
 import execa from 'execa';
-import { createStripAnsiSerializer, REPO_ROOT, createReplaceSerializer } from '@kbn/dev-utils';
+import { REPO_ROOT } from '@kbn/utils';
+import { createStripAnsiSerializer, createReplaceSerializer } from '@kbn/dev-utils';
 import extract from 'extract-zip';
 import del from 'del';
 import globby from 'globby';
@@ -76,7 +77,8 @@ it('builds a generated plugin into a viable archive', async () => {
      │ info initialized, 0 bundles cached
      │ info starting worker [1 bundle]
      │ succ 1 bundles compiled successfully after <time>
-     info copying source into the build and converting with babel
+     info copying assets from \`public/assets\` to build
+     info copying server source into the build and converting with babel
      info running yarn to install dependencies
      info compressing plugin into [fooTestPlugin-7.5.0.zip]"
   `);

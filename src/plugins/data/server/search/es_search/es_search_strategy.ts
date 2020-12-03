@@ -16,56 +16,40 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import { first } from 'rxjs/operators';
-import { SharedGlobalConfig, Logger } from 'kibana/server';
-import { SearchResponse } from 'elasticsearch';
-import { Observable } from 'rxjs';
-import { ApiResponse } from '@elastic/elasticsearch';
-import { SearchUsage } from '../collectors/usage';
-import { ISearchStrategy, getDefaultSearchParams, getTotalLoaded } from '..';
+import { from, Observable } from 'rxjs';
+import { first, tap } from 'rxjs/operators';
+import type { SearchResponse } from 'elasticsearch';
+import type { Logger, SharedGlobalConfig } from 'kibana/server';
+import type { ISearchStrategy } from '../types';
+import type { SearchUsage } from '../collectors';
+import { getDefaultSearchParams, getShardTimeout, shimAbortSignal } from './request_utils';
+import { toKibanaSearchResponse } from './response_utils';
+import { searchUsageObserver } from '../collectors/usage';
 
 export const esSearchStrategyProvider = (
   config$: Observable<SharedGlobalConfig>,
   logger: Logger,
   usage?: SearchUsage
-): ISearchStrategy => {
-  return {
-    search: async (context, request, options) => {
-      logger.debug(`search ${request.params?.index}`);
+): ISearchStrategy => ({
+  search: (request, { abortSignal }, { esClient, uiSettingsClient }) => {
+    // Only default index pattern type is supported here.
+    // See data_enhanced for other type support.
+    if (request.indexType) {
+      throw new Error(`Unsupported index pattern type ${request.indexType}`);
+    }
+
+    const search = async () => {
       const config = await config$.pipe(first()).toPromise();
-      const defaultParams = getDefaultSearchParams(config);
-
-      // Only default index pattern type is supported here.
-      // See data_enhanced for other type support.
-      if (!!request.indexType) {
-        throw new Error(`Unsupported index pattern type ${request.indexType}`);
-      }
-
       const params = {
-        ...defaultParams,
+        ...(await getDefaultSearchParams(uiSettingsClient)),
+        ...getShardTimeout(config),
         ...request.params,
       };
+      const promise = esClient.asCurrentUser.search<SearchResponse<unknown>>(params);
+      const { body } = await shimAbortSignal(promise, abortSignal);
+      return toKibanaSearchResponse(body);
+    };
 
-      try {
-        const esResponse = (await context.core.elasticsearch.client.asCurrentUser.search(
-          params
-        )) as ApiResponse<SearchResponse<any>>;
-        const rawResponse = esResponse.body;
-
-        if (usage) usage.trackSuccess(rawResponse.took);
-
-        // The above query will either complete or timeout and throw an error.
-        // There is no progress indication on this api.
-        return {
-          isPartial: false,
-          isRunning: false,
-          rawResponse,
-          ...getTotalLoaded(rawResponse._shards),
-        };
-      } catch (e) {
-        if (usage) usage.trackError();
-        throw e;
-      }
-    },
-  };
-};
+    return from(search()).pipe(tap(searchUsageObserver(logger, usage)));
+  },
+});

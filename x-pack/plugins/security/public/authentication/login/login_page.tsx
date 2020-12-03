@@ -15,6 +15,7 @@ import { EuiFlexGroup, EuiFlexItem, EuiIcon, EuiSpacer, EuiTitle } from '@elasti
 import { i18n } from '@kbn/i18n';
 import { FormattedMessage } from '@kbn/i18n/react';
 import { CoreStart, FatalErrorsStart, HttpStart, NotificationsStart } from 'src/core/public';
+import { AUTH_PROVIDER_HINT_QUERY_STRING_PARAMETER } from '../../../common/constants';
 import { LoginState } from '../../../common/login_state';
 import { LoginForm, DisabledLoginForm } from './components';
 
@@ -39,7 +40,7 @@ const infoMessageMap = new Map([
   [
     'LOGGED_OUT',
     i18n.translate('xpack.security.login.loggedOutDescription', {
-      defaultMessage: 'You have logged out of Appzen Mastermind.',
+      defaultMessage: 'You have logged out of AppZen Mastermind.',
     }),
   ],
 ]);
@@ -93,7 +94,7 @@ export class LoginPage extends Component<Props, State> {
               <h1>
                 <FormattedMessage
                   id="xpack.security.loginPage.welcomeTitle"
-                  defaultMessage="Welcome to Appzen Mastermind"
+                  defaultMessage="Welcome to AppZen Mastermind"
                 />
               </h1>
             </EuiTitle>
@@ -212,14 +213,16 @@ export class LoginPage extends Component<Props, State> {
       );
     }
 
+    const query = parse(window.location.href, true).query;
     return (
       <LoginForm
         http={this.props.http}
         notifications={this.props.notifications}
         selector={selector}
-        infoMessage={infoMessageMap.get(parse(window.location.href, true).query.msg?.toString())}
+        infoMessage={infoMessageMap.get(query.msg?.toString())}
         loginAssistanceMessage={this.props.loginAssistanceMessage}
         loginHelp={loginHelp}
+        authProviderHint={query[AUTH_PROVIDER_HINT_QUERY_STRING_PARAMETER]?.toString()}
       />
     );
   };

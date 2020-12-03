@@ -7,9 +7,9 @@
 import { uniq } from 'lodash';
 import LRU from 'lru-cache';
 import { MetricsExplorerRequestBody } from '../../../../common/http_api';
-import { ESSearchClient } from '../../../lib/snapshot';
 import { getDatasetForField } from './get_dataset_for_field';
 import { calculateMetricInterval } from '../../../utils/calculate_metric_interval';
+import { ESSearchClient } from '../../../lib/metrics/types';
 
 const cache = new LRU({
   max: 100,
@@ -34,7 +34,8 @@ export const findIntervalForMetrics = async (
 
   const modules = await Promise.all(
     fields.map(
-      async (field) => await getDatasetForField(client, field as string, options.indexPattern)
+      async (field) =>
+        await getDatasetForField(client, field as string, options.indexPattern, options.timerange)
     )
   );
 

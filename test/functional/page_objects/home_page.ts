@@ -23,6 +23,7 @@ export function HomePageProvider({ getService, getPageObjects }: FtrProviderCont
   const testSubjects = getService('testSubjects');
   const retry = getService('retry');
   const find = getService('find');
+  const deployment = getService('deployment');
   const PageObjects = getPageObjects(['common']);
   let isOss = true;
 
@@ -41,6 +42,14 @@ export function HomePageProvider({ getService, getPageObjects }: FtrProviderCont
 
     async isSampleDataSetInstalled(id: string) {
       return !(await testSubjects.exists(`addSampleDataSet${id}`));
+    }
+
+    async getVisibileSolutions() {
+      const solutionPanels = await testSubjects.findAll('~homSolutionPanel', 2000);
+      const panelAttributes = await Promise.all(
+        solutionPanels.map((panel) => panel.getAttribute('data-test-subj'))
+      );
+      return panelAttributes.map((attributeValue) => attributeValue.split('homSolutionPanel_')[1]);
     }
 
     async addSampleDataSet(id: string) {
@@ -74,7 +83,7 @@ export function HomePageProvider({ getService, getPageObjects }: FtrProviderCont
 
     async launchSampleDashboard(id: string) {
       await this.launchSampleDataSet(id);
-      isOss = await PageObjects.common.isOss();
+      isOss = await deployment.isOss();
       if (!isOss) {
         await find.clickByLinkText('Dashboard');
       }

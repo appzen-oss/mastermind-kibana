@@ -4,13 +4,13 @@
  * you may not use this file except in compliance with the Elastic License.
  */
 import React from 'react';
-import Boom from 'boom';
-import { mountWithIntl, nextTick } from 'test_utils/enzyme_helpers';
+import Boom from '@hapi/boom';
+import { mountWithIntl, nextTick } from '@kbn/test/jest';
 import { CopySavedObjectsToSpaceFlyout } from './copy_to_space_flyout';
 import { CopyToSpaceForm } from './copy_to_space_form';
 import { EuiLoadingSpinner, EuiEmptyPrompt } from '@elastic/eui';
 import { Space } from '../../../common/model/space';
-import { findTestSubject } from 'test_utils/find_test_subject';
+import { findTestSubject } from '@kbn/test/jest';
 import { SelectableSpacesControl } from './selectable_spaces_control';
 import { act } from '@testing-library/react';
 import { ProcessingCopyToSpace } from './processing_copy_to_space';
@@ -510,7 +510,7 @@ describe('CopyToSpaceFlyout', () => {
       Object {
         "color": "warning",
         "content": <FormattedMessage
-          defaultMessage="Saved object has missing references; it will be copied, but one or more of its references are broken."
+          defaultMessage="Object will be copied, but one or more references are missing."
           id="xpack.spaces.management.copyToSpace.copyStatus.missingReferencesMessage"
           values={Object {}}
         />,
@@ -604,7 +604,7 @@ describe('CopyToSpaceFlyout', () => {
       Object {
         "color": "danger",
         "content": <FormattedMessage
-          defaultMessage="There was an error copying this saved object."
+          defaultMessage="An error occurred copying this object."
           id="xpack.spaces.management.copyToSpace.copyStatus.unresolvableErrorMessage"
           values={Object {}}
         />,

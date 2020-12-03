@@ -4,12 +4,17 @@
  * you may not use this file except in compliance with the Elastic License.
  */
 
+import {
+  KibanaRequest,
+  Logger,
+  SavedObjectsServiceStart,
+  PluginInitializerContext,
+} from 'src/core/server';
 import { PluginStartContract as ActionsPluginStartContract } from '../../actions/server';
 import { AlertsClient } from './alerts_client';
 import { ALERTS_FEATURE_ID } from '../common';
 import { AlertTypeRegistry, SpaceIdToNamespaceFunction } from './types';
-import { KibanaRequest, Logger, SavedObjectsServiceStart } from '../../../../src/core/server';
-import { InvalidateAPIKeyParams, SecurityPluginSetup } from '../../security/server';
+import { SecurityPluginSetup } from '../../security/server';
 import { EncryptedSavedObjectsClient } from '../../encrypted_saved_objects/server';
 import { TaskManagerStartContract } from '../../task_manager/server';
 import { PluginStartContract as FeaturesPluginStart } from '../../features/server';
@@ -30,6 +35,7 @@ export interface AlertsClientFactoryOpts {
   actions: ActionsPluginStartContract;
   features: FeaturesPluginStart;
   eventLog: IEventLogClientService;
+  kibanaVersion: PluginInitializerContext['env']['packageInfo']['version'];
 }
 
 export class AlertsClientFactory {
@@ -45,6 +51,7 @@ export class AlertsClientFactory {
   private actions!: ActionsPluginStartContract;
   private features!: FeaturesPluginStart;
   private eventLog!: IEventLogClientService;
+  private kibanaVersion!: PluginInitializerContext['env']['packageInfo']['version'];
 
   public initialize(options: AlertsClientFactoryOpts) {
     if (this.isInitialized) {
@@ -62,6 +69,7 @@ export class AlertsClientFactory {
     this.actions = options.actions;
     this.features = options.features;
     this.eventLog = options.eventLog;
+    this.kibanaVersion = options.kibanaVersion;
   }
 
   public create(request: KibanaRequest, savedObjects: SavedObjectsServiceStart): AlertsClient {
@@ -80,12 +88,13 @@ export class AlertsClientFactory {
 
     return new AlertsClient({
       spaceId,
+      kibanaVersion: this.kibanaVersion,
       logger: this.logger,
       taskManager: this.taskManager,
       alertTypeRegistry: this.alertTypeRegistry,
       unsecuredSavedObjectsClient: savedObjects.getScopedClient(request, {
         excludedWrappers: ['security'],
-        includedHiddenTypes: ['alert'],
+        includedHiddenTypes: ['alert', 'api_key_pending_invalidation'],
       }),
       authorization,
       actionsAuthorization: actions.getActionsAuthorizationWithRequest(request),
@@ -118,22 +127,6 @@ export class AlertsClientFactory {
         return {
           apiKeysEnabled: true,
           result: createAPIKeyResult,
-        };
-      },
-      async invalidateAPIKey(params: InvalidateAPIKeyParams) {
-        if (!securityPluginSetup) {
-          return { apiKeysEnabled: false };
-        }
-        const invalidateAPIKeyResult = await securityPluginSetup.authc.invalidateAPIKeyAsInternalUser(
-          params
-        );
-        // Null when Elasticsearch security is disabled
-        if (!invalidateAPIKeyResult) {
-          return { apiKeysEnabled: false };
-        }
-        return {
-          apiKeysEnabled: true,
-          result: invalidateAPIKeyResult,
         };
       },
       async getActionsClient() {

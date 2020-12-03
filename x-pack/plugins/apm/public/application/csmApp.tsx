@@ -4,51 +4,49 @@
  * you may not use this file except in compliance with the Elastic License.
  */
 
+import euiDarkVars from '@elastic/eui/dist/eui_theme_dark.json';
+import euiLightVars from '@elastic/eui/dist/eui_theme_light.json';
+import { AppMountParameters, CoreStart } from 'kibana/public';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Route, Router } from 'react-router-dom';
-import styled, { ThemeProvider, DefaultTheme } from 'styled-components';
-import euiDarkVars from '@elastic/eui/dist/eui_theme_dark.json';
-import euiLightVars from '@elastic/eui/dist/eui_theme_light.json';
-import { CoreStart, AppMountParameters } from 'kibana/public';
-import { ApmPluginSetupDeps } from '../plugin';
-
+import styled, { DefaultTheme, ThemeProvider } from 'styled-components';
 import {
   KibanaContextProvider,
-  useUiSetting$,
   RedirectAppLinks,
+  useUiSetting$,
 } from '../../../../../src/plugins/kibana_react/public';
-import { px, units } from '../style/variables';
-import { UpdateBreadcrumbs } from '../components/app/Main/UpdateBreadcrumbs';
-import { ScrollToTopOnPathChange } from '../components/app/Main/ScrollToTopOnPathChange';
-import 'react-vis/dist/style.css';
-import { RumHome } from '../components/app/RumDashboard/RumHome';
-import { ConfigSchema } from '../index';
-import { BreadcrumbRoute } from '../components/app/Main/ProvideBreadcrumbs';
-import { RouteName } from '../components/app/Main/route_config/route_names';
+import { APMRouteDefinition } from '../application/routes';
 import { renderAsRedirectTo } from '../components/app/Main/route_config';
+import { ScrollToTopOnPathChange } from '../components/app/Main/ScrollToTopOnPathChange';
+import { RumHome, UX_LABEL } from '../components/app/RumDashboard/RumHome';
 import { ApmPluginContext } from '../context/ApmPluginContext';
 import { UrlParamsProvider } from '../context/UrlParamsContext';
-import { LoadingIndicatorProvider } from '../context/LoadingIndicatorContext';
+import { useBreadcrumbs } from '../hooks/use_breadcrumbs';
+import { ConfigSchema } from '../index';
+import { ApmPluginSetupDeps, ApmPluginStartDeps } from '../plugin';
 import { createCallApmApi } from '../services/rest/createCallApmApi';
+import { px, units } from '../style/variables';
+import { createStaticIndexPattern } from '../services/rest/index_pattern';
 
 const CsmMainContainer = styled.div`
   padding: ${px(units.plus)};
   height: 100%;
 `;
 
-export const rumRoutes: BreadcrumbRoute[] = [
+export const rumRoutes: APMRouteDefinition[] = [
   {
     exact: true,
     path: '/',
-    render: renderAsRedirectTo('/csm'),
-    breadcrumb: 'Client Side Monitoring',
-    name: RouteName.CSM,
+    render: renderAsRedirectTo('/ux'),
+    breadcrumb: UX_LABEL,
   },
 ];
 
 function CsmApp() {
   const [darkMode] = useUiSetting$<boolean>('theme:darkMode');
+
+  useBreadcrumbs(rumRoutes);
 
   return (
     <ThemeProvider
@@ -59,7 +57,6 @@ function CsmApp() {
       })}
     >
       <CsmMainContainer data-test-subj="csmMainContainer" role="main">
-        <UpdateBreadcrumbs routes={rumRoutes} />
         <Route component={ScrollToTopOnPathChange} />
         <RumHome />
       </CsmMainContainer>
@@ -68,19 +65,23 @@ function CsmApp() {
 }
 
 export function CsmAppRoot({
+  appMountParameters,
   core,
   deps,
-  history,
   config,
+  corePlugins: { embeddable },
 }: {
+  appMountParameters: AppMountParameters;
   core: CoreStart;
   deps: ApmPluginSetupDeps;
-  history: AppMountParameters['history'];
   config: ConfigSchema;
+  corePlugins: ApmPluginStartDeps;
 }) {
+  const { history } = appMountParameters;
   const i18nCore = core.i18n;
   const plugins = deps;
   const apmPluginContextValue = {
+    appMountParameters,
     config,
     core,
     plugins,
@@ -88,13 +89,11 @@ export function CsmAppRoot({
   return (
     <RedirectAppLinks application={core.application}>
       <ApmPluginContext.Provider value={apmPluginContextValue}>
-        <KibanaContextProvider services={{ ...core, ...plugins }}>
+        <KibanaContextProvider services={{ ...core, ...plugins, embeddable }}>
           <i18nCore.Context>
             <Router history={history}>
               <UrlParamsProvider>
-                <LoadingIndicatorProvider>
-                  <CsmApp />
-                </LoadingIndicatorProvider>
+                <CsmApp />
               </UrlParamsProvider>
             </Router>
           </i18nCore.Context>
@@ -111,13 +110,28 @@ export function CsmAppRoot({
 export const renderApp = (
   core: CoreStart,
   deps: ApmPluginSetupDeps,
-  { element, history }: AppMountParameters,
-  config: ConfigSchema
+  appMountParameters: AppMountParameters,
+  config: ConfigSchema,
+  corePlugins: ApmPluginStartDeps
 ) => {
+  const { element } = appMountParameters;
+
   createCallApmApi(core.http);
 
+  // Automatically creates static index pattern and stores as saved object
+  createStaticIndexPattern().catch((e) => {
+    // eslint-disable-next-line no-console
+    console.log('Error creating static index pattern', e);
+  });
+
   ReactDOM.render(
-    <CsmAppRoot core={core} deps={deps} history={history} config={config} />,
+    <CsmAppRoot
+      appMountParameters={appMountParameters}
+      core={core}
+      deps={deps}
+      config={config}
+      corePlugins={corePlugins}
+    />,
     element
   );
   return () => {

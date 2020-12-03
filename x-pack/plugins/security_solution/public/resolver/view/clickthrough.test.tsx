@@ -4,6 +4,7 @@
  * you may not use this file except in compliance with the Elastic License.
  */
 
+import { noAncestorsTwoChildenInIndexCalledAwesomeIndex } from '../data_access_layer/mocks/no_ancestors_two_children_in_index_called_awesome_index';
 import { noAncestorsTwoChildren } from '../data_access_layer/mocks/no_ancestors_two_children';
 import { Simulator } from '../test_utilities/simulator';
 // Extend jest with a custom matcher
@@ -19,6 +20,62 @@ let entityIDs: { origin: string; firstChild: string; secondChild: string };
 // the resolver component instance ID, used by the react code to distinguish piece of global state from those used by other resolver instances
 const resolverComponentInstanceID = 'resolverComponentInstanceID';
 
+describe("Resolver, when rendered with the `indices` prop set to `[]` and the `databaseDocumentID` prop set to `_id`, and when the document is found in an index called 'awesome_index'", () => {
+  beforeEach(async () => {
+    // create a mock data access layer
+    const {
+      metadata: dataAccessLayerMetadata,
+      dataAccessLayer,
+    } = noAncestorsTwoChildenInIndexCalledAwesomeIndex();
+
+    // save a reference to the entity IDs exposed by the mock data layer
+    entityIDs = dataAccessLayerMetadata.entityIDs;
+
+    // save a reference to the `_id` supported by the mock data layer
+    databaseDocumentID = dataAccessLayerMetadata.databaseDocumentID;
+
+    // create a resolver simulator, using the data access layer and an arbitrary component instance ID
+    simulator = new Simulator({
+      databaseDocumentID,
+      dataAccessLayer,
+      resolverComponentInstanceID,
+      indices: [],
+    });
+  });
+
+  it('should render no processes', async () => {
+    await expect(
+      simulator.map(() => ({
+        processes: simulator.processNodeElements().length,
+      }))
+    ).toYieldEqualTo({
+      processes: 0,
+    });
+  });
+
+  describe("when rerendered with the `indices` prop set to `['awesome_index'`]", () => {
+    beforeEach(async () => {
+      simulator.indices = ['awesome_index'];
+    });
+    // Combining assertions here for performance. Unfortunately, Enzyme + jsdom + React is slow.
+    it(`should have 3 nodes, with the entityID's 'origin', 'firstChild', and 'secondChild'. 'origin' should be selected when the simulator has the right indices`, async () => {
+      await expect(
+        simulator.map(() => ({
+          selectedOriginCount: simulator.selectedProcessNode(entityIDs.origin).length,
+          unselectedFirstChildCount: simulator.unselectedProcessNode(entityIDs.firstChild).length,
+          unselectedSecondChildCount: simulator.unselectedProcessNode(entityIDs.secondChild).length,
+          nodePrimaryButtonCount: simulator.testSubject('resolver:node:primary-button').length,
+        }))
+      ).toYieldEqualTo({
+        selectedOriginCount: 1,
+        unselectedFirstChildCount: 1,
+        unselectedSecondChildCount: 1,
+        nodePrimaryButtonCount: 3,
+      });
+    });
+  });
+});
+
 describe('Resolver, when analyzing a tree that has no ancestors and 2 children', () => {
   beforeEach(async () => {
     // create a mock data access layer
@@ -31,7 +88,12 @@ describe('Resolver, when analyzing a tree that has no ancestors and 2 children',
     databaseDocumentID = dataAccessLayerMetadata.databaseDocumentID;
 
     // create a resolver simulator, using the data access layer and an arbitrary component instance ID
-    simulator = new Simulator({ databaseDocumentID, dataAccessLayer, resolverComponentInstanceID });
+    simulator = new Simulator({
+      databaseDocumentID,
+      dataAccessLayer,
+      resolverComponentInstanceID,
+      indices: [],
+    });
   });
 
   describe('when it has loaded', () => {
@@ -75,34 +137,35 @@ describe('Resolver, when analyzing a tree that has no ancestors and 2 children',
 
     it('should render 3 elements with "treeitem" roles, each owned by an element with a "tree" role', async () => {
       await expect(
-        simulator.map(() => ({
-          nodesOwnedByTrees: simulator.testSubject('resolver:node').filterWhere((domNode) => {
-            /**
-             * This test verifies corectness w.r.t. the tree/treeitem roles
-             * From W3C: `Authors MUST ensure elements with role treeitem are contained in, or owned by, an element with the role group or tree.`
-             *
-             * https://www.w3.org/TR/wai-aria-1.1/#tree
-             * https://www.w3.org/TR/wai-aria-1.1/#treeitem
-             *
-             * w3c defines two ways for an element to be an "owned element"
-             *  1. Any DOM descendant
-             *  2. Any element specified as a child via aria-owns
-             *  (see: https://www.w3.org/TR/wai-aria-1.1/#dfn-owned-element)
-             *
-             * In the context of Resolver (as of this writing) nodes/treeitems are children of the tree,
-             * but they could be moved out of the tree, provided that the tree is given an `aria-owns`
-             * attribute referring to them (method 2 above).
-             */
-            return domNode.closest('[role="tree"]').length === 1;
-          }).length,
-        }))
-      ).toYieldEqualTo({ nodesOwnedByTrees: 3 });
+        simulator.map(() => {
+          /**
+           * This test verifies corectness w.r.t. the tree/treeitem roles
+           * From W3C: `Authors MUST ensure elements with role treeitem are contained in, or owned by, an element with the role group or tree.`
+           *
+           * https://www.w3.org/TR/wai-aria-1.1/#tree
+           * https://www.w3.org/TR/wai-aria-1.1/#treeitem
+           *
+           * w3c defines two ways for an element to be an "owned element"
+           *  1. Any DOM descendant
+           *  2. Any element specified as a child via aria-owns
+           *  (see: https://www.w3.org/TR/wai-aria-1.1/#dfn-owned-element)
+           *
+           * In the context of Resolver (as of this writing) nodes/treeitems are children of the tree,
+           * but they could be moved out of the tree, provided that the tree is given an `aria-owns`
+           * attribute referring to them (method 2 above).
+           */
+          const tree = simulator.domNodesWithRole('tree');
+          return {
+            // There should be only one tree.
+            treeCount: tree.length,
+            // The tree should have 3 nodes in it.
+            nodesOwnedByTrees: tree.find(Simulator.nodeElementSelector()).length,
+          };
+        })
+      ).toYieldEqualTo({ treeCount: 1, nodesOwnedByTrees: 3 });
     });
 
-    it(`should show links to the 3 nodes (with icons) in the node list.`, async () => {
-      await expect(
-        simulator.map(() => simulator.testSubject('resolver:node-list:node-link:title').length)
-      ).toYieldEqualTo(3);
+    it(`should show links to the 3 nodes in the node list.`, async () => {
       await expect(
         simulator.map(() => simulator.testSubject('resolver:node-list:node-link:title').length)
       ).toYieldEqualTo(3);
@@ -115,7 +178,7 @@ describe('Resolver, when analyzing a tree that has no ancestors and 2 children',
         );
         // Click the second child node's primary button
         if (button) {
-          button.simulate('click');
+          button.simulate('click', { button: 0 });
         }
       });
       it('should render the second child node as selected, and the origin as not selected, and the query string should indicate that the second child is selected', async () => {
@@ -132,7 +195,8 @@ describe('Resolver, when analyzing a tree that has no ancestors and 2 children',
         ).toYieldEqualTo({
           // Just the second child should be marked as selected in the query string
           search: urlSearch(resolverComponentInstanceID, {
-            selectedEntityID: entityIDs.secondChild,
+            panelParameters: { nodeID: entityIDs.secondChild },
+            panelView: 'nodeDetail',
           }),
           // The second child is rendered and has `[aria-selected]`
           selectedSecondChildNodeCount: 1,
@@ -144,7 +208,7 @@ describe('Resolver, when analyzing a tree that has no ancestors and 2 children',
   });
 });
 
-describe('Resolver, when analyzing a tree that has two related events for the origin', () => {
+describe('Resolver, when analyzing a tree that has 2 related registry and 1 related event of all other categories for the origin node', () => {
   beforeEach(async () => {
     // create a mock data access layer with related events
     const {
@@ -159,7 +223,12 @@ describe('Resolver, when analyzing a tree that has two related events for the or
     databaseDocumentID = dataAccessLayerMetadata.databaseDocumentID;
 
     // create a resolver simulator, using the data access layer and an arbitrary component instance ID
-    simulator = new Simulator({ databaseDocumentID, dataAccessLayer, resolverComponentInstanceID });
+    simulator = new Simulator({
+      databaseDocumentID,
+      dataAccessLayer,
+      resolverComponentInstanceID,
+      indices: [],
+    });
   });
 
   describe('when it has loaded', () => {
@@ -208,48 +277,26 @@ describe('Resolver, when analyzing a tree that has two related events for the or
       );
       expect(edgesThatTerminateUnderneathSecondChild).toHaveLength(1);
     });
-
-    it('should render a related events button', async () => {
+    it('should show exactly one option with the correct count', async () => {
       await expect(
-        simulator.map(() => ({
-          relatedEventButtons: simulator.processNodeSubmenuButton(entityIDs.origin).length,
-        }))
-      ).toYieldEqualTo({
-        relatedEventButtons: 1,
-      });
-    });
-    describe('when the related events button is clicked', () => {
-      beforeEach(async () => {
-        const button = await simulator.resolveWrapper(() =>
-          simulator.processNodeSubmenuButton(entityIDs.origin)
-        );
-        if (button) {
-          button.simulate('click');
-        }
-      });
-      it('should open the submenu and display exactly one option with the correct count', async () => {
-        await expect(
-          simulator.map(() =>
-            simulator.testSubject('resolver:map:node-submenu-item').map((node) => node.text())
-          )
-        ).toYieldEqualTo(['2 registry']);
-      });
-    });
-    describe('and when the related events button is clicked again', () => {
-      beforeEach(async () => {
-        const button = await simulator.resolveWrapper(() =>
-          simulator.processNodeSubmenuButton(entityIDs.origin)
-        );
-        if (button) {
-          button.simulate('click');
-          button.simulate('click'); // The first click opened the menu, this second click closes it
-        }
-      });
-      it('should close the submenu', async () => {
-        await expect(
-          simulator.map(() => simulator.testSubject('resolver:map:node-submenu-item').length)
-        ).toYieldEqualTo(0);
-      });
+        simulator.map(() =>
+          simulator.testSubject('resolver:map:node-submenu-item').map((node) => node.text())
+        )
+      ).toYieldEqualTo([
+        '1 authentication',
+        '1 database',
+        '1 driver',
+        '1 file',
+        '1 host',
+        '1 iam',
+        '1 intrusion_detection',
+        '1 malware',
+        '1 network',
+        '1 package',
+        '1 process',
+        '2 registry',
+        '1 web',
+      ]);
     });
   });
 });

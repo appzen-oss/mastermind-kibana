@@ -28,7 +28,7 @@ import {
 } from './flyout.test.mocks';
 
 import React from 'react';
-import { shallowWithI18nProvider } from 'test_utils/enzyme_helpers';
+import { shallowWithI18nProvider } from '@kbn/test/jest';
 import { coreMock } from '../../../../../../core/public/mocks';
 import { serviceRegistryMock } from '../../../services/service_registry.mock';
 import { Flyout, FlyoutProps, FlyoutState } from './flyout';
@@ -64,7 +64,10 @@ describe('Flyout', () => {
       done: jest.fn(),
       newIndexPatternUrl: '',
       indexPatterns: {
-        getFields: jest.fn().mockImplementation(() => [{ id: '1' }, { id: '2' }]),
+        getCache: jest.fn().mockImplementation(() => [
+          { id: '1', attributes: {} },
+          { id: '2', attributes: {} },
+        ]),
       } as any,
       overlays,
       http,
@@ -267,6 +270,10 @@ describe('Flyout', () => {
 
       expect(component.state('status')).toBe('success');
       expect(component.find('EuiFlyout ImportSummary')).toMatchSnapshot();
+      const cancelButton = await component.find(
+        'EuiButtonEmpty[data-test-subj="importSavedObjectsCancelBtn"]'
+      );
+      expect(cancelButton.prop('disabled')).toBe(true);
     });
   });
 
@@ -453,7 +460,9 @@ describe('Flyout', () => {
       // Ensure all promises resolve
       await new Promise((resolve) => process.nextTick(resolve));
 
-      expect(component.state('error')).toEqual('foobar');
+      expect(component.state('error')).toMatchInlineSnapshot(
+        `"The file could not be processed due to error: \\"foobar\\""`
+      );
       expect(component.find('EuiFlyoutBody EuiCallOut')).toMatchSnapshot();
     });
   });

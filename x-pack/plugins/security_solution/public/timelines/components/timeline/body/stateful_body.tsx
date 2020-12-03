@@ -4,7 +4,6 @@
  * you may not use this file except in compliance with the Elastic License.
  */
 
-import { noop } from 'lodash/fp';
 import memoizeOne from 'memoize-one';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
@@ -12,7 +11,7 @@ import deepEqual from 'fast-deep-equal';
 
 import { RowRendererId, TimelineId } from '../../../../../common/types/timeline';
 import { BrowserFields, DocValueFields } from '../../../../common/containers/source';
-import { TimelineItem } from '../../../../graphql/types';
+import { TimelineItem } from '../../../../../common/search_strategy/timeline';
 import { Note } from '../../../../common/lib/note';
 import { appSelectors, inputsModel, State } from '../../../../common/store';
 import { appActions } from '../../../../common/store/actions';
@@ -47,6 +46,7 @@ interface OwnProps {
   sort: Sort;
   toggleColumn: (column: ColumnHeaderOptions) => void;
   refetch: inputsModel.Refetch;
+  onRuleChange?: () => void;
 }
 
 type StatefulBodyComponentProps = OwnProps & PropsFromRedux;
@@ -62,7 +62,6 @@ const StatefulBodyComponent = React.memo<StatefulBodyComponentProps>(
     data,
     docValueFields,
     eventIdToNoteIds,
-    eventType,
     excludedRowRendererIds,
     id,
     isEventViewer = false,
@@ -75,12 +74,12 @@ const StatefulBodyComponent = React.memo<StatefulBodyComponentProps>(
     selectedEventIds,
     setSelected,
     clearSelected,
+    onRuleChange,
     show,
     showCheckboxes,
     graphEventId,
     refetch,
     sort,
-    timelineType,
     toggleColumn,
     unPinEvent,
     updateColumns,
@@ -198,7 +197,6 @@ const StatefulBodyComponent = React.memo<StatefulBodyComponentProps>(
         data={data}
         docValueFields={docValueFields}
         eventIdToNoteIds={eventIdToNoteIds}
-        eventType={eventType}
         getNotesByIds={getNotesByIds}
         graphEventId={graphEventId}
         isEventViewer={isEventViewer}
@@ -209,19 +207,18 @@ const StatefulBodyComponent = React.memo<StatefulBodyComponentProps>(
         onColumnSorted={onColumnSorted}
         onRowSelected={onRowSelected}
         onSelectAll={onSelectAll}
-        onFilterChange={noop} // TODO: this is the callback for column filters, which is out scope for this phase of delivery
         onPinEvent={onPinEvent}
         onUnPinEvent={onUnPinEvent}
         onUpdateColumns={onUpdateColumns}
         pinnedEventIds={pinnedEventIds}
         refetch={refetch}
+        onRuleChange={onRuleChange}
         rowRenderers={enabledRowRenderers}
         selectedEventIds={selectedEventIds}
         show={id === TimelineId.active ? show : true}
         showCheckboxes={showCheckboxes}
         sort={sort}
         timelineId={id}
-        timelineType={timelineType}
         toggleColumn={toggleColumn}
         updateNote={onUpdateNote}
       />
@@ -234,7 +231,6 @@ const StatefulBodyComponent = React.memo<StatefulBodyComponentProps>(
     deepEqual(prevProps.excludedRowRendererIds, nextProps.excludedRowRendererIds) &&
     deepEqual(prevProps.docValueFields, nextProps.docValueFields) &&
     prevProps.eventIdToNoteIds === nextProps.eventIdToNoteIds &&
-    prevProps.eventType === nextProps.eventType &&
     prevProps.graphEventId === nextProps.graphEventId &&
     deepEqual(prevProps.notesById, nextProps.notesById) &&
     prevProps.id === nextProps.id &&
@@ -245,8 +241,7 @@ const StatefulBodyComponent = React.memo<StatefulBodyComponentProps>(
     prevProps.show === nextProps.show &&
     prevProps.selectedEventIds === nextProps.selectedEventIds &&
     prevProps.showCheckboxes === nextProps.showCheckboxes &&
-    prevProps.sort === nextProps.sort &&
-    prevProps.timelineType === nextProps.timelineType
+    prevProps.sort === nextProps.sort
 );
 
 StatefulBodyComponent.displayName = 'StatefulBodyComponent';
@@ -264,7 +259,6 @@ const makeMapStateToProps = () => {
     const {
       columns,
       eventIdToNoteIds,
-      eventType,
       excludedRowRendererIds,
       graphEventId,
       isSelectAllChecked,
@@ -273,13 +267,11 @@ const makeMapStateToProps = () => {
       selectedEventIds,
       show,
       showCheckboxes,
-      timelineType,
     } = timeline;
 
     return {
       columnHeaders: memoizedColumnHeaders(columns, browserFields),
       eventIdToNoteIds,
-      eventType,
       excludedRowRendererIds,
       graphEventId,
       isSelectAllChecked,
@@ -290,7 +282,6 @@ const makeMapStateToProps = () => {
       selectedEventIds,
       show,
       showCheckboxes,
-      timelineType,
     };
   };
   return mapStateToProps;

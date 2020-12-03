@@ -20,6 +20,7 @@ import { copySavedObjectsToSpacesFactory } from './copy_to_spaces';
 
 jest.mock('../../../../../../src/core/server', () => {
   return {
+    ...(jest.requireActual('../../../../../../src/core/server') as Record<string, unknown>),
     exportSavedObjectsToStream: jest.fn(),
     importSavedObjectsFromStream: jest.fn(),
   };
@@ -282,7 +283,7 @@ describe('copySavedObjectsToSpaces', () => {
           new Readable({
             objectMode: true,
             read() {
-              this.emit('error', new Error('Something went wrong while reading this stream'));
+              this.destroy(new Error('Something went wrong while reading this stream'));
             },
           })
         );

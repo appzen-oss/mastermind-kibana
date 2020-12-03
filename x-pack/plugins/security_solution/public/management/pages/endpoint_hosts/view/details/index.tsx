@@ -14,6 +14,7 @@ import {
   EuiText,
   EuiSpacer,
   EuiEmptyPrompt,
+  EuiToolTip,
 } from '@elastic/eui';
 import { useHistory } from 'react-router-dom';
 import { FormattedMessage } from '@kbn/i18n/react';
@@ -32,6 +33,8 @@ import {
   policyResponseFailedOrWarningActionCount,
   policyResponseError,
   policyResponseLoading,
+  policyResponseTimestamp,
+  policyVersionInfo,
 } from '../../store/selectors';
 import { EndpointDetails } from './endpoint_details';
 import { PolicyResponse } from './policy_response';
@@ -41,6 +44,7 @@ import { useNavigateByRouterEventHandler } from '../../../../../common/hooks/end
 import { getEndpointListPath } from '../../../../common/routing';
 import { SecurityPageName } from '../../../../../app/types';
 import { useFormatUrl } from '../../../../../common/components/link_to';
+import { PreferenceFormattedDateFromPrimitive } from '../../../../../common/components/formatted_date';
 
 export const EndpointDetailsFlyout = memo(() => {
   const history = useHistory();
@@ -51,6 +55,7 @@ export const EndpointDetailsFlyout = memo(() => {
     ...queryParamsWithoutSelectedEndpoint
   } = queryParams;
   const details = useEndpointSelector(detailsData);
+  const policyInfo = useEndpointSelector(policyVersionInfo);
   const loading = useEndpointSelector(detailsLoading);
   const error = useEndpointSelector(detailsError);
   const show = useEndpointSelector(showView);
@@ -80,13 +85,20 @@ export const EndpointDetailsFlyout = memo(() => {
       size="s"
     >
       <EuiFlyoutHeader hasBorder>
-        <EuiTitle size="s">
-          {loading ? (
-            <EuiLoadingContent lines={1} />
-          ) : (
-            <h2 data-test-subj="endpointDetailsFlyoutTitle"> {details?.host?.hostname} </h2>
-          )}
-        </EuiTitle>
+        {loading ? (
+          <EuiLoadingContent lines={1} />
+        ) : (
+          <EuiToolTip content={details?.host?.hostname} anchorClassName="eui-textTruncate">
+            <EuiTitle size="s">
+              <h2
+                style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}
+                data-test-subj="endpointDetailsFlyoutTitle"
+              >
+                {details?.host?.hostname}
+              </h2>
+            </EuiTitle>
+          </EuiToolTip>
+        )}
       </EuiFlyoutHeader>
       {details === undefined ? (
         <>
@@ -99,7 +111,7 @@ export const EndpointDetailsFlyout = memo(() => {
           {show === 'details' && (
             <>
               <EuiFlyoutBody data-test-subj="endpointDetailsFlyoutBody">
-                <EndpointDetails details={details} />
+                <EndpointDetails details={details} policyInfo={policyInfo} />
               </EuiFlyoutBody>
             </>
           )}
@@ -122,22 +134,23 @@ const PolicyResponseFlyoutPanel = memo<{
   const loading = useEndpointSelector(policyResponseLoading);
   const error = useEndpointSelector(policyResponseError);
   const { formatUrl } = useFormatUrl(SecurityPageName.administration);
+  const responseTimestamp = useEndpointSelector(policyResponseTimestamp);
   const [detailsUri, detailsRoutePath] = useMemo(
     () => [
       formatUrl(
         getEndpointListPath({
           name: 'endpointList',
           ...queryParams,
-          selected_endpoint: hostMeta.host.id,
+          selected_endpoint: hostMeta.agent.id,
         })
       ),
       getEndpointListPath({
         name: 'endpointList',
         ...queryParams,
-        selected_endpoint: hostMeta.host.id,
+        selected_endpoint: hostMeta.agent.id,
       }),
     ],
-    [hostMeta.host.id, formatUrl, queryParams]
+    [hostMeta.agent.id, formatUrl, queryParams]
   );
   const backToDetailsClickHandler = useNavigateByRouterEventHandler(detailsRoutePath);
   const backButtonProp = useMemo((): FlyoutSubHeaderProps['backButton'] => {
@@ -161,16 +174,21 @@ const PolicyResponseFlyoutPanel = memo<{
           <h4>
             <FormattedMessage
               id="xpack.securitySolution.endpoint.policyResponse.title"
-              defaultMessage="Configuration Response"
+              defaultMessage="Policy Response"
             />
           </h4>
         </EuiText>
+        <EuiSpacer size="s" />
+        <EuiText size="xs" color="subdued" data-test-subj="endpointDetailsPolicyResponseTimestamp">
+          <PreferenceFormattedDateFromPrimitive value={responseTimestamp} />
+        </EuiText>
+        <EuiSpacer size="s" />
         {error && (
           <EuiEmptyPrompt
             title={
               <FormattedMessage
                 id="xpack.securitySolution.endpoint.details.noPolicyResponse"
-                defaultMessage="No configuration response available"
+                defaultMessage="No policy response available"
               />
             }
           />

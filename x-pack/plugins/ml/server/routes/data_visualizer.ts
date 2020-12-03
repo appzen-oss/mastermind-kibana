@@ -80,11 +80,11 @@ function getHistogramsForFields(
 /**
  * Routes for the index data visualizer.
  */
-export function dataVisualizerRoutes({ router, mlLicense }: RouteInitialization) {
+export function dataVisualizerRoutes({ router, routeGuard }: RouteInitialization) {
   /**
    * @apiGroup DataVisualizer
    *
-   * @api {post} /api/ml/data_visualizer/get_field_stats/:indexPatternTitle Get histograms for fields
+   * @api {post} /api/ml/data_visualizer/get_field_histograms/:indexPatternTitle Get histograms for fields
    * @apiName GetHistogramsForFields
    * @apiDescription Returns the histograms on a list fields in the specified index pattern.
    *
@@ -104,7 +104,7 @@ export function dataVisualizerRoutes({ router, mlLicense }: RouteInitialization)
         tags: ['access:ml:canAccessML'],
       },
     },
-    mlLicense.basicLicenseAPIGuard(async ({ client, request, response }) => {
+    routeGuard.basicLicenseAPIGuard(async ({ client, request, response }) => {
       try {
         const {
           params: { indexPatternTitle },
@@ -151,7 +151,7 @@ export function dataVisualizerRoutes({ router, mlLicense }: RouteInitialization)
         tags: ['access:ml:canAccessML'],
       },
     },
-    mlLicense.basicLicenseAPIGuard(async ({ client, request, response }) => {
+    routeGuard.basicLicenseAPIGuard(async ({ client, request, response }) => {
       try {
         const {
           params: { indexPatternTitle },
@@ -216,7 +216,7 @@ export function dataVisualizerRoutes({ router, mlLicense }: RouteInitialization)
         tags: ['access:ml:canAccessML'],
       },
     },
-    mlLicense.basicLicenseAPIGuard(async ({ client, request, response }) => {
+    routeGuard.basicLicenseAPIGuard(async ({ client, request, response }) => {
       try {
         const {
           params: { indexPatternTitle },

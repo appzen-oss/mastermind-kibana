@@ -8,13 +8,12 @@ import { EuiSelect } from '@elastic/eui';
 import { i18n } from '@kbn/i18n';
 import { History } from 'history';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import {
   ENVIRONMENT_ALL,
   ENVIRONMENT_NOT_DEFINED,
 } from '../../../../common/environment_filter_values';
 import { useEnvironments } from '../../../hooks/useEnvironments';
-import { useLocation } from '../../../hooks/useLocation';
 import { useUrlParams } from '../../../hooks/useUrlParams';
 import { fromQuery, toQuery } from '../Links/url_helpers';
 
@@ -63,20 +62,26 @@ function getOptions(environments: string[]) {
 export function EnvironmentFilter() {
   const history = useHistory();
   const location = useLocation();
+  const { serviceName } = useParams<{ serviceName?: string }>();
   const { uiFilters, urlParams } = useUrlParams();
 
   const { environment } = uiFilters;
-  const { serviceName, start, end } = urlParams;
+  const { start, end } = urlParams;
   const { environments, status = 'loading' } = useEnvironments({
     serviceName,
     start,
     end,
   });
 
+  // Set the min-width so we don't see as much collapsing of the select during
+  // the loading state. 200px is what is looks like if "production" is
+  // the contents.
+  const minWidth = 200;
+
   return (
     <EuiSelect
       prepend={i18n.translate('xpack.apm.filter.environment.label', {
-        defaultMessage: 'environment',
+        defaultMessage: 'Environment',
       })}
       options={getOptions(environments)}
       value={environment || ENVIRONMENT_ALL.value}
@@ -84,6 +89,7 @@ export function EnvironmentFilter() {
         updateEnvironmentUrl(history, location, event.target.value);
       }}
       isLoading={status === 'loading'}
+      style={{ minWidth }}
     />
   );
 }

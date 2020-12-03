@@ -6,10 +6,10 @@
 
 import {
   ResolverRelatedEvents,
+  SafeResolverEvent,
   ResolverTree,
   ResolverEntityIndex,
 } from '../../../../common/endpoint/types';
-import { mockEndpointEvent } from '../../mocks/endpoint_event';
 import { mockTreeWithNoAncestorsAnd2Children } from '../../mocks/resolver_tree';
 import { DataAccessLayer } from '../../types';
 
@@ -54,15 +54,32 @@ export function noAncestorsTwoChildren(): { dataAccessLayer: DataAccessLayer; me
       relatedEvents(entityID: string): Promise<ResolverRelatedEvents> {
         return Promise.resolve({
           entityID,
-          events: [
-            mockEndpointEvent({
-              entityID,
-              name: 'event',
-              timestamp: 0,
-            }),
-          ],
+          events: [],
           nextEvent: null,
         });
+      },
+
+      /**
+       * Return events that have `process.entity_id` that includes `entityID` and that have
+       * a `event.category` that includes `category`.
+       */
+      async eventsWithEntityIDAndCategory(
+        entityID: string,
+        category: string,
+        after?: string
+      ): Promise<{
+        events: SafeResolverEvent[];
+        nextEvent: string | null;
+      }> {
+        const events: SafeResolverEvent[] = [];
+        return {
+          events,
+          nextEvent: null,
+        };
+      },
+
+      async event(_eventID: string): Promise<SafeResolverEvent | null> {
+        return null;
       },
 
       /**
@@ -79,17 +96,21 @@ export function noAncestorsTwoChildren(): { dataAccessLayer: DataAccessLayer; me
       },
 
       /**
-       * Get an array of index patterns that contain events.
-       */
-      indexPatterns(): string[] {
-        return ['index pattern'];
-      },
-
-      /**
        * Get entities matching a document.
        */
       entities(): Promise<ResolverEntityIndex> {
-        return Promise.resolve([{ entity_id: metadata.entityIDs.origin }]);
+        return Promise.resolve([
+          {
+            name: 'endpoint',
+            schema: {
+              id: 'process.entity_id',
+              parent: 'process.parent.entity_id',
+              ancestry: 'process.Ext.ancestry',
+              name: 'process.name',
+            },
+            id: metadata.entityIDs.origin,
+          },
+        ]);
       },
     },
   };

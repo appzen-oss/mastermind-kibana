@@ -4,6 +4,7 @@
  * you may not use this file except in compliance with the Elastic License.
  */
 
+import expect from '@kbn/expect';
 import { FtrProviderContext } from '../ftr_provider_context';
 import { logWrapper } from './log_wrapper';
 
@@ -13,14 +14,8 @@ export function LensPageProvider({ getService, getPageObjects }: FtrProviderCont
   const retry = getService('retry');
   const find = getService('find');
   const comboBox = getService('comboBox');
-  const PageObjects = getPageObjects([
-    'header',
-    'common',
-    'visualize',
-    'dashboard',
-    'header',
-    'timePicker',
-  ]);
+  const browser = getService('browser');
+  const PageObjects = getPageObjects(['header', 'timePicker', 'common']);
 
   return logWrapper('lensPage', log, {
     /**
@@ -92,28 +87,152 @@ export function LensPageProvider({ getService, getPageObjects }: FtrProviderCont
      * @param layerIndex - the index of the layer
      */
     async configureDimension(
-      opts: { dimension: string; operation: string; field: string },
+      opts: {
+        dimension: string;
+        operation: string;
+        field?: string;
+        isPreviousIncompatible?: boolean;
+        keepOpen?: boolean;
+        palette?: string;
+      },
       layerIndex = 0
     ) {
       await retry.try(async () => {
         await testSubjects.click(`lns-layerPanel-${layerIndex} > ${opts.dimension}`);
         await testSubjects.exists(`lns-indexPatternDimension-${opts.operation}`);
       });
+      const operationSelector = opts.isPreviousIncompatible
+        ? `lns-indexPatternDimension-${opts.operation} incompatible`
+        : `lns-indexPatternDimension-${opts.operation}`;
+      await testSubjects.click(operationSelector);
 
-      await testSubjects.click(`lns-indexPatternDimension-${opts.operation}`);
+      if (opts.field) {
+        const target = await testSubjects.find('indexPattern-dimension-field');
+        await comboBox.openOptionsList(target);
+        await comboBox.setElement(target, opts.field);
+      }
 
-      const target = await testSubjects.find('indexPattern-dimension-field');
-      await comboBox.openOptionsList(target);
-      await comboBox.setElement(target, opts.field);
+      if (opts.palette) {
+        await testSubjects.click('lns-palettePicker');
+        await find.clickByCssSelector(`#${opts.palette}`);
+      }
+
+      if (!opts.keepOpen) {
+        this.closeDimensionEditor();
+      }
+    },
+
+    /**
+     * Drags field to workspace
+     *
+     * @param field  - the desired field for the dimension
+     * */
+    async dragFieldToWorkspace(field: string) {
+      await browser.html5DragAndDrop(
+        testSubjects.getCssSelector(`lnsFieldListPanelField-${field}`),
+        testSubjects.getCssSelector('lnsWorkspace')
+      );
+      await PageObjects.header.waitUntilLoadingHasFinished();
+    },
+
+    /**
+     * Drags field to dimension trigger
+     *
+     * @param field  - the desired field for the dimension
+     * @param dimension - the selector of the dimension being changed
+     * */
+    async dragFieldToDimensionTrigger(field: string, dimension: string) {
+      await browser.html5DragAndDrop(
+        testSubjects.getCssSelector(`lnsFieldListPanelField-${field}`),
+        testSubjects.getCssSelector(dimension)
+      );
+      await PageObjects.header.waitUntilLoadingHasFinished();
+    },
+
+    /**
+     * Drags field to dimension trigger
+     *
+     * @param from - the selector of the dimension being moved
+     * @param to - the selector of the dimension being dropped to
+     * */
+    async dragDimensionToDimension(from: string, to: string) {
+      await browser.html5DragAndDrop(
+        testSubjects.getCssSelector(from),
+        testSubjects.getCssSelector(to)
+      );
+      await PageObjects.header.waitUntilLoadingHasFinished();
+    },
+
+    /**
+     * Reorder elements within the group
+     *
+     * @param startIndex - the index of dragging element
+     * @param endIndex - the index of drop
+     * */
+    async reorderDimensions(dimension: string, startIndex: number, endIndex: number) {
+      const dragging = `[data-test-subj='${dimension}']:nth-of-type(${
+        startIndex + 1
+      }) .lnsDragDrop`;
+      const dropping = `[data-test-subj='${dimension}']:nth-of-type(${
+        endIndex + 1
+      }) [data-test-subj='lnsDragDrop-reorderableDrop'`;
+      await browser.html5DragAndDrop(dragging, dropping);
+      await PageObjects.header.waitUntilLoadingHasFinished();
+    },
+
+    async assertPalette(palette: string) {
+      await retry.try(async () => {
+        await testSubjects.click('lns-palettePicker');
+        const currentPalette = await (
+          await find.byCssSelector('[aria-selected=true]')
+        ).getAttribute('id');
+        expect(currentPalette).to.equal(palette);
+      });
+    },
+
+    /**
+     * Open the specified dimension.
+     *
+     * @param dimension - the selector of the dimension panel to open
+     * @param layerIndex - the index of the layer
+     */
+    async openDimensionEditor(dimension: string, layerIndex = 0) {
+      await retry.try(async () => {
+        await testSubjects.click(`lns-layerPanel-${layerIndex} > ${dimension}`);
+      });
+    },
+
+    // closes the dimension editor flyout
+    async closeDimensionEditor() {
+      await testSubjects.click('lns-indexPattern-dimensionContainerTitle');
     },
 
     /**
      * Removes the dimension matching a specific test subject
      */
     async removeDimension(dimensionTestSubj: string) {
-      await testSubjects.click(`${dimensionTestSubj} > indexPattern-dimensionPopover-remove`);
+      await testSubjects.click(`${dimensionTestSubj} > indexPattern-dimension-remove`);
     },
-
+    /**
+     * adds new filter to filters agg
+     */
+    async addFilterToAgg(queryString: string) {
+      await testSubjects.click('lns-newBucket-add');
+      const queryInput = await testSubjects.find('indexPattern-filters-queryStringInput');
+      await queryInput.type(queryString);
+      // Problem here is that after typing in the queryInput a dropdown will fetch the server
+      // with suggestions and show up. Depending on the cursor position and some other factors
+      // pressing Enter at this point may lead to auto-complete the queryInput with random stuff from the
+      // dropdown which was not intended originally.
+      // To close the Filter popover we need to move to the label input and then press Enter:
+      // solution is to press Tab 2 twice (first Tab will close the dropdown) instead of Enter to avoid
+      // race condition with the dropdown
+      await PageObjects.common.pressTabKey();
+      await PageObjects.common.pressTabKey();
+      // Now it is safe to press Enter as we're in the label input
+      await PageObjects.common.pressEnterKey();
+      await PageObjects.common.sleep(1000); // give time for debounced components to rerender
+    },
     /**
      * Save the current Lens visualization.
      */
@@ -147,8 +266,41 @@ export function LensPageProvider({ getService, getPageObjects }: FtrProviderCont
       await testSubjects.click('lnsApp_saveAndReturnButton');
     },
 
+    async editDimensionLabel(label: string) {
+      await testSubjects.setValue('indexPattern-label-edit', label);
+    },
+    async editDimensionFormat(format: string) {
+      const formatInput = await testSubjects.find('indexPattern-dimension-format');
+      await comboBox.openOptionsList(formatInput);
+      await comboBox.setElement(formatInput, format);
+    },
+    async editDimensionColor(color: string) {
+      const colorPickerInput = await testSubjects.find('colorPickerAnchor');
+      await colorPickerInput.type(color);
+      await PageObjects.common.sleep(1000); // give time for debounced components to rerender
+    },
+    async editMissingValues(option: string) {
+      await retry.try(async () => {
+        await testSubjects.click('lnsValuesButton');
+        await testSubjects.exists('lnsValuesButton');
+      });
+      await testSubjects.click('lnsMissingValuesSelect');
+      const optionSelector = await find.byCssSelector(`#${option}`);
+      await optionSelector.click();
+    },
+
     getTitle() {
-      return testSubjects.getVisibleText('lns_ChartTitle');
+      return testSubjects.getAttribute('lns_ChartTitle', 'innerText');
+    },
+
+    async getFiltersAggLabels() {
+      const labels = [];
+      const filters = await testSubjects.findAll('indexPattern-filters-existingFilterContainer');
+      for (let i = 0; i < filters.length; i++) {
+        labels.push(await filters[i].getVisibleText());
+      }
+      log.debug(`Found ${labels.length} filters on current page`);
+      return labels;
     },
 
     /**
@@ -217,6 +369,38 @@ export function LensPageProvider({ getService, getPageObjects }: FtrProviderCont
       await testSubjects.click('lnsLayerAddButton');
     },
 
+    /**
+     * Changes the index pattern in the data panel
+     */
+    async switchDataPanelIndexPattern(name: string) {
+      await testSubjects.click('indexPattern-switch-link');
+      await find.clickByCssSelector(`[title="${name}"]`);
+      await PageObjects.header.waitUntilLoadingHasFinished();
+    },
+
+    /**
+     * Changes the index pattern for the first layer
+     */
+    async switchFirstLayerIndexPattern(name: string) {
+      await testSubjects.click('lns_layerIndexPatternLabel');
+      await find.clickByCssSelector(`[title="${name}"]`);
+      await PageObjects.header.waitUntilLoadingHasFinished();
+    },
+
+    /**
+     * Returns the current index pattern of the data panel
+     */
+    async getDataPanelIndexPattern() {
+      return await (await testSubjects.find('indexPattern-switch-link')).getAttribute('title');
+    },
+
+    /**
+     * Returns the current index pattern of the first layer
+     */
+    async getFirstLayerIndexPattern() {
+      return await (await testSubjects.find('lns_layerIndexPatternLabel')).getAttribute('title');
+    },
+
     async linkedToOriginatingApp() {
       await PageObjects.header.waitUntilLoadingHasFinished();
       await testSubjects.existOrFail('lnsApp_saveAndReturnButton');
@@ -226,18 +410,36 @@ export function LensPageProvider({ getService, getPageObjects }: FtrProviderCont
       await PageObjects.header.waitUntilLoadingHasFinished();
       await testSubjects.missingOrFail('lnsApp_saveAndReturnButton');
     },
+
     /**
      * Gets label of dimension trigger in dimension panel
      *
      * @param dimension - the selector of the dimension
+     * @param index - the index of the dimension trigger in group
      */
     async getDimensionTriggerText(dimension: string, index = 0) {
-      const dimensionElements = await testSubjects.findAll(dimension);
-      const trigger = await testSubjects.findDescendant(
-        'lns-dimensionTrigger',
-        dimensionElements[index]
+      const dimensionTexts = await this.getDimensionTriggersTexts(dimension);
+      return dimensionTexts[index];
+    },
+    /**
+     * Gets label of all dimension triggers in dimension group
+     *
+     * @param dimension - the selector of the dimension
+     */
+    async getDimensionTriggersTexts(dimension: string) {
+      return retry.try(async () => {
+        const dimensionElements = await testSubjects.findAll(`${dimension} > lns-dimensionTrigger`);
+        const dimensionTexts = await Promise.all(
+          await dimensionElements.map(async (el) => await el.getVisibleText())
+        );
+        return dimensionTexts;
+      });
+    },
+
+    async isShowingNoResults() {
+      return (
+        (await (await testSubjects.find('lnsWorkspace')).getVisibleText()) === 'No results found'
       );
-      return await trigger.getVisibleText();
     },
 
     /**
@@ -280,6 +482,14 @@ export function LensPageProvider({ getService, getPageObjects }: FtrProviderCont
     async assertMetric(title: string, count: string) {
       await this.assertExactText('[data-test-subj="lns_metric_title"]', title);
       await this.assertExactText('[data-test-subj="lns_metric_value"]', count);
+    },
+
+    async assertMissingValues(option: string) {
+      await this.assertExactText('[data-test-subj="lnsMissingValuesSelect"]', option);
+    },
+    async assertColor(color: string) {
+      // TODO: target dimensionTrigger color element after merging https://github.com/elastic/kibana/pull/76871
+      await testSubjects.getAttribute('colorPickerAnchor', color);
     },
   });
 }

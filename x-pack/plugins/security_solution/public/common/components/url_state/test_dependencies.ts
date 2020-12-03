@@ -117,6 +117,7 @@ export const defaultProps: UrlStateContainerPropTypes = {
       id: '',
       isOpen: false,
     },
+    [CONSTANTS.sourcerer]: {},
   },
   setInitialStateFromUrl: dispatchSetInitialStateFromUrl(mockDispatch),
   updateTimeline: (jest.fn() as unknown) as DispatchUpdateTimeline,
@@ -277,15 +278,9 @@ export const getMockPropsObj = ({
 
 // silly that this needs to be an array and not an object
 // https://jestjs.io/docs/en/api#testeachtable-name-fn-timeout
-export const testCases: Array<[
-  LocationTypes,
-  string,
-  string,
-  string,
-  string | null,
-  string,
-  undefined | string
-]> = [
+export const testCases: Array<
+  [LocationTypes, string, string, string, string | null, string, undefined | string]
+> = [
   [
     /* page */ CONSTANTS.networkPage,
     /* namespaceLower */ 'network',

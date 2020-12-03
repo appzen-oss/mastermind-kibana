@@ -6,10 +6,12 @@
 
 import React from 'react';
 
-import { IUser } from '../../../types';
+import { User } from '../../../types';
 
-export const UserIcon: React.FC<IUser> = ({ name, pictureUrl, color, initials, email }) => (
-  <div className="avatar avatar--small" style={{ backgroundColor: color }}>
+import './user_icon.scss';
+
+export const UserIcon: React.FC<User> = ({ name, pictureUrl, color, initials, email }) => (
+  <div className="user-icon user-icon--small" style={{ backgroundColor: color }}>
     {pictureUrl ? (
       <img src={pictureUrl} className="avatar__image" alt={name || email} />
     ) : (

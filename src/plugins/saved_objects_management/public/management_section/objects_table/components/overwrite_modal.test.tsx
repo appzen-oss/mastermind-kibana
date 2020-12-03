@@ -18,7 +18,7 @@
  */
 
 import React from 'react';
-import { shallowWithI18nProvider, mountWithIntl } from 'test_utils/enzyme_helpers';
+import { shallowWithI18nProvider, mountWithIntl } from '@kbn/test/jest';
 import { OverwriteModalProps, OverwriteModal } from './overwrite_modal';
 import { findTestSubject } from '@elastic/eui/lib/test';
 
@@ -40,7 +40,7 @@ describe('OverwriteModal', () => {
       const wrapper = shallowWithI18nProvider(<OverwriteModal {...props} />);
 
       expect(wrapper.find('p').text()).toMatchInlineSnapshot(
-        `"\\"baz\\" conflicts with an existing object, are you sure you want to overwrite it?"`
+        `"\\"baz\\" conflicts with an existing object. Overwrite it?"`
       );
       expect(wrapper.find('EuiSuperSelect')).toHaveLength(0);
     });
@@ -82,7 +82,7 @@ describe('OverwriteModal', () => {
       const wrapper = shallowWithI18nProvider(<OverwriteModal {...props} />);
 
       expect(wrapper.find('p').text()).toMatchInlineSnapshot(
-        `"\\"baz\\" conflicts with multiple existing objects, do you want to overwrite one of them?"`
+        `"\\"baz\\" conflicts with multiple existing objects. Overwrite one?"`
       );
       expect(wrapper.find('EuiSuperSelect')).toHaveLength(1);
     });

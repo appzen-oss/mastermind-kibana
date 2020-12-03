@@ -4,25 +4,31 @@
  * you may not use this file except in compliance with the Elastic License.
  */
 
-import React, { ReactNode } from 'react';
-import { i18n } from '@kbn/i18n';
 import {
   EuiButtonEmpty,
   EuiPage,
-  EuiSideNav,
-  EuiPageSideBar,
   EuiPageBody,
+  EuiPageSideBar,
+  EuiSideNav,
 } from '@elastic/eui';
-import { HomeLink } from '../../shared/Links/apm/HomeLink';
-import { useLocation } from '../../../hooks/useLocation';
-import { getAPMHref } from '../../shared/Links/apm/APMLink';
+import { i18n } from '@kbn/i18n';
+import React, { ReactNode } from 'react';
+import { RouteComponentProps } from 'react-router-dom';
+import { HeaderMenuPortal } from '../../../../../observability/public';
+import { ActionMenu } from '../../../application/action_menu';
 import { useApmPluginContext } from '../../../hooks/useApmPluginContext';
+import { getAPMHref } from '../../shared/Links/apm/APMLink';
+import { HomeLink } from '../../shared/Links/apm/HomeLink';
 
-export function Settings(props: { children: ReactNode }) {
-  const { core } = useApmPluginContext();
+interface SettingsProps extends RouteComponentProps<{}> {
+  children: ReactNode;
+}
+
+export function Settings({ children, location }: SettingsProps) {
+  const { appMountParameters, core } = useApmPluginContext();
   const { basePath } = core.http;
   const canAccessML = !!core.application.capabilities.ml?.canAccessML;
-  const { search, pathname } = useLocation();
+  const { search, pathname } = location;
 
   function getSettingsHref(path: string) {
     return getAPMHref({ basePath, path: `/settings${path}`, search });
@@ -30,10 +36,15 @@ export function Settings(props: { children: ReactNode }) {
 
   return (
     <>
+      <HeaderMenuPortal
+        setHeaderActionMenu={appMountParameters.setHeaderActionMenu}
+      >
+        <ActionMenu />
+      </HeaderMenuPortal>
       <HomeLink>
         <EuiButtonEmpty size="s" color="primary" iconType="arrowLeft">
-          {i18n.translate('xpack.apm.settings.returnToOverviewLinkLabel', {
-            defaultMessage: 'Return to overview',
+          {i18n.translate('xpack.apm.settings.returnLinkLabel', {
+            defaultMessage: 'Return to inventory',
           })}
         </EuiButtonEmpty>
       </HomeLink>
@@ -94,7 +105,7 @@ export function Settings(props: { children: ReactNode }) {
             ]}
           />
         </EuiPageSideBar>
-        <EuiPageBody>{props.children}</EuiPageBody>
+        <EuiPageBody>{children}</EuiPageBody>
       </EuiPage>
     </>
   );

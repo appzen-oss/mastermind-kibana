@@ -22,7 +22,9 @@ import {
   SavedObjectsUpdateResponse,
   SavedObjectsAddToNamespacesOptions,
   SavedObjectsDeleteFromNamespacesOptions,
+  SavedObjectsRemoveReferencesToOptions,
   ISavedObjectTypeRegistry,
+  SavedObjectsRemoveReferencesToResponse,
 } from 'src/core/server';
 import { AuthenticatedUser } from '../../../security/common/model';
 import { EncryptedSavedObjectsService } from '../crypto';
@@ -66,15 +68,18 @@ export class EncryptedSavedObjectsClientWrapper implements SavedObjectsClientCon
     }
 
     // Saved objects with encrypted attributes should have IDs that are hard to guess especially
-    // since IDs are part of the AAD used during encryption, that's why we control them within this
-    // wrapper and don't allow consumers to specify their own IDs directly.
-    if (options.id) {
+    // since IDs are part of the AAD used during encryption. Types can opt-out of this restriction,
+    // when necessary, but it's much safer for this wrapper to generate them.
+    if (
+      options.id &&
+      !this.options.service.canSpecifyID(type, options.version, options.overwrite)
+    ) {
       throw new Error(
-        'Predefined IDs are not allowed for saved objects with encrypted attributes.'
+        `Predefined IDs are not allowed for encrypted saved objects of type "${type}".`
       );
     }
 
-    const id = generateID();
+    const id = options.id ?? generateID();
     const namespace = getDescriptorNamespace(
       this.options.baseTypeRegistry,
       type,
@@ -97,7 +102,7 @@ export class EncryptedSavedObjectsClientWrapper implements SavedObjectsClientCon
 
   public async bulkCreate<T>(
     objects: Array<SavedObjectsBulkCreateObject<T>>,
-    options?: SavedObjectsBaseOptions
+    options?: SavedObjectsBaseOptions & Pick<SavedObjectsCreateOptions, 'overwrite'>
   ) {
     // We encrypt attributes for every object in parallel and that can potentially exhaust libuv or
     // NodeJS thread pool. If it turns out to be a problem, we can consider switching to the
@@ -110,14 +115,17 @@ export class EncryptedSavedObjectsClientWrapper implements SavedObjectsClientCon
 
         // Saved objects with encrypted attributes should have IDs that are hard to guess especially
         // since IDs are part of the AAD used during encryption, that's why we control them within this
-        // wrapper and don't allow consumers to specify their own IDs directly.
-        if (object.id) {
+        // wrapper and don't allow consumers to specify their own IDs directly unless overwriting the original document.
+        if (
+          object.id &&
+          !this.options.service.canSpecifyID(object.type, object.version, options?.overwrite)
+        ) {
           throw new Error(
-            'Predefined IDs are not allowed for saved objects with encrypted attributes.'
+            `Predefined IDs are not allowed for encrypted saved objects of type "${object.type}".`
           );
         }
 
-        const id = generateID();
+        const id = object.id ?? generateID();
         const namespace = getDescriptorNamespace(
           this.options.baseTypeRegistry,
           object.type,
@@ -150,14 +158,14 @@ export class EncryptedSavedObjectsClientWrapper implements SavedObjectsClientCon
     // sequential processing.
     const encryptedObjects = await Promise.all(
       objects.map(async (object) => {
-        const { type, id, attributes } = object;
+        const { type, id, attributes, namespace: objectNamespace } = object;
         if (!this.options.service.isRegistered(type)) {
           return object;
         }
         const namespace = getDescriptorNamespace(
           this.options.baseTypeRegistry,
           type,
-          options?.namespace
+          objectNamespace ?? options?.namespace
         );
         return {
           ...object,
@@ -249,6 +257,14 @@ export class EncryptedSavedObjectsClientWrapper implements SavedObjectsClientCon
     options?: SavedObjectsDeleteFromNamespacesOptions
   ) {
     return await this.options.baseClient.deleteFromNamespaces(type, id, namespaces, options);
+  }
+
+  public async removeReferencesTo(
+    type: string,
+    id: string,
+    options: SavedObjectsRemoveReferencesToOptions = {}
+  ): Promise<SavedObjectsRemoveReferencesToResponse> {
+    return await this.options.baseClient.removeReferencesTo(type, id, options);
   }
 
   /**

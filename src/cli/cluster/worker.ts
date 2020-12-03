@@ -21,10 +21,10 @@ import _ from 'lodash';
 import cluster from 'cluster';
 import { EventEmitter } from 'events';
 
-import { BinderFor } from '../../legacy/utils/binder_for';
+import { BinderFor } from './binder_for';
 import { fromRoot } from '../../core/server/utils';
 
-const cliPath = fromRoot('src/cli');
+const cliPath = fromRoot('src/cli/dev');
 const baseArgs = _.difference(process.argv.slice(2), ['--no-watch']);
 const baseArgv = [process.execPath, cliPath].concat(baseArgs);
 
@@ -49,13 +49,13 @@ interface WorkerOptions {
   title?: string;
   watch?: boolean;
   baseArgv?: string[];
+  apmServiceName?: string;
 }
 
 export class Worker extends EventEmitter {
   private readonly clusterBinder: BinderFor;
   private readonly processBinder: BinderFor;
 
-  private type: string;
   private title: string;
   private log: any;
   private forkBinder: BinderFor | null = null;
@@ -75,7 +75,6 @@ export class Worker extends EventEmitter {
     super();
 
     this.log = opts.log;
-    this.type = opts.type;
     this.title = opts.title || opts.type;
     this.watch = opts.watch !== false;
     this.startCount = 0;
@@ -87,8 +86,9 @@ export class Worker extends EventEmitter {
 
     this.env = {
       NODE_OPTIONS: process.env.NODE_OPTIONS || '',
-      kbnWorkerType: this.type,
+      isDevCliChild: 'true',
       kbnWorkerArgv: JSON.stringify([...(opts.baseArgv || baseArgv), ...(opts.argv || [])]),
+      ELASTIC_APM_SERVICE_NAME: opts.apmServiceName || '',
     };
   }
 

@@ -20,6 +20,7 @@ import { resolveCopySavedObjectsToSpacesConflictsFactory } from './resolve_copy_
 
 jest.mock('../../../../../../src/core/server', () => {
   return {
+    ...(jest.requireActual('../../../../../../src/core/server') as Record<string, unknown>),
     exportSavedObjectsToStream: jest.fn(),
     resolveSavedObjectsImportErrors: jest.fn(),
   };
@@ -289,7 +290,7 @@ describe('resolveCopySavedObjectsToSpacesConflicts', () => {
           new Readable({
             objectMode: true,
             read() {
-              this.emit('error', new Error('Something went wrong while reading this stream'));
+              this.destroy(new Error('Something went wrong while reading this stream'));
             },
           })
         );

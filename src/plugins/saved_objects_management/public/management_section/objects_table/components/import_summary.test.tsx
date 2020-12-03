@@ -19,7 +19,7 @@
 
 import React from 'react';
 import { ShallowWrapper } from 'enzyme';
-import { shallowWithI18nProvider } from 'test_utils/enzyme_helpers';
+import { shallowWithI18nProvider } from '@kbn/test/jest';
 import { ImportSummary, ImportSummaryProps } from './import_summary';
 import { FailedImport } from '../../../lib';
 
@@ -70,7 +70,7 @@ describe('ImportSummary', () => {
     const wrapper = shallowWithI18nProvider(<ImportSummary {...props} />);
 
     expect(findHeader(wrapper).childAt(0).props()).toEqual(
-      expect.objectContaining({ values: { importCount: 1 } })
+      expect.not.objectContaining({ values: expect.anything() }) // no importCount for singular
     );
     const countCreated = findCountCreated(wrapper);
     expect(countCreated).toHaveLength(1);
@@ -90,7 +90,7 @@ describe('ImportSummary', () => {
     const wrapper = shallowWithI18nProvider(<ImportSummary {...props} />);
 
     expect(findHeader(wrapper).childAt(0).props()).toEqual(
-      expect.objectContaining({ values: { importCount: 1 } })
+      expect.not.objectContaining({ values: expect.anything() }) // no importCount for singular
     );
     expect(findCountCreated(wrapper)).toHaveLength(0);
     const countOverwritten = findCountOverwritten(wrapper);
@@ -110,7 +110,7 @@ describe('ImportSummary', () => {
     const wrapper = shallowWithI18nProvider(<ImportSummary {...props} />);
 
     expect(findHeader(wrapper).childAt(0).props()).toEqual(
-      expect.objectContaining({ values: { importCount: 1 } })
+      expect.not.objectContaining({ values: expect.anything() }) // no importCount for singular
     );
     expect(findCountCreated(wrapper)).toHaveLength(0);
     expect(findCountOverwritten(wrapper)).toHaveLength(0);

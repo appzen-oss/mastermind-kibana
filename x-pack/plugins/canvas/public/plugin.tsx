@@ -5,6 +5,7 @@
  */
 
 import { BehaviorSubject } from 'rxjs';
+import { ChartsPluginSetup, ChartsPluginStart } from 'src/plugins/charts/public';
 import {
   CoreSetup,
   CoreStart,
@@ -43,6 +44,7 @@ export interface CanvasSetupDeps {
   home?: HomePublicPluginSetup;
   usageCollection?: UsageCollectionSetup;
   bfetch: BfetchPublicSetup;
+  charts: ChartsPluginSetup;
 }
 
 export interface CanvasStartDeps {
@@ -50,6 +52,7 @@ export interface CanvasStartDeps {
   expressions: ExpressionsStart;
   inspector: InspectorStart;
   uiActions: UiActionsStart;
+  charts: ChartsPluginStart;
 }
 
 /**
@@ -88,7 +91,7 @@ export class CanvasPlugin
       category: DEFAULT_APP_CATEGORIES.kibana,
       id: 'canvas',
       title: 'Canvas',
-      euiIconType: 'canvasApp',
+      euiIconType: 'logoKibana',
       order: 3000,
       updater$: this.appUpdater,
       mount: async (params: AppMountParameters) => {

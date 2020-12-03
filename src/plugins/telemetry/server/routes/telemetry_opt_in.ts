@@ -17,7 +17,6 @@
  * under the License.
  */
 
-import moment from 'moment';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { schema } from '@kbn/config-schema';
@@ -26,6 +25,7 @@ import {
   StatsGetterConfig,
   TelemetryCollectionManagerPluginSetup,
 } from 'src/plugins/telemetry_collection_manager/server';
+import { SavedObjectsErrorHelpers } from '../../../../core/server';
 import { getTelemetryAllowChangingOptInStatus } from '../../common/telemetry_config';
 import { sendTelemetryOptInStatus } from './telemetry_opt_in_stats';
 
@@ -85,8 +85,6 @@ export function registerTelemetryOptInRoutes({
       }
 
       const statsGetterConfig: StatsGetterConfig = {
-        start: moment().subtract(20, 'minutes').toISOString(),
-        end: moment().toISOString(),
         unencrypted: false,
       };
 
@@ -99,7 +97,7 @@ export function registerTelemetryOptInRoutes({
         const optInStatusUrl = config.optInStatusUrl;
         sendTelemetryOptInStatus(
           telemetryCollectionManager,
-          { optInStatusUrl, newOptInStatus },
+          { optInStatusUrl, newOptInStatus, currentKibanaVersion },
           statsGetterConfig
         ).catch((err) => {
           // The server is likely behind a firewall and can't reach the remote service
@@ -109,7 +107,13 @@ export function registerTelemetryOptInRoutes({
         });
       }
 
-      await updateTelemetrySavedObject(context.core.savedObjects.client, attributes);
+      try {
+        await updateTelemetrySavedObject(context.core.savedObjects.client, attributes);
+      } catch (e) {
+        if (SavedObjectsErrorHelpers.isForbiddenError(e)) {
+          return res.forbidden();
+        }
+      }
       return res.ok({ body: optInStatus });
     }
   );

@@ -4,22 +4,26 @@
  * you may not use this file except in compliance with the Elastic License.
  */
 
-export interface IAccount {
+export interface Account {
   accountId: string;
-  onBoardingComplete: boolean;
-  role: IRole;
+  onboardingComplete: boolean;
+  role: {
+    id: string;
+    roleType: string;
+    ability: {
+      accessAllEngines: boolean;
+      manage: string[];
+      edit: string[];
+      view: string[];
+      credentialTypes: string[];
+      availableRoleTypes: string[];
+    };
+  };
 }
 
-export interface IRole {
-  id: string;
-  roleType: string;
-  ability: {
-    accessAllEngines: boolean;
-    destroy: string[];
-    manage: string[];
-    edit: string[];
-    view: string[];
-    credentialTypes: string[];
-    availableRoleTypes: string[];
+export interface ConfiguredLimits {
+  engine: {
+    maxDocumentByteSize: number;
+    maxEnginesPerMetaEngine: number;
   };
 }

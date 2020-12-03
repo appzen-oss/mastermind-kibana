@@ -18,10 +18,9 @@
  */
 
 import { resolve } from 'path';
-import { format as formatUrl } from 'url';
+import Fs from 'fs';
 
-import opn from 'opn';
-import { REPO_ROOT } from '@kbn/dev-utils';
+import { REPO_ROOT } from '@kbn/utils';
 import { FSWatcher } from 'chokidar';
 import * as Rx from 'rxjs';
 import { startWith, mapTo, filter, map, take, tap } from 'rxjs/operators';
@@ -34,15 +33,12 @@ import { BasePathProxyServer } from '../../core/server/http';
 import { Log } from './log';
 import { Worker } from './worker';
 
-process.env.kbnWorkerType = 'managr';
-
 export type SomeCliArgs = Pick<
   CliArgs,
   | 'quiet'
   | 'silent'
   | 'repl'
   | 'disableOptimizer'
-  | 'open'
   | 'watch'
   | 'oss'
   | 'runExamples'
@@ -51,7 +47,7 @@ export type SomeCliArgs = Pick<
 >;
 
 const firstAllTrue = (...sources: Array<Rx.Observable<boolean>>) =>
-  Rx.combineLatest(...sources).pipe(
+  Rx.combineLatest(sources).pipe(
     filter((values) => values.every((v) => v === true)),
     take(1),
     mapTo(undefined)
@@ -76,6 +72,19 @@ export class ClusterManager {
     this.log = new Log(opts.quiet, opts.silent);
     this.inReplMode = !!opts.repl;
     this.basePathProxy = basePathProxy;
+
+    if (!this.basePathProxy) {
+      this.log.warn(
+        '===================================================================================================='
+      );
+      this.log.warn(
+        'no-base-path',
+        'Running Kibana in dev mode with --no-base-path disables several useful features and is not recommended'
+      );
+      this.log.warn(
+        '===================================================================================================='
+      );
+    }
 
     // run @kbn/optimizer and write it's state to kbnOptimizerReady$
     if (opts.disableOptimizer) {
@@ -109,6 +118,7 @@ export class ClusterManager {
         type: 'server',
         log: this.log,
         argv: serverArgv,
+        apmServiceName: 'kibana',
       })),
     ];
 
@@ -143,17 +153,6 @@ export class ClusterManager {
         worker.fork!.send({ reloadLoggingConfig: true });
       });
     });
-
-    if (opts.open) {
-      this.setupOpen(
-        formatUrl({
-          protocol: config.get('server.ssl.enabled') ? 'https' : 'http',
-          hostname: config.get('server.host'),
-          port: config.get('server.port'),
-          pathname: this.basePathProxy ? this.basePathProxy.basePath : '',
-        })
-      );
-    }
 
     if (opts.watch) {
       const pluginPaths = config.get<string[]>('plugins.paths');
@@ -206,14 +205,6 @@ export class ClusterManager {
     }
   }
 
-  setupOpen(openUrl: string) {
-    firstAllTrue(this.serverReady$, this.kbnOptimizerReady$)
-      .toPromise()
-      .then(() => {
-        opn(openUrl);
-      });
-  }
-
   setupWatching(extraPaths: string[], pluginInternalDirsIgnore: string[]) {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const chokidar = require('chokidar');
@@ -224,18 +215,22 @@ export class ClusterManager {
       new Set(
         [
           fromRoot('src/core'),
-          fromRoot('src/legacy/core_plugins'),
           fromRoot('src/legacy/server'),
           fromRoot('src/legacy/ui'),
           fromRoot('src/legacy/utils'),
-          fromRoot('x-pack/legacy/common'),
-          fromRoot('x-pack/legacy/plugins'),
-          fromRoot('x-pack/legacy/server'),
           fromRoot('config'),
           ...extraPaths,
         ].map((path) => resolve(path))
       )
     );
+
+    for (const watchPath of watchPaths) {
+      if (!Fs.existsSync(fromRoot(watchPath))) {
+        throw new Error(
+          `A watch directory [${watchPath}] does not exist, which will cause chokidar to fail. Either make sure the directory exists or remove it as a watch source in the ClusterManger`
+        );
+      }
+    }
 
     const ignorePaths = [
       /[\\\/](\..*|node_modules|bower_components|target|public|__[a-z0-9_]+__|coverage)([\\\/]|$)/,
@@ -243,7 +238,6 @@ export class ClusterManager {
       /\.md$/,
       /debug\.log$/,
       ...pluginInternalDirsIgnore,
-      fromRoot('src/legacy/server/sass/__tmp__'),
       fromRoot('x-pack/plugins/reporting/chromium'),
       fromRoot('x-pack/plugins/security_solution/cypress'),
       fromRoot('x-pack/plugins/apm/e2e'),
@@ -254,7 +248,6 @@ export class ClusterManager {
       fromRoot('x-pack/plugins/lists/server/scripts'),
       fromRoot('x-pack/plugins/security_solution/scripts'),
       fromRoot('x-pack/plugins/security_solution/server/lib/detection_engine/scripts'),
-      'plugins/java_languageserver',
     ];
 
     this.watcher = chokidar.watch(watchPaths, {

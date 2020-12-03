@@ -6,7 +6,7 @@
 import moment from 'moment-timezone';
 import React, { ReactElement } from 'react';
 import { ReactWrapper } from 'enzyme';
-import { mountWithIntl } from 'test_utils/enzyme_helpers';
+import { mountWithIntl } from '@kbn/test/jest';
 import { findTestSubject, takeMountedSnapshot } from '@elastic/eui/lib/test';
 
 import {
@@ -17,10 +17,10 @@ import {
 import { HttpService } from '../../../../../src/core/public/http';
 import { usageCollectionPluginMock } from '../../../../../src/plugins/usage_collection/public/mocks';
 
+import { PolicyFromES } from '../../common/types';
 import { PolicyTable } from '../../public/application/sections/policy_table/policy_table';
 import { init as initHttp } from '../../public/application/services/http';
 import { init as initUiMetric } from '../../public/application/services/ui_metric';
-import { PolicyFromES } from '../../public/application/services/policies/types';
 
 initHttp(
   new HttpService().setup({

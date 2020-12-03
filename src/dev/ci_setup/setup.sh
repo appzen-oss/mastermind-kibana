@@ -14,13 +14,7 @@ echo " -- TEST_ES_SNAPSHOT_VERSION='$TEST_ES_SNAPSHOT_VERSION'"
 ### install dependencies
 ###
 echo " -- installing node.js dependencies"
-yarn kbn bootstrap --prefer-offline
-
-###
-### ensure Chromedriver install hook is triggered
-### when modules are up-to-date
-###
-node node_modules/chromedriver/install.js
+yarn kbn bootstrap
 
 ###
 ### Download es snapshots

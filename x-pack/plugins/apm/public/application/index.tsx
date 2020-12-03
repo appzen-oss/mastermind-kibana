@@ -22,27 +22,27 @@ import {
 import { AlertsContextProvider } from '../../../triggers_actions_ui/public';
 import { routes } from '../components/app/Main/route_config';
 import { ScrollToTopOnPathChange } from '../components/app/Main/ScrollToTopOnPathChange';
-import { UpdateBreadcrumbs } from '../components/app/Main/UpdateBreadcrumbs';
-import { ApmPluginContext } from '../context/ApmPluginContext';
+import {
+  ApmPluginContext,
+  ApmPluginContextValue,
+} from '../context/ApmPluginContext';
 import { LicenseProvider } from '../context/LicenseContext';
-import { LoadingIndicatorProvider } from '../context/LoadingIndicatorContext';
-import { LocationProvider } from '../context/LocationContext';
-import { MatchedRouteProvider } from '../context/MatchedRouteContext';
 import { UrlParamsProvider } from '../context/UrlParamsContext';
+import { useBreadcrumbs } from '../hooks/use_breadcrumbs';
 import { ApmPluginSetupDeps } from '../plugin';
 import { createCallApmApi } from '../services/rest/createCallApmApi';
 import { createStaticIndexPattern } from '../services/rest/index_pattern';
 import { setHelpExtension } from '../setHelpExtension';
-import { px, units } from '../style/variables';
 import { setReadonlyBadge } from '../updateBadge';
 
 const MainContainer = styled.div`
-  padding: ${px(units.plus)};
   height: 100%;
 `;
 
 function App() {
   const [darkMode] = useUiSetting$<boolean>('theme:darkMode');
+
+  useBreadcrumbs(routes);
 
   return (
     <ThemeProvider
@@ -53,7 +53,6 @@ function App() {
       })}
     >
       <MainContainer data-test-subj="apmMainContainer" role="main">
-        <UpdateBreadcrumbs routes={routes} />
         <Route component={ScrollToTopOnPathChange} />
         <Switch>
           {routes.map((route, i) => (
@@ -66,23 +65,14 @@ function App() {
 }
 
 export function ApmAppRoot({
-  core,
-  deps,
-  history,
-  config,
+  apmPluginContextValue,
 }: {
-  core: CoreStart;
-  deps: ApmPluginSetupDeps;
-  history: AppMountParameters['history'];
-  config: ConfigSchema;
+  apmPluginContextValue: ApmPluginContextValue;
 }) {
+  const { appMountParameters, core, plugins } = apmPluginContextValue;
+  const { history } = appMountParameters;
   const i18nCore = core.i18n;
-  const plugins = deps;
-  const apmPluginContextValue = {
-    config,
-    core,
-    plugins,
-  };
+
   return (
     <RedirectAppLinks application={core.application}>
       <ApmPluginContext.Provider value={apmPluginContextValue}>
@@ -92,24 +82,18 @@ export function ApmAppRoot({
             docLinks: core.docLinks,
             capabilities: core.application.capabilities,
             toastNotifications: core.notifications.toasts,
-            actionTypeRegistry: plugins.triggers_actions_ui.actionTypeRegistry,
-            alertTypeRegistry: plugins.triggers_actions_ui.alertTypeRegistry,
+            actionTypeRegistry: plugins.triggersActionsUi.actionTypeRegistry,
+            alertTypeRegistry: plugins.triggersActionsUi.alertTypeRegistry,
           }}
         >
           <KibanaContextProvider services={{ ...core, ...plugins }}>
             <i18nCore.Context>
               <Router history={history}>
-                <LocationProvider>
-                  <MatchedRouteProvider routes={routes}>
-                    <UrlParamsProvider>
-                      <LoadingIndicatorProvider>
-                        <LicenseProvider>
-                          <App />
-                        </LicenseProvider>
-                      </LoadingIndicatorProvider>
-                    </UrlParamsProvider>
-                  </MatchedRouteProvider>
-                </LocationProvider>
+                <UrlParamsProvider>
+                  <LicenseProvider>
+                    <App />
+                  </LicenseProvider>
+                </UrlParamsProvider>
               </Router>
             </i18nCore.Context>
           </KibanaContextProvider>
@@ -125,14 +109,21 @@ export function ApmAppRoot({
 
 export const renderApp = (
   core: CoreStart,
-  deps: ApmPluginSetupDeps,
-  { element, history }: AppMountParameters,
+  setupDeps: ApmPluginSetupDeps,
+  appMountParameters: AppMountParameters,
   config: ConfigSchema
 ) => {
+  const { element } = appMountParameters;
+  const apmPluginContextValue = {
+    appMountParameters,
+    config,
+    core,
+    plugins: setupDeps,
+  };
+
   // render APM feedback link in global help menu
   setHelpExtension(core);
   setReadonlyBadge(core);
-
   createCallApmApi(core.http);
 
   // Automatically creates static index pattern and stores as saved object
@@ -142,7 +133,7 @@ export const renderApp = (
   });
 
   ReactDOM.render(
-    <ApmAppRoot core={core} deps={deps} history={history} config={config} />,
+    <ApmAppRoot apmPluginContextValue={apmPluginContextValue} />,
     element
   );
   return () => {

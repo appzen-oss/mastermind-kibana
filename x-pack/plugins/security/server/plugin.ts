@@ -7,14 +7,17 @@
 import { combineLatest } from 'rxjs';
 import { first, map } from 'rxjs/operators';
 import { TypeOf } from '@kbn/config-schema';
+import { deepFreeze } from '@kbn/std';
+import { UsageCollectionSetup } from 'src/plugins/usage_collection/server';
+import { SecurityOssPluginSetup } from 'src/plugins/security_oss/server';
 import {
-  deepFreeze,
   CoreSetup,
   CoreStart,
   Logger,
   PluginInitializerContext,
 } from '../../../../src/core/server';
-import { SpacesPluginSetup } from '../../spaces/server';
+import { SpacesPluginSetup, SpacesPluginStart } from '../../spaces/server';
+import { PluginSetupContract as FeaturesSetupContract } from '../../features/server';
 import {
   PluginSetupContract as FeaturesPluginSetup,
   PluginStartContract as FeaturesPluginStart,
@@ -30,12 +33,20 @@ import { SecurityLicenseService, SecurityLicense } from '../common/licensing';
 import { setupSavedObjects } from './saved_objects';
 import { AuditService, SecurityAuditLogger, AuditServiceSetup } from './audit';
 import { SecurityFeatureUsageService, SecurityFeatureUsageServiceStart } from './feature_usage';
+import { securityFeatures } from './features';
 import { ElasticsearchService } from './elasticsearch';
 import { SessionManagementService } from './session_management';
+import { registerSecurityUsageCollector } from './usage_collector';
+import { setupSpacesClient } from './spaces';
 
 export type SpacesService = Pick<
   SpacesPluginSetup['spacesService'],
   'getSpaceId' | 'namespaceToSpaceId'
+>;
+
+export type FeaturesService = Pick<
+  FeaturesSetupContract,
+  'getKibanaFeatures' | 'getElasticsearchFeatures'
 >;
 
 /**
@@ -57,29 +68,23 @@ export interface SecurityPluginSetup {
     'actions' | 'checkPrivilegesDynamicallyWithRequest' | 'checkPrivilegesWithRequest' | 'mode'
   >;
   license: SecurityLicense;
-  audit: Pick<AuditServiceSetup, 'getLogger'>;
-
-  /**
-   * If Spaces plugin is available it's supposed to register its SpacesService with Security plugin
-   * so that Security can get space ID from the URL or namespace. We can't declare optional dependency
-   * to Spaces since it'd result into circular dependency between these two plugins and circular
-   * dependencies aren't supported by the Core. In the future we have to get rid of this implicit
-   * dependency.
-   * @param service Spaces service exposed by the Spaces plugin.
-   */
-  registerSpacesService: (service: SpacesService) => void;
+  audit: AuditServiceSetup;
 }
 
 export interface PluginSetupDependencies {
   features: FeaturesPluginSetup;
   licensing: LicensingPluginSetup;
   taskManager: TaskManagerSetupContract;
+  usageCollection?: UsageCollectionSetup;
+  securityOss?: SecurityOssPluginSetup;
+  spaces?: SpacesPluginSetup;
 }
 
 export interface PluginStartDependencies {
   features: FeaturesPluginStart;
   licensing: LicensingPluginStart;
   taskManager: TaskManagerStartContract;
+  spaces?: SpacesPluginStart;
 }
 
 /**
@@ -87,8 +92,8 @@ export interface PluginStartDependencies {
  */
 export class Plugin {
   private readonly logger: Logger;
-  private spacesService?: SpacesService | symbol = Symbol('not accessed');
   private securityLicenseService?: SecurityLicenseService;
+  private authc?: Authentication;
 
   private readonly featureUsageService = new SecurityFeatureUsageService();
   private featureUsageServiceStart?: SecurityFeatureUsageServiceStart;
@@ -108,22 +113,20 @@ export class Plugin {
     this.initializerContext.logger.get('session')
   );
 
-  private readonly getSpacesService = () => {
-    // Changing property value from Symbol to undefined denotes the fact that property was accessed.
-    if (!this.wasSpacesServiceAccessed()) {
-      this.spacesService = undefined;
-    }
-
-    return this.spacesService as SpacesService | undefined;
-  };
-
   constructor(private readonly initializerContext: PluginInitializerContext) {
     this.logger = this.initializerContext.logger.get();
   }
 
   public async setup(
     core: CoreSetup<PluginStartDependencies>,
-    { features, licensing, taskManager }: PluginSetupDependencies
+    {
+      features,
+      licensing,
+      taskManager,
+      usageCollection,
+      securityOss,
+      spaces,
+    }: PluginSetupDependencies
   ) {
     const [config, legacyConfig] = await combineLatest([
       this.initializerContext.config.create<TypeOf<typeof ConfigSchema>>().pipe(
@@ -143,6 +146,17 @@ export class Plugin {
       license$: licensing.license$,
     });
 
+    if (securityOss) {
+      license.features$.subscribe(({ allowRbac }) => {
+        const showInsecureClusterWarning = !allowRbac;
+        securityOss.showInsecureClusterWarning$.next(showInsecureClusterWarning);
+      });
+    }
+
+    securityFeatures.forEach((securityFeature) =>
+      features.registerElasticsearchFeature(securityFeature)
+    );
+
     const { clusterClient } = this.elasticsearchService.setup({
       elasticsearch: core.elasticsearch,
       license,
@@ -151,8 +165,17 @@ export class Plugin {
 
     this.featureUsageService.setup({ featureUsage: licensing.featureUsage });
 
-    const audit = this.auditService.setup({ license, config: config.audit });
-    const auditLogger = new SecurityAuditLogger(audit.getLogger());
+    registerSecurityUsageCollector({ usageCollection, config, license });
+
+    const audit = this.auditService.setup({
+      license,
+      config: config.audit,
+      logging: core.logging,
+      http: core.http,
+      getSpaceId: (request) => spaces?.spacesService.getSpaceId(request),
+      getCurrentUser: (request) => this.authc?.getCurrentUser(request),
+    });
+    const legacyAuditLogger = new SecurityAuditLogger(audit.getLogger());
 
     const { session } = this.sessionManagementService.setup({
       config,
@@ -162,8 +185,9 @@ export class Plugin {
       taskManager,
     });
 
-    const authc = await setupAuthentication({
-      auditLogger,
+    this.authc = await setupAuthentication({
+      legacyAuditLogger,
+      audit,
       getFeatureUsageService: this.getFeatureUsageService,
       http: core.http,
       clusterClient,
@@ -181,15 +205,24 @@ export class Plugin {
       loggers: this.initializerContext.logger,
       kibanaIndexName: legacyConfig.kibana.index,
       packageVersion: this.initializerContext.env.packageInfo.version,
-      getSpacesService: this.getSpacesService,
+      buildNumber: this.initializerContext.env.packageInfo.buildNum,
+      getSpacesService: () => spaces?.spacesService,
       features,
+      getCurrentUser: this.authc.getCurrentUser,
+    });
+
+    setupSpacesClient({
+      spaces,
+      audit,
+      authz,
     });
 
     setupSavedObjects({
-      auditLogger,
+      legacyAuditLogger,
+      audit,
       authz,
       savedObjects: core.savedObjects,
-      getSpacesService: this.getSpacesService,
+      getSpacesService: () => spaces?.spacesService,
     });
 
     defineRoutes({
@@ -199,30 +232,31 @@ export class Plugin {
       logger: this.initializerContext.logger.get('routes'),
       clusterClient,
       config,
-      authc,
+      authc: this.authc,
       authz,
       license,
       session,
       getFeatures: () =>
         core
           .getStartServices()
-          .then(([, { features: featuresStart }]) => featuresStart.getFeatures()),
+          .then(([, { features: featuresStart }]) => featuresStart.getKibanaFeatures()),
       getFeatureUsageService: this.getFeatureUsageService,
     });
 
     return deepFreeze<SecurityPluginSetup>({
       audit: {
+        asScoped: audit.asScoped,
         getLogger: audit.getLogger,
       },
 
       authc: {
-        isAuthenticated: authc.isAuthenticated,
-        getCurrentUser: authc.getCurrentUser,
-        areAPIKeysEnabled: authc.areAPIKeysEnabled,
-        createAPIKey: authc.createAPIKey,
-        invalidateAPIKey: authc.invalidateAPIKey,
-        grantAPIKeyAsInternalUser: authc.grantAPIKeyAsInternalUser,
-        invalidateAPIKeyAsInternalUser: authc.invalidateAPIKeyAsInternalUser,
+        isAuthenticated: this.authc.isAuthenticated,
+        getCurrentUser: this.authc.getCurrentUser,
+        areAPIKeysEnabled: this.authc.areAPIKeysEnabled,
+        createAPIKey: this.authc.createAPIKey,
+        invalidateAPIKey: this.authc.invalidateAPIKey,
+        grantAPIKeyAsInternalUser: this.authc.grantAPIKeyAsInternalUser,
+        invalidateAPIKeyAsInternalUser: this.authc.invalidateAPIKeyAsInternalUser,
       },
 
       authz: {
@@ -233,14 +267,6 @@ export class Plugin {
       },
 
       license,
-
-      registerSpacesService: (service) => {
-        if (this.wasSpacesServiceAccessed()) {
-          throw new Error('Spaces service has been accessed before registration.');
-        }
-
-        this.spacesService = service;
-      },
     });
   }
 
@@ -273,9 +299,5 @@ export class Plugin {
     this.authorizationService.stop();
     this.elasticsearchService.stop();
     this.sessionManagementService.stop();
-  }
-
-  private wasSpacesServiceAccessed() {
-    return typeof this.spacesService !== 'symbol';
   }
 }

@@ -4,22 +4,15 @@
  * you may not use this file except in compliance with the Elastic License.
  */
 
-import { ProcessorEvent } from '../../../common/processor_event';
 import {
   ERROR_GROUP_ID,
   SERVICE_NAME,
   TRANSACTION_SAMPLED,
 } from '../../../common/elasticsearch_fieldnames';
-import { PromiseReturnType } from '../../../typings/common';
+import { ProcessorEvent } from '../../../common/processor_event';
 import { rangeFilter } from '../../../common/utils/range_filter';
-import {
-  Setup,
-  SetupTimeRange,
-  SetupUIFilters,
-} from '../helpers/setup_request';
+import { Setup, SetupTimeRange } from '../helpers/setup_request';
 import { getTransaction } from '../transactions/get_transaction';
-
-export type ErrorGroupAPIResponse = PromiseReturnType<typeof getErrorGroup>;
 
 // TODO: rename from "getErrorGroup"  to "getErrorGroupSample" (since a single error is returned, not an errorGroup)
 export async function getErrorGroup({
@@ -29,9 +22,9 @@ export async function getErrorGroup({
 }: {
   serviceName: string;
   groupId: string;
-  setup: Setup & SetupTimeRange & SetupUIFilters;
+  setup: Setup & SetupTimeRange;
 }) {
-  const { start, end, uiFiltersES, apmEventClient } = setup;
+  const { start, end, esFilter, apmEventClient } = setup;
 
   const params = {
     apm: {
@@ -45,7 +38,7 @@ export async function getErrorGroup({
             { term: { [SERVICE_NAME]: serviceName } },
             { term: { [ERROR_GROUP_ID]: groupId } },
             { range: rangeFilter(start, end) },
-            ...uiFiltersES,
+            ...esFilter,
           ],
           should: [{ term: { [TRANSACTION_SAMPLED]: true } }],
         },

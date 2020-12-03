@@ -14,9 +14,10 @@ import { useActions, useValues } from 'kea';
 import { SetWorkplaceSearchChrome as SetPageChrome } from '../../../shared/kibana_chrome';
 import { SendWorkplaceSearchTelemetry as SendTelemetry } from '../../../shared/telemetry';
 
+import { AppLogic } from '../../app_logic';
 import { OverviewLogic } from './overview_logic';
 
-import { Loading } from '../../components/shared/loading';
+import { Loading } from '../../../shared/loading';
 import { ProductButton } from '../../components/shared/product_button';
 import { ViewContentHeader } from '../../components/shared/view_content_header';
 
@@ -44,21 +45,25 @@ const HEADER_DESCRIPTION = i18n.translate(
 );
 
 export const Overview: React.FC = () => {
-  const { initializeOverview } = useActions(OverviewLogic);
-
   const {
-    dataLoading,
-    hasUsers,
-    hasOrgSources,
-    isOldAccount,
     organization: { name: orgName, defaultOrgName },
-  } = useValues(OverviewLogic);
+  } = useValues(AppLogic);
+
+  const { initializeOverview } = useActions(OverviewLogic);
+  const { dataLoading, hasUsers, hasOrgSources, isOldAccount } = useValues(OverviewLogic);
 
   useEffect(() => {
     initializeOverview();
   }, [initializeOverview]);
 
-  if (dataLoading) return <Loading />;
+  // TODO: Remove div wrapper once the Overview page is using the full Layout
+  if (dataLoading) {
+    return (
+      <div style={{ height: '90vh' }}>
+        <Loading />
+      </div>
+    );
+  }
 
   const hideOnboarding = hasUsers && hasOrgSources && isOldAccount && orgName !== defaultOrgName;
 
@@ -67,7 +72,7 @@ export const Overview: React.FC = () => {
 
   return (
     <EuiPage restrictWidth>
-      <SetPageChrome isRoot />
+      <SetPageChrome />
       <SendTelemetry action="viewed" metric="overview" />
 
       <EuiPageBody>

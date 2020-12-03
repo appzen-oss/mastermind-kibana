@@ -3,8 +3,8 @@
  * or more contributor license agreements. Licensed under the Elastic License;
  * you may not use this file except in compliance with the Elastic License.
  */
-
-import { Feature } from '../../../features/server';
+import type { PublicMethodsOf } from '@kbn/utility-types';
+import { KibanaFeature } from '../../../features/server';
 import {
   HttpResources,
   IBasePath,
@@ -42,7 +42,7 @@ export interface RouteDefinitionParams {
   authz: AuthorizationServiceSetup;
   session: PublicMethodsOf<Session>;
   license: SecurityLicense;
-  getFeatures: () => Promise<Feature[]>;
+  getFeatures: () => Promise<KibanaFeature[]>;
   getFeatureUsageService: () => SecurityFeatureUsageServiceStart;
 }
 

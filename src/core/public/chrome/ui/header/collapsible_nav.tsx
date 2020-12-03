@@ -31,7 +31,7 @@ import {
 import { i18n } from '@kbn/i18n';
 import { groupBy, sortBy } from 'lodash';
 import React, { Fragment, useRef } from 'react';
-import { useObservable } from 'react-use';
+import useObservable from 'react-use/lib/useObservable';
 import * as Rx from 'rxjs';
 import { ChromeNavLink, ChromeRecentlyAccessedHistoryItem } from '../..';
 import { AppCategory } from '../../../../types';
@@ -79,7 +79,7 @@ interface Props {
   basePath: HttpStart['basePath'];
   id: string;
   isLocked: boolean;
-  isOpen: boolean;
+  isNavOpen: boolean;
   homeHref: string;
   navLinks$: Rx.Observable<ChromeNavLink[]>;
   recentlyAccessed$: Rx.Observable<ChromeRecentlyAccessedHistoryItem[]>;
@@ -87,6 +87,7 @@ interface Props {
   onIsLockedUpdate: OnIsLockedUpdate;
   closeNav: () => void;
   navigateToApp: InternalApplicationStart['navigateToApp'];
+  navigateToUrl: InternalApplicationStart['navigateToUrl'];
   customNavLink$: Rx.Observable<ChromeNavLink | undefined>;
 }
 
@@ -94,12 +95,13 @@ export function CollapsibleNav({
   basePath,
   id,
   isLocked,
-  isOpen,
+  isNavOpen,
   homeHref,
   storage = window.localStorage,
   onIsLockedUpdate,
   closeNav,
   navigateToApp,
+  navigateToUrl,
   ...observables
 }: Props) {
   const navLinks = useObservable(observables.navLinks$, []).filter((link) => !link.hidden);
@@ -110,7 +112,9 @@ export function CollapsibleNav({
   const groupedNavLinks = groupBy(navLinks, (link) => link?.category?.id);
   const { undefined: unknowns = [], ...allCategorizedLinks } = groupedNavLinks;
   const categoryDictionary = getAllCategories(allCategorizedLinks);
-  const orderedCategories = getOrderedCategories(allCategorizedLinks, categoryDictionary);
+  //TODO: remove this line
+  getOrderedCategories(allCategorizedLinks, categoryDictionary);
+  const orderedCategories:string[] = [];
   const readyForEUI = (link: ChromeNavLink, needsIcon: boolean = false) => {
     return createEuiListItem({
       link,
@@ -129,7 +133,7 @@ export function CollapsibleNav({
       aria-label={i18n.translate('core.ui.primaryNav.screenReaderLabel', {
         defaultMessage: 'Primary',
       })}
-      isOpen={isOpen}
+      isOpen={isNavOpen}
       isDocked={isLocked}
       onClose={closeNav}
     >
@@ -200,7 +204,7 @@ export function CollapsibleNav({
       </EuiFlexItem>
 
       {/* Recently viewed */}
-      {/* <EuiCollapsibleNavGroup
+      <EuiCollapsibleNavGroup
         key="recentlyViewed"
         background="light"
         title={i18n.translate('core.ui.recentlyViewed', { defaultMessage: 'Recently viewed' })}
@@ -217,17 +221,21 @@ export function CollapsibleNav({
             listItems={recentlyAccessed.map((link) => {
               // TODO #64541
               // Can remove icon from recent links completely
-              const { iconType, ...hydratedLink } = createRecentNavLink(link, navLinks, basePath);
+              const { iconType, onClick, ...hydratedLink } = createRecentNavLink(
+                link,
+                navLinks,
+                basePath,
+                navigateToUrl
+              );
 
               return {
                 ...hydratedLink,
                 'data-test-subj': 'collapsibleNavAppLink--recent',
                 onClick: (event) => {
-                  if (isModifiedOrPrevented(event)) {
-                    return;
+                  if (!isModifiedOrPrevented(event)) {
+                    closeNav();
+                    onClick(event);
                   }
-
-                  closeNav();
                 },
               };
             })}
@@ -246,13 +254,13 @@ export function CollapsibleNav({
             </p>
           </EuiText>
         )}
-      </EuiCollapsibleNavGroup> */}
+      </EuiCollapsibleNavGroup>
 
       <EuiHorizontalRule margin="none" />
 
       <EuiFlexItem className="eui-yScroll">
         {/* Kibana, Observability, Security, and Management sections */}
-        {/* {orderedCategories.map((categoryName) => {
+        {orderedCategories.map((categoryName) => {
           const category = categoryDictionary[categoryName]!;
 
           return (
@@ -278,7 +286,7 @@ export function CollapsibleNav({
               />
             </EuiCollapsibleNavGroup>
           );
-        })} */}
+        })}
 
         {/* Things with no category (largely for custom plugins) */}
         {unknowns.map((link, i) => (
