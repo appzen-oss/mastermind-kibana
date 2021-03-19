@@ -83,7 +83,7 @@ function onClick(
       event.stopPropagation();
     }
   } else {
-    navigateToApp('home');
+    navigateToApp('invoice');
     event.preventDefault();
   }
 }

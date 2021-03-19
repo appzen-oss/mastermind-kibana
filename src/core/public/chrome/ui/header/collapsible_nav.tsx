@@ -179,7 +179,7 @@ export function CollapsibleNav({
             aria-label={i18n.translate('core.ui.primaryNav.pinnedLinksAriaLabel', {
               defaultMessage: 'Pinned links',
             })}
-            listItems={[
+            /* listItems={[
               {
                 label: 'Home',
                 iconType: 'home',
@@ -194,7 +194,8 @@ export function CollapsibleNav({
                   navigateToApp('home');
                 },
               },
-            ]}
+            ]} */
+            listItems={[]}
             maxWidth="none"
             color="text"
             gutterSize="none"
@@ -212,6 +213,7 @@ export function CollapsibleNav({
         initialIsOpen={getIsCategoryOpen('recentlyViewed', storage)}
         onToggle={(isCategoryOpen) => setIsCategoryOpen('recentlyViewed', isCategoryOpen, storage)}
         data-test-subj="collapsibleNavGroup-recentlyViewed"
+        style={{"display": "none"}}
       >
         {recentlyAccessed.length > 0 ? (
           <EuiListGroup
