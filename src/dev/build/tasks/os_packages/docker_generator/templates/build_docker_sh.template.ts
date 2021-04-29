@@ -62,12 +62,12 @@ function generator({
     done
   }
 
-  retry_docker_pull ${baseOSImage}
+  echo ${baseOSImage};
 
   echo "Building: kibana${imageFlavor}${ubiImageFlavor}-docker"; \\
-  docker build -t ${imageTag}${imageFlavor}${ubiImageFlavor}:${version} -f Dockerfile . || exit 1;
+  echo "docker build -t ${imageTag}${imageFlavor}${ubiImageFlavor}:${version} -f Dockerfile . || exit 1;";
 
-  docker save ${imageTag}${imageFlavor}${ubiImageFlavor}:${version} | gzip -c > ${dockerTargetFilename}
+  echo "docker save ${imageTag}${imageFlavor}${ubiImageFlavor}:${version} | gzip -c > ${dockerTargetFilename}"
 
   exit 0
   `);
