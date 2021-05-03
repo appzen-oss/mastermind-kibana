@@ -112,7 +112,7 @@ export function HeaderLogo({ href, navigateToApp, loadingCount$, ...observables 
     >
       <LoadingIndicator loadingCount$={loadingCount$!} />
       <EuiText size="s" style={{ paddingLeft:"8px" }}>
-        <h3><EuiTextColor color="ghost">AppZen Mastermind</EuiTextColor></h3>
+        <h3><EuiTextColor color="ghost">AppZen Autonomous AP</EuiTextColor></h3>
       </EuiText>
       {/* <ElasticMark className="chrHeaderLogo__mark" aria-hidden={true} /> */}
     </a>

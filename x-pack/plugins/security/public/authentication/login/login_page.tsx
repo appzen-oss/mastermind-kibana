@@ -40,7 +40,7 @@ const infoMessageMap = new Map([
   [
     'LOGGED_OUT',
     i18n.translate('xpack.security.login.loggedOutDescription', {
-      defaultMessage: 'You have logged out of AppZen Mastermind.',
+      defaultMessage: 'You have logged out of AppZen Autonomous AP.',
     }),
   ],
 ]);
@@ -94,7 +94,7 @@ export class LoginPage extends Component<Props, State> {
               <h1>
                 <FormattedMessage
                   id="xpack.security.loginPage.welcomeTitle"
-                  defaultMessage="Welcome to AppZen Mastermind"
+                  defaultMessage="Welcome to AppZen Autonomous AP"
                 />
               </h1>
             </EuiTitle>
