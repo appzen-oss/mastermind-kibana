@@ -2,6 +2,32 @@
 # yarn lockfile v1
 
 
+"@az/common-configs@^8.20.4":
+  version "8.20.4"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/common-configs/-/common-configs-8.20.4.tgz#f4115afef279aa5110a4f5be8d33197dbb803df8"
+  integrity sha512-hEi5jyHgv/51yColpIj5l8AV/Qvo2J8Tfk/EkO5/gaIkjC8h7gHIV/7Ma8S/3+a4hPwY1Th48xWTB+In5TAFJQ==
+  dependencies:
+    "@az/utility" "^1.4.0"
+    lodash "^4.17.15"
+
+"@az/utility@^1.4.0":
+  version "1.9.1"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/utility/-/utility-1.9.1.tgz#de5c0813158f276b5e7c93b8018776f9aa141c22"
+  integrity sha512-eo16u9bHjYuVxJzauyMOFS9gb2IBrVhIIzFVc0dBq/VyP5NiZeAecIWZgeh/B67gYLD4Mxa3okIu4ZV2EC0rhw==
+  dependencies:
+    lodash "^4.17.15"
+    moment "^2.24.0"
+    moment-timezone "^0.5.27"
+
+"@az/utility@^2.4.2":
+  version "2.4.2"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/utility/-/utility-2.4.2.tgz#cd0fe41c59d145e9eba86c7d2ce420014e48821e"
+  integrity sha512-mxIvurJNPz056dTJDiKfxJzfIIHVdDipF2DCUFFBv/UCxaxEOjZEtfg/DzisUp/xuoxpP4HEfocZ4X4ex4PrKw==
+  dependencies:
+    lodash "^4.17.20"
+    moment "^2.24.0"
+    moment-timezone "^0.5.27"
+
 "@babel/cli@^7.10.5":
   version "7.11.6"
   resolved "https://registry.yarnpkg.com/@babel/cli/-/cli-7.11.6.tgz#1fcbe61c2a6900c3539c06ee58901141f3558482"
@@ -1433,9 +1459,10 @@
   resolved "https://registry.yarnpkg.com/@elastic/eslint-plugin-eui/-/eslint-plugin-eui-0.0.2.tgz#56b9ef03984a05cc213772ae3713ea8ef47b0314"
   integrity sha512-IoxURM5zraoQ7C8f+mJb9HYSENiZGgRVcG4tLQxE61yHNNRDXtGDWTZh8N1KIHcsqN1CEPETjuzBXkJYF/fDiQ==
 
-"@elastic/eui@30.2.0-10":
-  version "30.2.0-10"
-  resolved "https://nexus.mgmt.appzen.com/repository/npm-appzen/@elastic/eui/-/eui-30.2.0-10.tgz#9c1b5a13824e8c7d86dd8c400d7fe8d7d8f0c744"
+"@elastic/eui@30.2.0-11":
+  version "30.2.0-11"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@elastic/eui/-/eui-30.2.0-11.tgz#86b96537f7a3af60d8471730620bb0850c70dbee"
+  integrity sha512-8SPAgR6iNtPxxVZ8EjklElbPa5a4W/5Zk/2dJCf2OPbU8ebJhVuJt7Vf010qmwA8cReAk80cCjUYIEWSSp5hjA==
   dependencies:
     "@types/chroma-js" "^2.0.0"
     "@types/lodash" "^4.14.160"
