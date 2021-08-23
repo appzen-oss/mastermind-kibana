@@ -1459,10 +1459,10 @@
   resolved "https://registry.yarnpkg.com/@elastic/eslint-plugin-eui/-/eslint-plugin-eui-0.0.2.tgz#56b9ef03984a05cc213772ae3713ea8ef47b0314"
   integrity sha512-IoxURM5zraoQ7C8f+mJb9HYSENiZGgRVcG4tLQxE61yHNNRDXtGDWTZh8N1KIHcsqN1CEPETjuzBXkJYF/fDiQ==
 
-"@elastic/eui@30.2.0-26":
-  version "30.2.0-26"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@elastic/eui/-/eui-30.2.0-26.tgz#3ae590405a445133089f22279da0d1cd6483f262"
-  integrity sha512-SqIH8RfFa6ohHL/4TtIp3cYYLDU334zrlS0FLeXQKU/ZkBQr08D+8BqBv5PPTRroLJs+lKTk+yDYoASg/5tBew==
+"@elastic/eui@30.2.0-27":
+  version "30.2.0-27"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@elastic/eui/-/eui-30.2.0-27.tgz#821a2c38a2a7d74650122ae53d6b0560591041b4"
+  integrity sha512-vwI1NcDFGFuToMfRCNus2TR4zRjJRQZQRWoXdCMSQcteLZBhO2a3wO2jZUWOAUvITwMyFwd5TlHY7ZoGfnNxBA==
   dependencies:
     "@types/chroma-js" "^2.0.0"
     "@types/lodash" "^4.14.160"
