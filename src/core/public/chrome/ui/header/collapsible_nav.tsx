@@ -112,9 +112,11 @@ export function CollapsibleNav({
   const groupedNavLinks = groupBy(navLinks, (link) => link?.category?.id);
   const { undefined: unknowns = [], ...allCategorizedLinks } = groupedNavLinks;
   const categoryDictionary = getAllCategories(allCategorizedLinks);
-  //TODO: remove this line
+  // TODO: remove this line
   getOrderedCategories(allCategorizedLinks, categoryDictionary);
-  const orderedCategories:string[] = [];
+  const orderedCategories = getOrderedCategories(allCategorizedLinks, categoryDictionary).filter(
+    (item) => item === 'aaa'
+  );
   const readyForEUI = (link: ChromeNavLink, needsIcon: boolean = false) => {
     return createEuiListItem({
       link,
@@ -213,7 +215,7 @@ export function CollapsibleNav({
         initialIsOpen={getIsCategoryOpen('recentlyViewed', storage)}
         onToggle={(isCategoryOpen) => setIsCategoryOpen('recentlyViewed', isCategoryOpen, storage)}
         data-test-subj="collapsibleNavGroup-recentlyViewed"
-        style={{"display": "none"}}
+        style={{ display: 'none' }}
       >
         {recentlyAccessed.length > 0 ? (
           <EuiListGroup
