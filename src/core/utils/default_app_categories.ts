@@ -62,4 +62,12 @@ export const DEFAULT_APP_CATEGORIES: Record<string, AppCategory> = Object.freeze
     order: 5000,
     euiIconType: 'managementApp',
   },
+  aaa: {
+    id: 'aaa',
+    label: i18n.translate('mastermind.aaa.aaaNavList.label', {
+      defaultMessage: 'Autonomous AP',
+    }),
+    order: 1000,
+    euiIconType: 'logoObservability',
+  },
 });

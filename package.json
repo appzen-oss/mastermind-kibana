@@ -183,6 +183,7 @@
     "concat-stream": "1.6.2",
     "content-disposition": "0.5.3",
     "core-js": "^3.6.5",
+    "crypto-js": "^4.1.1",
     "custom-event-polyfill": "^0.3.0",
     "cypress-promise": "^1.1.0",
     "cytoscape": "^3.10.0",
