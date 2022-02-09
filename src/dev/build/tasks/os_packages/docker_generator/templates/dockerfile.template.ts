@@ -26,7 +26,7 @@ import { TemplateContext } from '../template_context';
 function generator(options: TemplateContext) {
   const template = readFileSync(resolve(__dirname, './Dockerfile'));
   return Mustache.render(template.toString(), {
-    packageManager: options.ubiImageFlavor ? 'microdnf' : 'yum',
+    packageManager: options.ubiImageFlavor ? 'microdnf' : 'apt-get',
     ...options,
   });
 }

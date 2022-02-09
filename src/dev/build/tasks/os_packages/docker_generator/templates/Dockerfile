@@ -11,10 +11,7 @@
 ################################################################################
 FROM {{{baseOSImage}}} AS builder
 
-{{#ubi}}
-RUN {{packageManager}} install -y findutils tar gzip
-{{/ubi}}
-
+RUN {{packageManager}} update && DEBIAN_FRONTEND=noninteractive {{packageManager}} install -y curl
 {{#usePublicArtifact}}
 RUN cd /opt && \
   curl --retry 8 -s -L -O https://artifacts.elastic.co/downloads/kibana/{{artifactTarball}} && \
@@ -43,16 +40,14 @@ RUN chmod -R g=u /usr/share/kibana
 FROM {{{baseOSImage}}}
 EXPOSE 5601
 
-{{#ubi}}
-  # https://github.com/rpm-software-management/microdnf/issues/50
-  RUN mkdir -p /run/user/$(id -u)
-{{/ubi}}
-
 RUN for iter in {1..10}; do \
-      {{packageManager}} update --setopt=tsflags=nodocs -y && \
-      {{packageManager}} install --setopt=tsflags=nodocs -y \
-        fontconfig freetype shadow-utils libnss3.so {{#ubi}}findutils{{/ubi}} && \
-      {{packageManager}} clean all && exit_code=0 && break || exit_code=$? && echo "{{packageManager}} error: retry $iter in 10s" && \
+      export DEBIAN_FRONTEND=noninteractive && \
+      {{packageManager}} update  && \
+      {{packageManager}} upgrade -y  && \
+      {{packageManager}} install -y --no-install-recommends \
+      fontconfig fonts-liberation libnss3 libfontconfig1 ca-certificates curl && \
+      {{packageManager}} clean && \
+      rm -rf /var/lib/apt/lists/* && exit_code=0 && break || exit_code=$? && echo "{{packageManager}} error: retry $iter in 10s" && \
       sleep 10; \
     done; \
     (exit $exit_code)
@@ -120,19 +115,6 @@ LABEL org.label-schema.build-date="{{dockerBuildDate}}" \
   org.opencontainers.image.url="https://www.elastic.co/products/kibana" \
   org.opencontainers.image.vendor="Elastic" \
   org.opencontainers.image.version="{{version}}"
-
-{{#ubi}}
-LABEL name="Kibana" \
-  maintainer="infra@elastic.co" \
-  vendor="Elastic" \
-  version="{{version}}" \
-  release="1" \
-  summary="Kibana" \
-  description="Your window into the Elastic Stack."
-
-RUN mkdir /licenses && \
-    cp LICENSE.txt /licenses/LICENSE
-{{/ubi}}
 
 USER kibana
 
