@@ -130,7 +130,7 @@ export class FatalErrorsScreen extends React.Component<Props, State> {
                 </EuiButtonEmpty>,
               ]}
             />
-            {this.state.errors.map((error, i) => (
+            {/* {this.state.errors.map((error, i) => (
               <EuiCallOut key={i} title={error.message} color="danger" iconType="alert">
                 <EuiCodeBlock language="bash" className="eui-textBreakAll">
                   {`Version: ${this.props.kibanaVersion}` +
@@ -140,7 +140,7 @@ export class FatalErrorsScreen extends React.Component<Props, State> {
                     (error.stack ? error.stack : '')}
                 </EuiCodeBlock>
               </EuiCallOut>
-            ))}
+            ))} */}
           </EuiPageContent>
         </EuiPageBody>
       </EuiPage>
