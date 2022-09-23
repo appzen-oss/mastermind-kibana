@@ -16,5 +16,4 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-declare module '@az/common-configs';
-declare module '@az/common-configs/src/apiEndPointHostNames';
+declare module '@az/app-switcher';
