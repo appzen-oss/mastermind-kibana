@@ -67,7 +67,7 @@ export const CollapsibleNavGroup = ({
       buttonContent={
         <CollapsibleNavGroupTitle
           navDepth={navDepth}
-          iconType={navOption.icon || ''}
+          iconType={navOption.icon || undefined}
           title={navOption.title}
           isActive={isActive}
         />

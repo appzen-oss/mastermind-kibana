@@ -169,7 +169,7 @@ export function Header({
 
   const switchToAdmin = async () => {
     try {
-      const res = await switchToAdminAPI();
+      await switchToAdminAPI();
       navigateToUrl(navigationRedirectURLMapping(window.location.hostname, '/console/index.html'));
     } catch (e) {}
   };
@@ -181,10 +181,7 @@ export function Header({
         (userAccount) => userAccount.customerId === selectedAccountOptionValue
       );
       if (selectedUserAccount) {
-        const res = await switchToUserAPI(
-          selectedUserAccount.azUserId,
-          selectedUserAccount.customerId
-        );
+        await switchToUserAPI(selectedUserAccount.azUserId, selectedUserAccount.customerId);
         navigateToUrl(
           navigationRedirectURLMapping(window.location.hostname, '/console/index.html')
         );

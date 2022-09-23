@@ -16,7 +16,5 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-
-import { Header } from './app_switcher';
-
-export { Header };
+declare module '@az/common-configs';
+declare module '@az/common-configs/src/apiEndPointHostNames';

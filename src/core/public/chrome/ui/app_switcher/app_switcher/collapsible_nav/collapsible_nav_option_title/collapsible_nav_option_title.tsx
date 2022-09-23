@@ -1,10 +1,10 @@
 import { EuiFlexItem, EuiText } from '@elastic/eui';
 import React from 'react';
 import styled from 'styled-components';
-import { useNavIcon } from '../use_navIcon';
+import { IconType, useNavIcon } from '../use_navIcon';
 
 interface Props {
-  iconType: string | undefined;
+  iconType: IconType | undefined;
   title: string;
   navDepth: number;
   isActive: boolean;

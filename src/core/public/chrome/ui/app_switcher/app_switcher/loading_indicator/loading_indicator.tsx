@@ -1,4 +1,4 @@
-import { EuiLoadingSpinner, EuiProgress, EuiIcon } from '@elastic/eui';
+import { EuiLoadingSpinner, EuiProgress } from '@elastic/eui';
 import React from 'react';
 import classNames from 'classnames';
 

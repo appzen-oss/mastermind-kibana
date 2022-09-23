@@ -18,10 +18,11 @@
  */
 
 import { EuiBreadcrumb, IconType } from '@elastic/eui';
+import { IconType as AZIconType } from '../../app_switcher/collapsible_nav/use_navIcon';
 export interface NavigationObject {
   id: string;
   title: string;
-  icon?: string;
+  icon?: AZIconType;
   isOpen?: boolean;
   isExpandable?: boolean;
   url?: string;
@@ -92,7 +93,7 @@ export interface ChromeBreadcrumbsAppendExtension {
 export interface NavigationObject {
   id: string;
   title: string;
-  icon?: string;
+  icon?: AZIconType;
   isOpen?: boolean;
   isExpandable?: boolean;
   url?: string;
