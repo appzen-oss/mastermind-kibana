@@ -248,7 +248,6 @@ export function getWebpackConfig(bundle: Bundle, bundleRefs: BundleRefs, worker:
     mode: 'production',
 
     plugins: [
-      new webpack.ContextReplacementPlugin(/@az/),
       new webpack.DefinePlugin({
         'process.env': {
           IS_KIBANA_DISTRIBUTABLE: `"true"`,

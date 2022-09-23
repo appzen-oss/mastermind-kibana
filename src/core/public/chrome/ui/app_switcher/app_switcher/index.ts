@@ -16,4 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-declare module '@az/app-switcher';
+
+import { Header } from './header/header';
+
+export { Header };

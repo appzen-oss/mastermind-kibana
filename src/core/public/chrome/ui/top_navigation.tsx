@@ -19,7 +19,6 @@
 import React from 'react';
 import useObservable from 'react-use/lib/useObservable';
 import { Observable } from 'rxjs';
-import { Header } from '@az/app-switcher';
 import { InternalApplicationStart } from '../../application';
 import { HttpStart } from '../../http';
 import {
@@ -31,6 +30,7 @@ import {
 import { ChromeNavControl } from '../nav_controls';
 import { ChromeNavLink } from '../nav_links';
 import { ChromeRecentlyAccessedHistoryItem } from '../recently_accessed';
+import { Header } from './app_switcher';
 import { OnIsLockedUpdate } from './header';
 
 export interface Props {
