@@ -91,6 +91,7 @@ export const TopNavigation = ({
     });
   const logoutAPI = () => http.get(`/api/mastermind_security/logout`);
   const customerConfigAPI = () => http.get(`/api/mastermind_security/customer_config`);
+  const appConfigAPI = () => http.get('/api/mastermind_security/app_config');
 
   return (
     <Header
@@ -98,6 +99,7 @@ export const TopNavigation = ({
       switchToAdminAPI={switchToAdminAPI}
       switchToUserAPI={switchToUserAPI}
       logOutAPI={logoutAPI}
+      appConfigAPI={appConfigAPI}
       customerConfigAPI={customerConfigAPI}
       navigateToUrl={application.navigateToUrl}
       navigateToApp={application.navigateToApp}
