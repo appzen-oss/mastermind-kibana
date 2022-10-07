@@ -2,12 +2,12 @@
 # yarn lockfile v1
 
 
-"@az/app-switcher@1.0.10":
-  version "1.0.10"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/app-switcher/-/app-switcher-1.0.10.tgz#dfa6a37e618e6eeb9f8037ae854972d62fd188c7"
-  integrity sha512-JP1DxOeMKgPPO31w4X6NvtgMLWFognVYm7G25uQabMm5GF9k5cMfd6vTtMmikBp2lkBp6/ToLIMYeo4YrcunKw==
+"@az/app-switcher@1.0.11":
+  version "1.0.11"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/app-switcher/-/app-switcher-1.0.11.tgz#5f442b7c79472124e14cc50017f9bcd51a1144fb"
+  integrity sha512-0n6ImP1vl8Mx+lsRwEaEUEA5EGkSUfwpQ1RhbzWjzIqLXa+s79dWV/O0apb9PVAcMZClnWav4ehnKcx1JwFvXQ==
   dependencies:
-    "@az/common-configs" "^8.31.11"
+    "@az/common-configs" "^8.31.12"
     "@az/utility" "^2.5.4"
     copyfiles "^2.4.1"
     react-use "^13.27.0"
@@ -15,10 +15,10 @@
     tslib "^2.4.0"
     utility-types "^3.10.0"
 
-"@az/common-configs@^8.31.11":
-  version "8.31.11"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/common-configs/-/common-configs-8.31.11.tgz#b681ad9c9d71bc6207fd17c091c8f26f4702c12a"
-  integrity sha512-BYwthlQ6a6G/c+lbTK9IIqtSGkem2Cb636uRc9CTR7VWP19ghJ3yEZmWTXN3ppsuKOymbK9x2BiKiJePC+zqPA==
+"@az/common-configs@^8.31.12":
+  version "8.31.12"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/common-configs/-/common-configs-8.31.12.tgz#01b18d385351374d3a9fcf4dc260c7a1ec4725d9"
+  integrity sha512-q8NF6R1ZocEX3m6L9tWXE3TTFuIguQ3+x9j7fV07ZZNuygWHU/1WIuVTweIU6NAjLec9jzzbCk+j6wTqrFgEeg==
   dependencies:
     "@az/utility" "^1.4.0"
     lodash "^4.17.15"
