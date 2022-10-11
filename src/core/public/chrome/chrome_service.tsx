@@ -37,8 +37,9 @@ import { ChromeDocTitle, DocTitleService } from './doc_title';
 import { ChromeNavControls, NavControlsService } from './nav_controls';
 import { ChromeNavLinks, NavLinksService, ChromeNavLink } from './nav_links';
 import { ChromeRecentlyAccessed, RecentlyAccessedService } from './recently_accessed';
-import { Header } from './ui';
+// import { Header } from './ui';
 import { ChromeHelpExtensionMenuLink } from './ui/header/header_help_menu';
+import { TopNavigation } from './ui/top_navigation';
 export { ChromeNavControls, ChromeRecentlyAccessed, ChromeDocTitle };
 
 const IS_LOCKED_KEY = 'core.chrome.isLocked';
@@ -227,12 +228,13 @@ export class ChromeService {
       docTitle,
 
       getHeaderComponent: () => (
-        <Header
+        <TopNavigation
           loadingCount$={http.getLoadingCount$()}
           application={application}
           appTitle$={appTitle$.pipe(takeUntil(this.stop$))}
           badge$={badge$.pipe(takeUntil(this.stop$))}
           basePath={http.basePath}
+          http={http}
           breadcrumbs$={breadcrumbs$.pipe(takeUntil(this.stop$))}
           breadcrumbsAppendExtension$={breadcrumbsAppendExtension$.pipe(takeUntil(this.stop$))}
           customNavLink$={customNavLink$.pipe(takeUntil(this.stop$))}
@@ -251,6 +253,32 @@ export class ChromeService {
           onIsLockedUpdate={setIsNavDrawerLocked}
           isLocked$={getIsNavDrawerLocked$}
         />
+        // <Header
+        //   switchToAdminAPI={switchToAdminAPI}
+        //   switchToUserAPI={switchToUserAPI}
+        //   loadingCount$={http.getLoadingCount$()}
+        //   application={application}
+        //   appTitle$={appTitle$.pipe(takeUntil(this.stop$))}
+        //   badge$={badge$.pipe(takeUntil(this.stop$))}
+        //   basePath={http.basePath}
+        //   breadcrumbs$={breadcrumbs$.pipe(takeUntil(this.stop$))}
+        //   breadcrumbsAppendExtension$={breadcrumbsAppendExtension$.pipe(takeUntil(this.stop$))}
+        //   customNavLink$={customNavLink$.pipe(takeUntil(this.stop$))}
+        //   kibanaDocLink={docLinks.links.kibana}
+        //   forceAppSwitcherNavigation$={navLinks.getForceAppSwitcherNavigation$()}
+        //   helpExtension$={helpExtension$.pipe(takeUntil(this.stop$))}
+        //   helpSupportUrl$={helpSupportUrl$.pipe(takeUntil(this.stop$))}
+        //   homeHref={http.basePath.prepend('/app/home')}
+        //   isVisible$={this.isVisible$}
+        //   kibanaVersion={injectedMetadata.getKibanaVersion()}
+        //   navLinks$={navLinks.getNavLinks$()}
+        //   recentlyAccessed$={recentlyAccessed.get$()}
+        //   navControlsLeft$={navControls.getLeft$()}
+        //   navControlsCenter$={navControls.getCenter$()}
+        //   navControlsRight$={navControls.getRight$()}
+        //   onIsLockedUpdate={setIsNavDrawerLocked}
+        //   isLocked$={getIsNavDrawerLocked$}
+        // />
       ),
 
       setAppTitle: (appTitle: string) => appTitle$.next(appTitle),
