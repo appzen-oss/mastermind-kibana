@@ -1506,8 +1506,7 @@
     uuid "^3.3.2"
 
 "@elastic/datemath@link:packages/elastic-datemath":
-  version "0.0.0"
-  uid ""
+  version "5.0.3"
 
 "@elastic/elasticsearch@7.10.0-rc.1":
   version "7.10.0-rc.1"
@@ -1530,8 +1529,7 @@
     semver "7.3.2"
 
 "@elastic/eslint-config-kibana@link:packages/elastic-eslint-config-kibana":
-  version "0.0.0"
-  uid ""
+  version "0.15.0"
 
 "@elastic/eslint-plugin-eui@0.0.2":
   version "0.0.2"
@@ -1650,7 +1648,6 @@
 
 "@elastic/safer-lodash-set@link:packages/elastic-safer-lodash-set":
   version "0.0.0"
-  uid ""
 
 "@elastic/ui-ace@0.2.3":
   version "0.2.3"
@@ -2740,132 +2737,149 @@
     regenerator-runtime "^0.13.3"
 
 "@kbn/ace@link:packages/kbn-ace":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
 
 "@kbn/analytics@link:packages/kbn-analytics":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
 
 "@kbn/apm-config-loader@link:packages/kbn-apm-config-loader":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
+  dependencies:
+    "@elastic/safer-lodash-set" "link:packages/elastic-safer-lodash-set"
+    "@kbn/utils" "link:packages/kbn-utils"
 
 "@kbn/babel-code-parser@link:packages/kbn-babel-code-parser":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
+  dependencies:
+    "@kbn/babel-preset" "link:packages/kbn-babel-preset"
 
 "@kbn/babel-preset@link:packages/kbn-babel-preset":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
 
 "@kbn/config-schema@link:packages/kbn-config-schema":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
 
 "@kbn/config@link:packages/kbn-config":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
+  dependencies:
+    "@elastic/safer-lodash-set" "link:packages/elastic-safer-lodash-set"
+    "@kbn/config-schema" "link:packages/kbn-config-schema"
+    "@kbn/logging" "link:packages/kbn-logging"
+    "@kbn/std" "link:packages/kbn-std"
 
 "@kbn/dev-utils@link:packages/kbn-dev-utils":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
+  dependencies:
+    "@kbn/utils" "link:packages/kbn-utils"
 
 "@kbn/es-archiver@link:packages/kbn-es-archiver":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
+  dependencies:
+    "@kbn/dev-utils" "link:packages/kbn-dev-utils"
+    "@kbn/test" "link:packages/kbn-test"
+    "@kbn/utils" "link:packages/kbn-utils"
 
 "@kbn/es@link:packages/kbn-es":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
+  dependencies:
+    "@kbn/dev-utils" "link:packages/kbn-dev-utils"
 
 "@kbn/eslint-import-resolver-kibana@link:packages/kbn-eslint-import-resolver-kibana":
-  version "0.0.0"
-  uid ""
+  version "2.0.0"
 
 "@kbn/eslint-plugin-eslint@link:packages/kbn-eslint-plugin-eslint":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
 
 "@kbn/expect@link:packages/kbn-expect":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
 
 "@kbn/i18n@link:packages/kbn-i18n":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
 
 "@kbn/interpreter@link:packages/kbn-interpreter":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
+  dependencies:
+    "@kbn/i18n" "link:packages/kbn-i18n"
 
 "@kbn/legacy-logging@link:packages/kbn-legacy-logging":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
+  dependencies:
+    "@kbn/utils" "link:packages/kbn-utils"
 
 "@kbn/logging@link:packages/kbn-logging":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
+  dependencies:
+    "@kbn/std" "link:packages/kbn-std"
 
 "@kbn/monaco@link:packages/kbn-monaco":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
 
 "@kbn/optimizer@link:packages/kbn-optimizer":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
+  dependencies:
+    "@kbn/babel-preset" "link:packages/kbn-babel-preset"
+    "@kbn/config" "link:packages/kbn-config"
+    "@kbn/dev-utils" "link:packages/kbn-dev-utils"
+    "@kbn/std" "link:packages/kbn-std"
+    "@kbn/ui-shared-deps" "link:packages/kbn-ui-shared-deps"
 
 "@kbn/plugin-generator@link:packages/kbn-plugin-generator":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
+  dependencies:
+    "@kbn/dev-utils" "link:packages/kbn-dev-utils"
 
 "@kbn/plugin-helpers@link:packages/kbn-plugin-helpers":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
+  dependencies:
+    "@kbn/dev-utils" "link:packages/kbn-dev-utils"
+    "@kbn/optimizer" "link:packages/kbn-optimizer"
 
 "@kbn/pm@link:packages/kbn-pm":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
+  dependencies:
+    "@kbn/utils" "link:packages/kbn-utils"
 
 "@kbn/release-notes@link:packages/kbn-release-notes":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
+  dependencies:
+    "@kbn/dev-utils" "link:packages/kbn-dev-utils"
+    "@kbn/utils" "link:packages/kbn-utils"
 
 "@kbn/std@link:packages/kbn-std":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
 
 "@kbn/storybook@link:packages/kbn-storybook":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
 
 "@kbn/telemetry-tools@link:packages/kbn-telemetry-tools":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
 
 "@kbn/test-subj-selector@link:packages/kbn-test-subj-selector":
-  version "0.0.0"
-  uid ""
+  version "0.2.1"
 
 "@kbn/test@link:packages/kbn-test":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
+  dependencies:
+    "@kbn/es" "link:packages/kbn-es"
+    "@kbn/i18n" "link:packages/kbn-i18n"
+    "@kbn/optimizer" "link:packages/kbn-optimizer"
 
 "@kbn/ui-framework@link:packages/kbn-ui-framework":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
 
 "@kbn/ui-shared-deps@link:packages/kbn-ui-shared-deps":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
+  dependencies:
+    "@kbn/i18n" "link:packages/kbn-i18n"
+    "@kbn/monaco" "link:packages/kbn-monaco"
 
 "@kbn/utility-types@link:packages/kbn-utility-types":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
 
 "@kbn/utils@link:packages/kbn-utils":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
+  dependencies:
+    "@kbn/config-schema" "link:packages/kbn-config-schema"
 
 "@mapbox/extent@0.4.0":
   version "0.4.0"
@@ -20816,10 +20830,10 @@ moment-duration-format@^2.3.2:
   resolved "https://registry.yarnpkg.com/moment-duration-format/-/moment-duration-format-2.3.2.tgz#5fa2b19b941b8d277122ff3f87a12895ec0d6212"
   integrity sha512-cBMXjSW+fjOb4tyaVHuaVE/A5TqkukDWiOfxxAjY+PEqmmBQlLwn+8OzwPiG3brouXKY5Un4pBjAeB6UToXHaQ==
 
-moment-timezone@^0.5.27:
-  version "0.5.27"
-  resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.5.27.tgz#73adec8139b6fe30452e78f210f27b1f346b8877"
-  integrity sha512-EIKQs7h5sAsjhPCqN6ggx6cEbs94GK050254TIJySD1bzoM5JTYDwAU1IoVOeTOL6Gm27kYJ51/uuvq1kIlrbw==
+moment-timezone@^0.5.27, moment-timezone@^0.5.35:
+  version "0.5.35"
+  resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.5.35.tgz#6fa2631bdbe8ff04f6b8753f7199516be6dc9839"
+  integrity sha512-cY/pBOEXepQvlgli06ttCTKcIf8cD1nmNwOKQQAdHBqYApQSpAqotBMX0RJZNgMp6i0PlZuf1mFtnlyEkwyvFw==
   dependencies:
     moment ">= 2.9.0"
 
