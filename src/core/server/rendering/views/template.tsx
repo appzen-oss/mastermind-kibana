@@ -126,7 +126,7 @@ export const Template: FunctionComponent<Props> = ({
                   'Elastic did not load properly. Check the server output for more information.',
               })}
             >
-              {i18n('core.ui.welcomeMessage', { defaultMessage: 'Loading AppZen Autonomous AP' })}
+              {i18n('core.ui.welcomeMessage', { defaultMessage: 'Please wait while loading...' })}
             </div>
             <div className="kbnProgress" />
           </div>
