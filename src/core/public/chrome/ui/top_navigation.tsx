@@ -19,7 +19,7 @@
 import React from 'react';
 import useObservable from 'react-use/lib/useObservable';
 import { Observable } from 'rxjs';
-import { Header } from '@az/app-switcher';
+import { Layout } from '@az/app-switcher';
 import { InternalApplicationStart } from '../../application';
 import { HttpStart } from '../../http';
 import {
@@ -92,9 +92,10 @@ export const TopNavigation = ({
   const logoutAPI = () => http.get(`/api/mastermind_security/logout`);
   const customerConfigAPI = () => http.get(`/api/mastermind_security/customer_config`);
   const appConfigAPI = () => http.get('/api/mastermind_security/app_config');
+  const productsAPI = () => http.get('/api/mastermind_security/products');
 
   return (
-    <Header
+    <Layout
       userDetailsAPI={userDetailsAPI}
       switchToAdminAPI={switchToAdminAPI}
       switchToUserAPI={switchToUserAPI}
@@ -111,6 +112,7 @@ export const TopNavigation = ({
       navLinks={navLinks}
       forceAppSwitcherNavigation={forceNavigation}
       loadingCount={loadingCount}
+      productsAPI={productsAPI}
     />
   );
 };
