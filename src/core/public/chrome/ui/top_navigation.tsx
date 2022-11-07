@@ -93,6 +93,7 @@ export const TopNavigation = ({
   const customerConfigAPI = () => http.get(`/api/mastermind_security/customer_config`);
   const appConfigAPI = () => http.get('/api/mastermind_security/app_config');
   const productsAPI = () => http.get('/api/mastermind_security/products');
+  const notificationsAPI = () => http.get('/api/mastermind_approver/notifications');
 
   return (
     <Layout
@@ -113,6 +114,7 @@ export const TopNavigation = ({
       forceAppSwitcherNavigation={forceNavigation}
       loadingCount={loadingCount}
       productsAPI={productsAPI}
+      notificationsAPI={notificationsAPI}
     />
   );
 };
