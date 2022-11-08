@@ -739,7 +739,7 @@
     "listr": "^0.14.1",
     "lmdb-store": "^0.8.15",
     "load-grunt-config": "^3.0.1",
-    "loader-utils": "^1.2.3",
+    "loader-utils": "^1.4.1",
     "log-symbols": "^2.2.0",
     "lz-string": "^1.4.4",
     "madge": "3.4.4",
