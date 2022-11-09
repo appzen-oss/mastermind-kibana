@@ -26,7 +26,11 @@ export const AppWrapper: React.FunctionComponent<{
   chromeVisible$: Observable<boolean>;
 }> = ({ chromeVisible$, children }) => {
   const visible = useObservable(chromeVisible$);
-  return <div className={classNames('app-wrapper', { 'hidden-chrome': !visible })}>{children}</div>;
+  return (
+    <div id="app" className={classNames('app-wrapper', { 'hidden-chrome': !visible })}>
+      {children}
+    </div>
+  );
 };
 
 export const AppContainer: React.FunctionComponent<{
