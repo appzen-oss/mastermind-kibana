@@ -10,10 +10,10 @@
     "@jridgewell/gen-mapping" "^0.1.0"
     "@jridgewell/trace-mapping" "^0.3.9"
 
-"@az/app-switcher@2.0.13":
-  version "2.0.13"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/app-switcher/-/app-switcher-2.0.13.tgz#d01eeb61a618d8c677da61b91574ee5df1edda88"
-  integrity sha512-k/4eE5YVjC9qDLmJSFDRwpk5TaPwX0rZ9Sm3Ck/lGSjelOhURAJUVilnqgllYzeqIszPiXhcpZRmPrESNbuXIQ==
+"@az/app-switcher@2.0.14":
+  version "2.0.14"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/app-switcher/-/app-switcher-2.0.14.tgz#d9028027e89c066c77e916971a0639e4f54d5d3d"
+  integrity sha512-IhZjw3cf7EPykTA5TT2HCCfRwdtr9k8tsbzKezWA/usgLezDVIpAylHQrh6RlLVU3mImzYEEnbpVOHGZU5EwDQ==
   dependencies:
     "@az/common-configs" "^9.0.7"
     "@az/utility" "^2.5.4"
@@ -25,6 +25,7 @@
     "@material-ui/icons" "^4.2.1"
     "@material-ui/pickers" "^3.2.0"
     "@svgr/rollup" "^6.5.0"
+    classnames "2.2.6"
     copyfiles "^2.4.1"
     react-use "^13.27.0"
     styled-components "^5.0.0"
