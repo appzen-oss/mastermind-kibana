@@ -94,6 +94,7 @@ export const TopNavigation = ({
   const appConfigAPI = () => http.get('/api/mastermind_security/app_config');
   const productsAPI = () => http.get('/api/mastermind_security/products');
   const notificationsAPI = () => http.get('/api/mastermind_approver/notifications');
+  const changePasswordAPI = () => http.post('/api/mastermind_security/change_password');
 
   return (
     <Layout
@@ -115,6 +116,7 @@ export const TopNavigation = ({
       loadingCount={loadingCount}
       productsAPI={productsAPI}
       notificationsAPI={notificationsAPI}
+      changePasswordAPI={changePasswordAPI}
     />
   );
 };
