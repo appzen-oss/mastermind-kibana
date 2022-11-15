@@ -94,7 +94,13 @@ export const TopNavigation = ({
   const appConfigAPI = () => http.get('/api/mastermind_security/app_config');
   const productsAPI = () => http.get('/api/mastermind_security/products');
   const notificationsAPI = () => http.get('/api/mastermind_approver/notifications');
-  const changePasswordAPI = () => http.post('/api/mastermind_security/change_password');
+  const changePasswordAPI = (currentPassword: string, newPassword: string) =>
+    http.post('/api/mastermind_security/change_password', {
+      query: {
+        currentPassword,
+        newPassword,
+      },
+    });
 
   return (
     <Layout
