@@ -10,12 +10,12 @@
     "@jridgewell/gen-mapping" "^0.1.0"
     "@jridgewell/trace-mapping" "^0.3.9"
 
-"@az/app-switcher@2.0.21":
-  version "2.0.21"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/app-switcher/-/app-switcher-2.0.21.tgz#ce728dd364f21a8301744bc8bd071851f23d5068"
-  integrity sha512-6IuYPdWQvxwE+3ZXanxuqSNMZtKGNyAjqw8BdLDOQsvCbGUWc03Q2cPOWJQoHgVNptfZZO1Kouh0cK4IO6pztA==
+"@az/app-switcher@2.0.24":
+  version "2.0.24"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/app-switcher/-/app-switcher-2.0.24.tgz#c6581ac0b0c304ab1fcb1944d8deb92b27a7a602"
+  integrity sha512-dILc4h4UJta6x3j0/DeIYaBFpbwKTSjoAU2tL99Cit1PctDPZZntGquA+bZxhDGV0EBvOZXBcC+EuBbv4lTskg==
   dependencies:
-    "@az/common-configs" "^9.0.9"
+    "@az/common-configs" "^9.0.10"
     "@az/utility" "^2.5.4"
     "@fortawesome/fontawesome-free-solid" "^5.0.13"
     "@fortawesome/fontawesome-svg-core" "^6.2.0"
@@ -32,20 +32,20 @@
     tslib "^2.4.0"
     utility-types "^3.10.0"
 
-"@az/common-configs@^9.0.9":
-  version "9.0.9"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/common-configs/-/common-configs-9.0.9.tgz#77fb39825b9322cdec55bf343997265d5c2ac27c"
-  integrity sha512-a6xNLKKqpjwjC63rKwucGuwiD/7kPTLOvqW5FUTGrIUtjC31OT4aefV1l8fYTPEhWcglRDuc7SvYxz0658EAYg==
+"@az/common-configs@^9.0.10":
+  version "9.1.0"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/common-configs/-/common-configs-9.1.0.tgz#049872f4a0291fa030548811c9df26b307faad54"
+  integrity sha512-LsjChqZikPiiOg1aJ3cFIAZKVroeP+ChT2NJzDxVx7F8+D0Ulvg1UDft35zbXZJS2LTmQ6fkQBwqFUkNu6IxAQ==
   dependencies:
-    "@az/utility" "2.5.4"
+    "@az/utility" "^1.4.0"
     lodash "^4.17.15"
 
-"@az/utility@2.5.4":
-  version "2.5.4"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/utility/-/utility-2.5.4.tgz#2541d3df435ce4e3a963cfdcdf1d4fd754c7f9c1"
-  integrity sha512-yYmDSTeq2E98oKJW0Pny6AMgWfh6hTJwL2BHS/rK1kZimRM9iWssKZObiQAcyrhNQi5+x9kq7wPQ7gTeMhygCw==
+"@az/utility@^1.4.0":
+  version "1.9.1"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/utility/-/utility-1.9.1.tgz#de5c0813158f276b5e7c93b8018776f9aa141c22"
+  integrity sha512-eo16u9bHjYuVxJzauyMOFS9gb2IBrVhIIzFVc0dBq/VyP5NiZeAecIWZgeh/B67gYLD4Mxa3okIu4ZV2EC0rhw==
   dependencies:
-    lodash "^4.17.20"
+    lodash "^4.17.15"
     moment "^2.24.0"
     moment-timezone "^0.5.27"
 
