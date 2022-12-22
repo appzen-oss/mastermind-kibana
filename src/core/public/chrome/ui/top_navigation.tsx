@@ -19,7 +19,7 @@
 import React from 'react';
 import useObservable from 'react-use/lib/useObservable';
 import { Observable } from 'rxjs';
-import { Layout } from '@az/app-switcher';
+import { AppSwitcher } from '@az/app-switcher';
 import { InternalApplicationStart } from '../../application';
 import { HttpStart } from '../../http';
 import {
@@ -103,7 +103,7 @@ export const TopNavigation = ({
     });
 
   return (
-    <Layout
+    <AppSwitcher
       userDetailsAPI={userDetailsAPI}
       switchToAdminAPI={switchToAdminAPI}
       switchToUserAPI={switchToUserAPI}
