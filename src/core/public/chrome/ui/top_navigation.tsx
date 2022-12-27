@@ -123,6 +123,7 @@ export const TopNavigation = ({
       productsAPI={productsAPI}
       notificationsAPI={notificationsAPI}
       changePasswordAPI={changePasswordAPI}
+      forceHideOrganizationsDropdown
     />
   );
 };
