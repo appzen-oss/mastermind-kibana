@@ -10,12 +10,12 @@
     "@jridgewell/gen-mapping" "^0.1.0"
     "@jridgewell/trace-mapping" "^0.3.9"
 
-"@az/app-switcher@2.1.14":
-  version "2.1.14"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/app-switcher/-/app-switcher-2.1.14.tgz#1f46e1d13026f05eae9fd9c3f547ade4a14c08c3"
-  integrity sha512-GwaifVFkao/4z6JwM7B6bkBDE6enj7g6GrTld3LiqvuEcRTqCJCrgu0UOmJipvs8NIdTRZU/9s7fA/5/+p01Ag==
+"@az/app-switcher@2.1.17":
+  version "2.1.17"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/app-switcher/-/app-switcher-2.1.17.tgz#0667b2ebc3ff34fe15302cdf062030cb4709e8f3"
+  integrity sha512-RahRy4FAcW7W74MrsEcWs2ZkuA/fsgjOlh38YCl6VHTfJ+Ll6AISoQDULBdlyZfuWTrhNtWwsKbjHmLMHX8IYA==
   dependencies:
-    "@az/common-configs" "^9.1.12"
+    "@az/common-configs" "^9.1.13"
     "@az/utility" "^2.5.4"
     "@fortawesome/fontawesome-free-solid" "^5.0.13"
     "@fortawesome/fontawesome-svg-core" "^6.2.0"
@@ -27,12 +27,20 @@
     "@svgr/rollup" "^6.5.0"
     classnames "2.2.6"
     copyfiles "^2.4.1"
+    logrocket "^1.0.3"
     react-use "^13.27.0"
     styled-components "^5.0.0"
     tslib "^2.4.0"
     utility-types "^3.10.0"
 
-"@az/common-configs@^9.1.12":
+"@az/common-configs@9.1.13":
+  version "9.1.13"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/common-configs/-/common-configs-9.1.13.tgz#231a088ae5abefec59fbea5c13d27d831e59f3ca"
+  integrity sha512-/FBaLIRTqI2G4tioinmFErsJTFtysx9O8SzIUPYuCMtEmEIcnrd9d4uh6TEyHgj/mhJQOgE2fuzRbUGK3nILTA==
+  dependencies:
+    lodash "^4.17.15"
+
+"@az/common-configs@^9.1.13":
   version "9.2.0"
   resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/common-configs/-/common-configs-9.2.0.tgz#c08d8f63f4f86d650d4d973c869598eebbc7d685"
   integrity sha512-2VPDLl9OaXJG1pVfny7o9UzJ6YjtFOR3e47J7Eh4SkqS802AY9p3UTlAL1X1rOkGqM838JLZV4Hlq1uknp191A==
@@ -21219,6 +21227,11 @@ loglevelnext@^1.0.1:
   dependencies:
     es6-symbol "^3.1.1"
     object.assign "^4.1.0"
+
+logrocket@^1.0.3:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/logrocket/-/logrocket-1.3.0.tgz#d21dba32a09bb7bc8309943a4692e22580614ad1"
+  integrity sha512-iP3l9hgBJxTkATZKJs93+uUJBvfg6QkV3+wNk9YB/wkJweXfsH9cNyYRx1PxI4BXvgX/CGR0qwbP7Vvo8STtgg==
 
 logrocket@^2.1.2:
   version "2.1.2"
