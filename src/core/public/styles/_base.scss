@@ -34,7 +34,7 @@
 // state. This is useful when you've already hand crafted your own
 // focus states in Kibana.
 :focus {
-  &:not([class^='eui']):not(.kbn-resetFocusState) {
+  &:not(.force-hide-focus-ring):not([class^='eui']):not(.kbn-resetFocusState) {
     @include euiFocusRing;
   }
 }
