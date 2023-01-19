@@ -72,6 +72,7 @@ export const TopNavigation = ({
   loadingCount$,
   http,
 }: Props) => {
+  const showBreadcrumbs = window.innerWidth > 600;
   const appTitle = useObservable(appTitle$, 'Kibana');
   const breadcrumbs = useObservable(breadcrumbs$, []);
   const breadcrumbsAppendExtension = useObservable(breadcrumbsAppendExtension$);
@@ -115,7 +116,7 @@ export const TopNavigation = ({
       navigateToUrl={application.navigateToUrl}
       navigateToApp={application.navigateToApp}
       appTitle={appTitle}
-      breadcrumbs={breadcrumbs}
+      breadcrumbs={showBreadcrumbs ? breadcrumbs : []}
       breadcrumbsAppendExtension={breadcrumbsAppendExtension}
       homeHref={homeHref}
       isVisible={isVisible}
