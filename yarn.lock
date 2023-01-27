@@ -10,12 +10,12 @@
     "@jridgewell/gen-mapping" "^0.1.0"
     "@jridgewell/trace-mapping" "^0.3.9"
 
-"@az/app-switcher@2.1.20":
-  version "2.1.20"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/app-switcher/-/app-switcher-2.1.20.tgz#a33c75f7ca7f39e64c58171b20bb5022b651627a"
-  integrity sha512-Lmpj7Y5Q8p9sXXGNmqnrjdo44bzpx4wfNC/6natMvpZZtlxvYA/aQWWB0iLjhchW+4sAgDyyeYJcSaiyxHG8zw==
+"@az/app-switcher@2.2.9":
+  version "2.2.9"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/app-switcher/-/app-switcher-2.2.9.tgz#edbe9f7346a4b4e32cec2621189c6fcba5c421ac"
+  integrity sha512-htDC4WXnF5NRu8DRvQTQrnlmJzBa4d6xZljwGCtoGQeVVnzwJg76Dg80aYmu/ohEhnn1Vq9AxIuJa8JS8pROyg==
   dependencies:
-    "@az/common-configs" "^9.1.13"
+    "@az/common-configs" "^9.2.6"
     "@az/utility" "^2.5.4"
     "@fortawesome/fontawesome-free-solid" "^5.0.13"
     "@fortawesome/fontawesome-svg-core" "^6.2.0"
@@ -33,17 +33,10 @@
     tslib "^2.4.0"
     utility-types "^3.10.0"
 
-"@az/common-configs@9.1.13":
-  version "9.1.13"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/common-configs/-/common-configs-9.1.13.tgz#231a088ae5abefec59fbea5c13d27d831e59f3ca"
-  integrity sha512-/FBaLIRTqI2G4tioinmFErsJTFtysx9O8SzIUPYuCMtEmEIcnrd9d4uh6TEyHgj/mhJQOgE2fuzRbUGK3nILTA==
-  dependencies:
-    lodash "^4.17.15"
-
-"@az/common-configs@^9.1.13":
-  version "9.2.0"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/common-configs/-/common-configs-9.2.0.tgz#c08d8f63f4f86d650d4d973c869598eebbc7d685"
-  integrity sha512-2VPDLl9OaXJG1pVfny7o9UzJ6YjtFOR3e47J7Eh4SkqS802AY9p3UTlAL1X1rOkGqM838JLZV4Hlq1uknp191A==
+"@az/common-configs@9.2.6", "@az/common-configs@^9.2.6":
+  version "9.2.6"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/common-configs/-/common-configs-9.2.6.tgz#822f0708e4bd5b0efa577ec29cfcb3368e9e1fd8"
+  integrity sha512-q8zhhn/IiokJP/HZ0mmMRymZ9ASToWKogbqWcZyHqUAxl2fIhjGY6dSmppCSebnCXg8DeeHmyBSIsar7/0L2Kg==
   dependencies:
     lodash "^4.17.15"
 
