@@ -81,6 +81,11 @@ export const TopNavigation = ({
   const isVisible = useObservable(isVisible$, false);
   const loadingCount = useObservable(loadingCount$, 0);
 
+  let mobileViewOptions = {
+    hideLeftNavigation: false,
+    hideProductSwitcher: false,
+    useWebUserMenu: false,
+  };
   const switchToAdminAPI = () => http.get(`/api/mastermind_security/switchadmin`);
   const userDetailsAPI = () => http.get(`/api/mastermind_security/user`);
   const zendeskTokenAPI = () => http.get('/api/mastermind_security/zendeskToken');
@@ -104,6 +109,16 @@ export const TopNavigation = ({
       },
     });
 
+  if (
+    application.history.location.pathname === '/app/approval' ||
+    application.history.location.pathname.includes('/app/invoice/invoice_details')
+  ) {
+    mobileViewOptions = {
+      hideLeftNavigation: true,
+      hideProductSwitcher: true,
+      useWebUserMenu: false,
+    };
+  }
   return (
     <AppSwitcher
       userDetailsAPI={userDetailsAPI}
@@ -127,6 +142,7 @@ export const TopNavigation = ({
       notificationsAPI={notificationsAPI}
       changePasswordAPI={changePasswordAPI}
       forceHideOrganizationsDropdown
+      mobileViewOptions={mobileViewOptions}
     />
   );
 };
