@@ -10,12 +10,12 @@
     "@jridgewell/gen-mapping" "^0.1.0"
     "@jridgewell/trace-mapping" "^0.3.9"
 
-"@az/app-switcher@2.2.11":
-  version "2.2.11"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/app-switcher/-/app-switcher-2.2.11.tgz#c1b73d46746fbf2fc4b790459aff19335e22a920"
-  integrity sha512-Fv2DUgtv/lNhvwyCu0HOeL5HyWK2IMc+M1YxFeEpUtyfQWOnaQp30VTgsIaQ45RDg5GQTp/Z5Hkq0Q+j9fo61A==
+"@az/app-switcher@2.2.12":
+  version "2.2.12"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/app-switcher/-/app-switcher-2.2.12.tgz#991e64864937d6a922cf5c8c3c440c3dc229657a"
+  integrity sha512-6+6X2gH0ORXg8X7KSVBM9uX3DWwNqYvLfBIKhFLWR/4HJom28ImXjUCS75XIVNJCnL75ejN2r/AqVqxspEMiBA==
   dependencies:
-    "@az/common-configs" "^9.2.7"
+    "@az/common-configs" "^9.2.8"
     "@az/utility" "^2.5.4"
     "@fortawesome/fontawesome-free-solid" "^5.0.13"
     "@fortawesome/fontawesome-svg-core" "^6.2.0"
@@ -33,17 +33,10 @@
     tslib "^2.4.0"
     utility-types "^3.10.0"
 
-"@az/common-configs@9.2.6":
-  version "9.2.6"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/common-configs/-/common-configs-9.2.6.tgz#822f0708e4bd5b0efa577ec29cfcb3368e9e1fd8"
-  integrity sha512-q8zhhn/IiokJP/HZ0mmMRymZ9ASToWKogbqWcZyHqUAxl2fIhjGY6dSmppCSebnCXg8DeeHmyBSIsar7/0L2Kg==
-  dependencies:
-    lodash "^4.17.15"
-
-"@az/common-configs@^9.2.7":
-  version "9.2.7"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/common-configs/-/common-configs-9.2.7.tgz#20e01d3c4706de87cad181db2f8070685ac2c9a1"
-  integrity sha512-fjWzxSwQ3MtnErhz3LYm9n0GutlvrVjwEUmz6i1Ad1nvmECLrcaNIirI1pLiqLNDSgqjmJrtF9KyJUSnd4NY4w==
+"@az/common-configs@9.2.8", "@az/common-configs@^9.2.8":
+  version "9.2.8"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/common-configs/-/common-configs-9.2.8.tgz#0aa25a79a9700ff5e86742f64b31093b74d082b1"
+  integrity sha512-yoCnfYTam6m1xJN209bgERl7dlcqJgCtXHY8YR8kX/Ww6rcC95HrffafCPEI1wj2k/wAQtmfc3tGFtaOOOGI9g==
   dependencies:
     lodash "^4.17.15"
 
