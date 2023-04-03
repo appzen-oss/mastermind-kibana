@@ -10,10 +10,10 @@
     "@jridgewell/gen-mapping" "^0.1.0"
     "@jridgewell/trace-mapping" "^0.3.9"
 
-"@az/app-switcher@2.3.10":
-  version "2.3.10"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/app-switcher/-/app-switcher-2.3.10.tgz#a3d010c62e012cf45481256ff2e536ca8ff579c1"
-  integrity sha512-XxQvoH+VNKwnod7Nui2AQaHkZeJnJFbKlLxc4y87MKScS2VgHX4makjIwbMU8mDIxBXx600fwK1Ui53+cntsUQ==
+"@az/app-switcher@2.3.11":
+  version "2.3.11"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/app-switcher/-/app-switcher-2.3.11.tgz#a1ed63e3a8fd271f0d1f1d83212c20d7e8236e1d"
+  integrity sha512-pGXMMSSFuQ7WXnz8fOB4BlJ3gd2+5ltPJwoIO71zxHEPyHtdvCVFamhYFrLZZ2gAYkY6XpXst9bIX/D3Av4JeQ==
   dependencies:
     "@az/common-configs" "^9.3.8"
     "@az/utility" "^2.5.4"
