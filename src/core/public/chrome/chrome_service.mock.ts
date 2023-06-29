@@ -40,6 +40,7 @@ const createStartContractMock = () => {
       get$: jest.fn(),
     },
     docTitle: {
+      setBaseTitle: jest.fn(),
       change: jest.fn(),
       reset: jest.fn(),
     },
