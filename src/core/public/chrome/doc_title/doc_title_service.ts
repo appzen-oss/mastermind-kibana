@@ -55,6 +55,10 @@ export interface ChromeDocTitle {
    */
   change(newTitle: string | string[]): void;
   /**
+   * Sets the base title of the document
+   */
+  setBaseTitle(newTitle: string): void;
+  /**
    * Resets the document title to it's initial value.
    * (meaning the one present in the title meta at application load.)
    */
@@ -76,6 +80,10 @@ export class DocTitleService {
     return {
       change: (title: string | string[]) => {
         this.applyTitle(title);
+      },
+      setBaseTitle: (title: string) => {
+        this.baseTitle = title;
+        this.applyTitle('');
       },
       reset: () => {
         this.applyTitle(defaultTitle);
