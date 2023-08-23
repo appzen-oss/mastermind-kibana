@@ -2429,7 +2429,8 @@
 
 "@elastic/eui@30.2.0-50":
   version "30.2.0-50"
-  resolved "file:../mastermind_eui/elastic-eui-30.2.0-50-g.tgz#f7129d1607e2a3e16807d3ae5245222f7553c1ad"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@elastic/eui/-/eui-30.2.0-50.tgz#9b3e2b7a3f84bf412764827617ee9779f71b044d"
+  integrity sha512-4/qwFNH5OQnTmyhsF8X/oHKGR1r3Ljcj+vhI5nSyuTTBEj3x4x5qFuPgIQJGQfkVgrI2S5PIPCO1kOctXDHIHw==
   dependencies:
     "@types/chroma-js" "^2.0.0"
     "@types/lodash" "^4.14.160"
