@@ -10,12 +10,12 @@
     "@jridgewell/gen-mapping" "^0.1.0"
     "@jridgewell/trace-mapping" "^0.3.9"
 
-"@az/app-switcher@2.5.12":
-  version "2.5.12"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/app-switcher/-/app-switcher-2.5.12.tgz#5091b1723e8f4fb1f2f50923275a3d9ca68a7b81"
-  integrity sha512-7GIwBCjcGFd5yoXeSbKJOTth41MRYSvX+GMm7TOzBoAAtgLsWRLoDqjqRUi9c2YlkF14PFZU2+6XM6SmujVM0Q==
+"@az/app-switcher@2.5.15":
+  version "2.5.15"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/app-switcher/-/app-switcher-2.5.15.tgz#5b9624cfc481c0029192c17674da3c84eed4f861"
+  integrity sha512-yQgfnHEyHpnem4XfIlnHCpEbKardN9chmOIHfujH43de8a+tjaIHJZO6S59Rww+mHzCXNi02GgGT1N45zEeolg==
   dependencies:
-    "@az/common-configs" "^9.4.11"
+    "@az/common-configs" "^9.4.12"
     "@az/utility" "2.5.0"
     "@fortawesome/fontawesome-free-solid" "^5.0.13"
     "@fortawesome/fontawesome-svg-core" "^6.2.0"
@@ -27,7 +27,7 @@
     "@svgr/rollup" "^6.5.0"
     classnames "2.2.6"
     copyfiles "^2.4.1"
-    logrocket "^1.0.3"
+    logrocket "^6.0.0"
     react-use "^13.27.0"
     styled-components "^5.0.0"
     tslib "^2.4.0"
@@ -37,6 +37,13 @@
   version "9.4.11"
   resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/common-configs/-/common-configs-9.4.11.tgz#890324e09f569381c0327b6bd011a23dfe5bbf61"
   integrity sha512-gOMcdH/25+9PhNxQxx1Oj14KHQGParvEimrAuj7ayguL0g9hwCHpCtwXJcUjnF0k+PgG5EMrPdRO2uSHu6ht1g==
+  dependencies:
+    lodash "^4.17.15"
+
+"@az/common-configs@^9.4.12":
+  version "9.4.12"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/common-configs/-/common-configs-9.4.12.tgz#e9c46cde89344cee83e4412d2469e9d0e1d58216"
+  integrity sha512-7pTk9rShqqmW5/NOpr6k3C4KYDmbYGjeY3Tw7M4Ty4O3F0T96ClHYilfO1/xMbfsc5WeUxsIpd8ii/YbIzxCkw==
   dependencies:
     lodash "^4.17.15"
 
@@ -21259,15 +21266,15 @@ loglevelnext@^1.0.1:
     es6-symbol "^3.1.1"
     object.assign "^4.1.0"
 
-logrocket@^1.0.3:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/logrocket/-/logrocket-1.3.0.tgz#d21dba32a09bb7bc8309943a4692e22580614ad1"
-  integrity sha512-iP3l9hgBJxTkATZKJs93+uUJBvfg6QkV3+wNk9YB/wkJweXfsH9cNyYRx1PxI4BXvgX/CGR0qwbP7Vvo8STtgg==
-
 logrocket@^2.1.2:
   version "2.1.2"
   resolved "https://registry.npmjs.org/logrocket/-/logrocket-2.1.2.tgz#5f6360c81c01797d67905de4851d54534deb9d0a"
   integrity sha512-voHZcZYtXIh0oIT6I/9szdDSauKR98uGlVxovD6oIggm7nqdic5d1/dqRUhokXiXXtLkF7pr6QUrtwIwTETjIw==
+
+logrocket@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/logrocket/-/logrocket-6.0.0.tgz#398ddac4a35aa72305ade14d4deacb28b1ea659f"
+  integrity sha512-67wlZnY/WPEboMHUv+rEhLawJyr/LogV3MsOlEKxsqNu0pD3pLj6Z/seQVGwHKqARtyF9xrAZd6H0Lfy+91C2w==
 
 lolex@^4.2.0:
   version "4.2.0"
