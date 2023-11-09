@@ -40,10 +40,10 @@
   dependencies:
     lodash "^4.17.15"
 
-"@az/internal-protos@^1.4.7":
-  version "1.4.7"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/internal-protos/-/internal-protos-1.4.7.tgz#70218a59c6f6654a5048f4b0c34b5eb7691eb6b5"
-  integrity sha512-OLnZ7NpgbbD2qDt6Yc0kgIPmioIC1rjYnQRygkA4MveTwBpZPjPIGc5GhT65mnCkgJS8k6mreuaXX4oMWC3oTw==
+"@az/internal-protos@^1.4.16-dev":
+  version "1.4.16-dev"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/internal-protos/-/internal-protos-1.4.16-dev.tgz#6324579ba80a24645fd4daee1d270fbca0a90495"
+  integrity sha512-CUcAMyJJUe99olZPyRnltVZ0k01SRXuMnTdWqlZbXqsku7vUpy4xaz4iNPMn2K/9xXh1mwVjhKtbKL4XMSI4WQ==
   dependencies:
     "@grpc/grpc-js" "^1.6.7"
     google-protobuf "^3.20.1"
