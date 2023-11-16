@@ -40,10 +40,17 @@
   dependencies:
     lodash "^4.17.15"
 
+<<<<<<< Updated upstream
 "@az/internal-protos@^1.4.16-dev":
   version "1.4.16-dev"
   resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/internal-protos/-/internal-protos-1.4.16-dev.tgz#6324579ba80a24645fd4daee1d270fbca0a90495"
   integrity sha512-CUcAMyJJUe99olZPyRnltVZ0k01SRXuMnTdWqlZbXqsku7vUpy4xaz4iNPMn2K/9xXh1mwVjhKtbKL4XMSI4WQ==
+=======
+"@az/internal-protos@^1.4.17-dev":
+  version "1.4.17-dev"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/internal-protos/-/internal-protos-1.4.17-dev.tgz#2c5e555091391ad0de0d500e543fc72bf82a02ad"
+  integrity sha512-9e8q8VM5vkdrKZFNDk1XBr8McjNS0GM7BmxyYXo2CMzZbWNLBY0dy6UPt3fRKrFCYImzXf1tTOhNUU41ut0avw==
+>>>>>>> Stashed changes
   dependencies:
     "@grpc/grpc-js" "^1.6.7"
     google-protobuf "^3.20.1"
