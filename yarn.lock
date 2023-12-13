@@ -10,12 +10,12 @@
     "@jridgewell/gen-mapping" "^0.1.0"
     "@jridgewell/trace-mapping" "^0.3.9"
 
-"@az/app-switcher@2.5.14":
-  version "2.5.14"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/app-switcher/-/app-switcher-2.5.14.tgz#526772d1fcd8055ba8f828c146608c4c3431003c"
-  integrity sha512-6XrwUYBLdfcE5c/v5i5p08rCzHJxYQ9c7KT+xxXOzrKml+helkYTfB+OGR+cQTS0z1rBcIG6++L126tBR91jqQ==
+"@az/app-switcher@2.5.16":
+  version "2.5.16"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/app-switcher/-/app-switcher-2.5.16.tgz#f6793ed761f48476d75e57d7a57dd16a3e8be34b"
+  integrity sha512-qs2dsiB3ZQRvEUjTjM094oYVlk5PbiqA1TrH++7XRtFXAguZu8tkLBecAwXPGv+LwIH+D02Td1krvjKZV13JZA==
   dependencies:
-    "@az/common-configs" "^9.4.11"
+    "@az/common-configs" "^9.4.12"
     "@az/utility" "2.5.0"
     "@fortawesome/fontawesome-free-solid" "^5.0.13"
     "@fortawesome/fontawesome-svg-core" "^6.2.0"
@@ -40,17 +40,17 @@
   dependencies:
     lodash "^4.17.15"
 
-<<<<<<< Updated upstream
-"@az/internal-protos@^1.4.16-dev":
-  version "1.4.16-dev"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/internal-protos/-/internal-protos-1.4.16-dev.tgz#6324579ba80a24645fd4daee1d270fbca0a90495"
-  integrity sha512-CUcAMyJJUe99olZPyRnltVZ0k01SRXuMnTdWqlZbXqsku7vUpy4xaz4iNPMn2K/9xXh1mwVjhKtbKL4XMSI4WQ==
-=======
+"@az/common-configs@^9.4.12":
+  version "9.4.12"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/common-configs/-/common-configs-9.4.12.tgz#e9c46cde89344cee83e4412d2469e9d0e1d58216"
+  integrity sha512-7pTk9rShqqmW5/NOpr6k3C4KYDmbYGjeY3Tw7M4Ty4O3F0T96ClHYilfO1/xMbfsc5WeUxsIpd8ii/YbIzxCkw==
+  dependencies:
+    lodash "^4.17.15"
+
 "@az/internal-protos@^1.4.17-dev":
   version "1.4.17-dev"
   resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/internal-protos/-/internal-protos-1.4.17-dev.tgz#2c5e555091391ad0de0d500e543fc72bf82a02ad"
   integrity sha512-9e8q8VM5vkdrKZFNDk1XBr8McjNS0GM7BmxyYXo2CMzZbWNLBY0dy6UPt3fRKrFCYImzXf1tTOhNUU41ut0avw==
->>>>>>> Stashed changes
   dependencies:
     "@grpc/grpc-js" "^1.6.7"
     google-protobuf "^3.20.1"
