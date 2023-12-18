@@ -10,13 +10,13 @@
     "@jridgewell/gen-mapping" "^0.1.0"
     "@jridgewell/trace-mapping" "^0.3.9"
 
-"@az/app-switcher@2.5.18":
-  version "2.5.18"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/app-switcher/-/app-switcher-2.5.18.tgz#2fc903a19a13b15677c17ed77878a9a31e819f6d"
-  integrity sha512-QybckG6b3cR+tBxwlO7xQplFi66s3vVsOE7u0yXsS5hw9B4TGgUAGvXrvS4xMbN03PvbFG62alWi5WjXYNya6w==
+"@az/app-switcher@2.6.2":
+  version "2.6.2"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/app-switcher/-/app-switcher-2.6.2.tgz#86d2d2a80173f3280909634891dd36ebcbd86eba"
+  integrity sha512-M5GBw3VW20twTYGHbQtRUg2+9oFzGJFsXg+Y6M3XNz6/4EBgDh6PAs+RnylmqCCf7EY4aeJl5/KiDCG6OZAl5A==
   dependencies:
-    "@az/common-configs" "^9.4.12"
-    "@az/utility" "2.5.0"
+    "@az/common-configs" "^9.5.1"
+    "@az/utility" "2.6.0"
     "@fortawesome/fontawesome-free-solid" "^5.0.13"
     "@fortawesome/fontawesome-svg-core" "^6.2.0"
     "@fortawesome/free-solid-svg-icons" "^6.2.0"
@@ -33,17 +33,10 @@
     tslib "^2.4.0"
     utility-types "^3.10.0"
 
-"@az/common-configs@^9.4.11":
-  version "9.4.11"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/common-configs/-/common-configs-9.4.11.tgz#890324e09f569381c0327b6bd011a23dfe5bbf61"
-  integrity sha512-gOMcdH/25+9PhNxQxx1Oj14KHQGParvEimrAuj7ayguL0g9hwCHpCtwXJcUjnF0k+PgG5EMrPdRO2uSHu6ht1g==
-  dependencies:
-    lodash "^4.17.15"
-
-"@az/common-configs@^9.4.12":
-  version "9.4.12"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/common-configs/-/common-configs-9.4.12.tgz#e9c46cde89344cee83e4412d2469e9d0e1d58216"
-  integrity sha512-7pTk9rShqqmW5/NOpr6k3C4KYDmbYGjeY3Tw7M4Ty4O3F0T96ClHYilfO1/xMbfsc5WeUxsIpd8ii/YbIzxCkw==
+"@az/common-configs@^9.5.1":
+  version "9.5.1"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/common-configs/-/common-configs-9.5.1.tgz#7c564b915e0b558224f810518cf183d9e4ebe95c"
+  integrity sha512-cy+7cYjrWj9qjp73Er0jW7jBAK95qtRjW0CtKFIUyHx/bnrTzFKnNe49QfsCCJxryzeqSS0xrrdQNzg/twEBOQ==
   dependencies:
     lodash "^4.17.15"
 
@@ -58,14 +51,14 @@
     grpc_tools_node_protoc_ts "^5.3.2"
     path "^0.12.7"
 
-"@az/utility@2.5.0":
-  version "2.5.0"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/utility/-/utility-2.5.0.tgz#2eec9203b6037971255862f5c8beefcfdf6b3daa"
-  integrity sha512-aRGgR+IAoC/hbEIXiXQsZsF4aj5UnoVSv4c6TMkgTIKPo2WCiJ2j4nzKJoE9DDzyjbl3ijzVnj8g0L1fONjPAA==
+"@az/utility@2.6.0":
+  version "2.6.0"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/utility/-/utility-2.6.0.tgz#1b5ac0ca88648afb35ee22c5662b3725efc86336"
+  integrity sha512-2GrVjC3gm2valjJVrnZXU2T8AJ8RzyVgJIuYRnxUMUWUR9yotO1ZUE9hqjuaU72vfhhmgjyEKw4nR6QxEHBZvQ==
   dependencies:
+    exceljs "^4.3.0"
+    json2csv "^5.0.7"
     lodash "^4.17.20"
-    moment "^2.24.0"
-    moment-timezone "^0.5.27"
 
 "@az/utility@^2.5.8":
   version "2.5.8"
@@ -22523,13 +22516,6 @@ moment-duration-format@^2.3.2:
   resolved "https://registry.yarnpkg.com/moment-duration-format/-/moment-duration-format-2.3.2.tgz#5fa2b19b941b8d277122ff3f87a12895ec0d6212"
   integrity sha512-cBMXjSW+fjOb4tyaVHuaVE/A5TqkukDWiOfxxAjY+PEqmmBQlLwn+8OzwPiG3brouXKY5Un4pBjAeB6UToXHaQ==
 
-moment-timezone@^0.5.27:
-  version "0.5.27"
-  resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.5.27.tgz#73adec8139b6fe30452e78f210f27b1f346b8877"
-  integrity sha512-EIKQs7h5sAsjhPCqN6ggx6cEbs94GK050254TIJySD1bzoM5JTYDwAU1IoVOeTOL6Gm27kYJ51/uuvq1kIlrbw==
-  dependencies:
-    moment ">= 2.9.0"
-
 moment-timezone@^0.5.35:
   version "0.5.43"
   resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.5.43.tgz#3dd7f3d0c67f78c23cd1906b9b2137a09b3c4790"
@@ -22537,7 +22523,7 @@ moment-timezone@^0.5.35:
   dependencies:
     moment "^2.29.4"
 
-"moment@>= 2.9.0", moment@>=1.6.0, moment@>=2.14.0, moment@^2.10.6, moment@^2.19.3, moment@^2.24.0, moment@^2.27.0:
+moment@>=1.6.0, moment@>=2.14.0, moment@^2.10.6, moment@^2.19.3, moment@^2.27.0:
   version "2.28.0"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.28.0.tgz#cdfe73ce01327cee6537b0fafac2e0f21a237d75"
   integrity sha512-Z5KOjYmnHyd/ukynmFd/WwyXHd7L4J9vTI/nn5Ap9AVUgaAE15VvQ9MOGmJJygEUklupqIrFnor/tjTwRU+tQw==
