@@ -60,10 +60,10 @@
     json2csv "^5.0.7"
     lodash "^4.17.20"
 
-"@az/utility@^2.5.8":
-  version "2.5.8"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/utility/-/utility-2.5.8.tgz#22135270c14e213a9691ebc7559a7baf1d148962"
-  integrity sha512-ChC1379SEfn658SojZ5OxCA5DO2K/P28XvyuQmzOG7Y1mZ8s7l2yob9B+t56I3hVb8DYC5V1WpTQNm5Oq7tTtQ==
+"@az/utility@^2.6.1":
+  version "2.6.1"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/utility/-/utility-2.6.1.tgz#e07aa50a00c7877c37d0d97f5f0559bcf94e2827"
+  integrity sha512-Cz3a1iP0gfMXmAupNvjRZk8PFhJbG7NTeDNQllRTOJ9y019EapLs9phm71EAxT9V2gGlWW21keNuhP2xw1iYvQ==
   dependencies:
     exceljs "^4.3.0"
     json2csv "^5.0.7"
