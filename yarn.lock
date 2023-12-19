@@ -10,13 +10,13 @@
     "@jridgewell/gen-mapping" "^0.1.0"
     "@jridgewell/trace-mapping" "^0.3.9"
 
-"@az/app-switcher@2.6.2":
-  version "2.6.2"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/app-switcher/-/app-switcher-2.6.2.tgz#86d2d2a80173f3280909634891dd36ebcbd86eba"
-  integrity sha512-M5GBw3VW20twTYGHbQtRUg2+9oFzGJFsXg+Y6M3XNz6/4EBgDh6PAs+RnylmqCCf7EY4aeJl5/KiDCG6OZAl5A==
+"@az/app-switcher@2.6.3":
+  version "2.6.3"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/app-switcher/-/app-switcher-2.6.3.tgz#aeed899d7439c046b1a8e3bf4a0af79d00ed120a"
+  integrity sha512-KEDpNsqOjTGfSA1DEYFxWAVmrO+gl9KOLixX9KPvQCDT+xXB6Hu2ClwUC6gp1wRyE0qoFJoiFFJZcmAgLXixaw==
   dependencies:
     "@az/common-configs" "^9.5.1"
-    "@az/utility" "2.6.0"
+    "@az/utility" "2.6.2"
     "@fortawesome/fontawesome-free-solid" "^5.0.13"
     "@fortawesome/fontawesome-svg-core" "^6.2.0"
     "@fortawesome/free-solid-svg-icons" "^6.2.0"
@@ -51,19 +51,10 @@
     grpc_tools_node_protoc_ts "^5.3.2"
     path "^0.12.7"
 
-"@az/utility@2.6.0":
-  version "2.6.0"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/utility/-/utility-2.6.0.tgz#1b5ac0ca88648afb35ee22c5662b3725efc86336"
-  integrity sha512-2GrVjC3gm2valjJVrnZXU2T8AJ8RzyVgJIuYRnxUMUWUR9yotO1ZUE9hqjuaU72vfhhmgjyEKw4nR6QxEHBZvQ==
-  dependencies:
-    exceljs "^4.3.0"
-    json2csv "^5.0.7"
-    lodash "^4.17.20"
-
-"@az/utility@^2.6.1":
-  version "2.6.1"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/utility/-/utility-2.6.1.tgz#e07aa50a00c7877c37d0d97f5f0559bcf94e2827"
-  integrity sha512-Cz3a1iP0gfMXmAupNvjRZk8PFhJbG7NTeDNQllRTOJ9y019EapLs9phm71EAxT9V2gGlWW21keNuhP2xw1iYvQ==
+"@az/utility@2.6.2", "@az/utility@^2.6.2":
+  version "2.6.2"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/utility/-/utility-2.6.2.tgz#047fd1d3530c124deed04ae089e8d9ea76dfa99a"
+  integrity sha512-9EYFbgM9a3WkznSaaxyUFJy8Ga6DPE3Rvob2Xg2iYJODV+Uo9AIvpc7zDKlHSHyavD1d3yd2h+G/LfxjBu/FwQ==
   dependencies:
     exceljs "^4.3.0"
     json2csv "^5.0.7"
