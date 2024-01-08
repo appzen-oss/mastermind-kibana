@@ -6,8 +6,9 @@
 
 const path = require('path');
 const webpack = require('webpack');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { stringifyRequest } = require('loader-utils'); // eslint-disable-line
-
+const cMapsDir = path.resolve(__dirname, '../../../../node_modules/pdfjs-dist/cmaps');
 const {
   KIBANA_ROOT,
   SHAREABLE_RUNTIME_OUTPUT,
@@ -185,6 +186,18 @@ module.exports = {
       },
     ],
   },
+  plugins: [
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: cMapsDir,
+          to: 'cmaps/',
+          // to: 'TESTCMAPS/',
+          // to: toDir,
+        },
+      ],
+    }),
+  ],
   node: {
     fs: 'empty',
     child_process: 'empty',

@@ -18,7 +18,12 @@
  */
 
 const path = require('path');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
+const cMapsDir = path.resolve(__dirname, 'node_modules/pdfjs-dist/cmaps');
+const toDir = path.resolve(__dirname, 'node_modules/testcmaps');
+
+console.log('*** STARTING WEBPACK CONFIG ***');
 module.exports = {
   mode: 'none',
   entry: {
@@ -35,6 +40,17 @@ module.exports = {
   resolve: {
     extensions: ['.ts', '.js'],
   },
+  plugins: [
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: cMapsDir,
+          // to: 'TESTCMAPS/',
+          to: toDir,
+        },
+      ],
+    }),
+  ],
 
   module: {
     rules: [
