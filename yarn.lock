@@ -33,13 +33,6 @@
     tslib "^2.4.0"
     utility-types "^3.10.0"
 
-"@az/common-configs@^9.5.2":
-  version "9.5.2"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/common-configs/-/common-configs-9.5.2.tgz#ac5eddcd4b0808cc5ebc7e719ddbff1490c5f6d6"
-  integrity sha512-IIs9Hq+wixSfkv2PB7AQlnvBgQGbtA4srmU7oOLEp+8O0ul1HlwUqTMbZ+mnjS8e65hav0Y7hgaFnxpCQMt23w==
-  dependencies:
-    lodash "^4.17.15"
-
 "@az/common-configs@^9.6.1":
   version "9.6.1"
   resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/common-configs/-/common-configs-9.6.1.tgz#5d37e47cc0a925e81b199de8046e753081749e1c"
