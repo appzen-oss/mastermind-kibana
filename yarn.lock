@@ -10,12 +10,12 @@
     "@jridgewell/gen-mapping" "^0.1.0"
     "@jridgewell/trace-mapping" "^0.3.9"
 
-"@az/app-switcher@2.7.2":
-  version "2.7.2"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/app-switcher/-/app-switcher-2.7.2.tgz#52638cfc2f7f5e2ed505cc5471c36ec59fb93985"
-  integrity sha512-zm00z4o3HL/Sx/D1eAmZmNR7k0EM9zZg4pcICKrLULx5EZkJxbTEqhJwPuhwEnnKNV3nR1UHBLyxxwObgsRVEA==
+"@az/app-switcher@2.7.5":
+  version "2.7.5"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/app-switcher/-/app-switcher-2.7.5.tgz#ca8e2d19dc5e273de858121c8a60a558491d9b20"
+  integrity sha512-/TydbpvI+01N1+1uygjYcvaHG+V0UrdMOw97JSSSj7D5k2WYXntjf+ORAmWXELcJa046DOvcSk6HPY4BA4HqMQ==
   dependencies:
-    "@az/common-configs" "^9.6.0"
+    "@az/common-configs" "^9.6.1"
     "@az/utility" "2.7.0"
     "@fortawesome/fontawesome-free-solid" "^5.0.13"
     "@fortawesome/fontawesome-svg-core" "^6.2.0"
@@ -33,24 +33,17 @@
     tslib "^2.4.0"
     utility-types "^3.10.0"
 
-"@az/common-configs@^9.5.2":
-  version "9.5.2"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/common-configs/-/common-configs-9.5.2.tgz#ac5eddcd4b0808cc5ebc7e719ddbff1490c5f6d6"
-  integrity sha512-IIs9Hq+wixSfkv2PB7AQlnvBgQGbtA4srmU7oOLEp+8O0ul1HlwUqTMbZ+mnjS8e65hav0Y7hgaFnxpCQMt23w==
+"@az/common-configs@^9.6.1":
+  version "9.6.1"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/common-configs/-/common-configs-9.6.1.tgz#5d37e47cc0a925e81b199de8046e753081749e1c"
+  integrity sha512-szbCohgEZIdBgo3I0K6JUWK+2brl8p04mTUYyZe9Uu7sO+dfs/4oD0MKTkWukWOeBDoaUJZX8MVgockDR0SZjw==
   dependencies:
     lodash "^4.17.15"
 
-"@az/common-configs@^9.6.0":
-  version "9.6.0"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/common-configs/-/common-configs-9.6.0.tgz#590133877e44b42f3445e411db32d2c157c6b08c"
-  integrity sha512-Py1EMZJTpeLgCP882IAKxB+7zMNcibJkcVSne/dNmLXnZRQ/xEJLyr/gH5PYZbcnzmzKo6/9IGmVwLxSGxC4wg==
-  dependencies:
-    lodash "^4.17.15"
-
-"@az/internal-protos@^1.6.0":
-  version "1.6.0"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/internal-protos/-/internal-protos-1.6.0.tgz#eb7a856f8bb39da3b00cef7bad4751cce9b519ae"
-  integrity sha512-th6JtEBREujHR+qbCWmJJLFuMINAsAot0NfQG8LhkJtp9f/9ga31w7eUSqPUQ0pi6h69gTbrGdJyPpL8DtJMCw==
+"@az/internal-protos@^1.5.1":
+  version "1.5.1"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/internal-protos/-/internal-protos-1.5.1.tgz#c938312348daa3cd65edd14c9a65c110f3131730"
+  integrity sha512-QM7zkdympookpK8+WXaNSt5M8SE2epfvyXRJPevwFY7w/vI2d7IvCAwF0KwQeBskquo5ntU14wWzr3RSMzo7fg==
   dependencies:
     "@grpc/grpc-js" "^1.6.7"
     google-protobuf "^3.20.1"
@@ -2445,10 +2438,10 @@
   resolved "https://registry.yarnpkg.com/@elastic/eslint-plugin-eui/-/eslint-plugin-eui-0.0.2.tgz#56b9ef03984a05cc213772ae3713ea8ef47b0314"
   integrity sha512-IoxURM5zraoQ7C8f+mJb9HYSENiZGgRVcG4tLQxE61yHNNRDXtGDWTZh8N1KIHcsqN1CEPETjuzBXkJYF/fDiQ==
 
-"@elastic/eui@30.2.0-61":
-  version "30.2.0-61"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@elastic/eui/-/eui-30.2.0-61.tgz#e1c5d369a812293cced89ebe16d5cc9a02654eb2"
-  integrity sha512-IqV5dimKswMLuIUY6/3yhBsOkSEbmOm5VCJoOFm/Chs6pKKK12QipctL4RiTBQlWiy69WpfgUS4fy6KoE/dAWg==
+"@elastic/eui@30.2.0-62":
+  version "30.2.0-62"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@elastic/eui/-/eui-30.2.0-62.tgz#6210b7a9ce22079891d5f82489113e7e959dd1fd"
+  integrity sha512-fQNd6Bj599g2NJupXWjSanQlFAdvlRP1cr9V6tkt8eYjMrclLetemK1KgqxoVXr3MLJXSAk/dLYPzDrAOUY+qw==
   dependencies:
     "@types/chroma-js" "^2.0.0"
     "@types/lodash" "^4.14.160"
@@ -22031,9 +22024,9 @@ meow@^7.0.1:
     yargs-parser "^18.1.3"
 
 merge-class-names@^1.1.1:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/merge-class-names/-/merge-class-names-1.3.0.tgz#c4cdc1a981a81dd9afc27aa4287e912a337c5dee"
-  integrity sha512-k0Qaj36VBpKgdc8c188LEZvo6v/zzry/FUufwopWbMSp6/knfVFU/KIB55/hJjeIpg18IH2WskXJCRnM/1BrdQ==
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/merge-class-names/-/merge-class-names-1.4.2.tgz#78d6d95ab259e7e647252a7988fd25a27d5a8835"
+  integrity sha512-bOl98VzwCGi25Gcn3xKxnR5p/WrhWFQB59MS/aGENcmUc6iSm96yrFDF0XSNurX9qN4LbJm0R9kfvsQ17i8zCw==
 
 merge-deep@^3.0.2:
   version "3.0.2"
@@ -24389,7 +24382,7 @@ pbkdf2@^3.0.3:
 
 pdfjs-dist@2.12.313:
   version "2.12.313"
-  resolved "https://registry.npmjs.org/pdfjs-dist/-/pdfjs-dist-2.12.313.tgz#62f2273737bb956267ae2e02cdfaddcb1099819c"
+  resolved "https://registry.yarnpkg.com/pdfjs-dist/-/pdfjs-dist-2.12.313.tgz#62f2273737bb956267ae2e02cdfaddcb1099819c"
   integrity sha512-1x6iXO4Qnv6Eb+YFdN5JdUzt4pAkxSp3aLAYPX93eQCyg/m7QFzXVWJHJVtoW48CI8HCXju4dSkhQZwoheL5mA==
 
 pdfjs-dist@^2.16.105:
@@ -25810,7 +25803,7 @@ react-onclickoutside@^6.5.0:
 
 react-pdf@^5.7.2:
   version "5.7.2"
-  resolved "https://registry.npmjs.org/react-pdf/-/react-pdf-5.7.2.tgz#c458dedf7983822668b40dcac1eae052c1f6e056"
+  resolved "https://registry.yarnpkg.com/react-pdf/-/react-pdf-5.7.2.tgz#c458dedf7983822668b40dcac1eae052c1f6e056"
   integrity sha512-hdDwvf007V0i2rPCqQVS1fa70CXut17SN3laJYlRHzuqcu8sLLjEoeXihty6c0Ev5g1mw31b8OT8EwRw1s8C4g==
   dependencies:
     "@babel/runtime" "^7.0.0"
