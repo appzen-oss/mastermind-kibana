@@ -15,7 +15,7 @@
   resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/app-switcher/-/app-switcher-2.7.5.tgz#ca8e2d19dc5e273de858121c8a60a558491d9b20"
   integrity sha512-/TydbpvI+01N1+1uygjYcvaHG+V0UrdMOw97JSSSj7D5k2WYXntjf+ORAmWXELcJa046DOvcSk6HPY4BA4HqMQ==
   dependencies:
-    "@az/common-configs" "^9.6.1"
+    "@az/common-configs" "9.6.2"
     "@az/utility" "2.7.0"
     "@fortawesome/fontawesome-free-solid" "^5.0.13"
     "@fortawesome/fontawesome-svg-core" "^6.2.0"
@@ -33,6 +33,13 @@
     tslib "^2.4.0"
     utility-types "^3.10.0"
 
+"@az/common-configs@9.6.2":
+  version "9.6.2"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/common-configs/-/common-configs-9.6.2.tgz#47318bef537711196ffb33bfd269ed2be3ef5593"
+  integrity sha512-cfqmkeNfCNo+t0kN5Rvw7U/UvvQ1dXXwGspVZR7qvoUGcKTub27AsNNGBXk7daGRVIDs+DJyhdNXWX8gKm0azQ==
+  dependencies:
+    lodash "^4.17.15"
+
 "@az/common-configs@^9.6.1":
   version "9.6.1"
   resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/common-configs/-/common-configs-9.6.1.tgz#5d37e47cc0a925e81b199de8046e753081749e1c"
@@ -40,10 +47,10 @@
   dependencies:
     lodash "^4.17.15"
 
-"@az/internal-protos@^1.5.1":
-  version "1.5.1"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/internal-protos/-/internal-protos-1.5.1.tgz#c938312348daa3cd65edd14c9a65c110f3131730"
-  integrity sha512-QM7zkdympookpK8+WXaNSt5M8SE2epfvyXRJPevwFY7w/vI2d7IvCAwF0KwQeBskquo5ntU14wWzr3RSMzo7fg==
+"@az/internal-protos@^1.6.2":
+  version "1.6.2"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/internal-protos/-/internal-protos-1.6.2.tgz#b413722a3815d83455edc8ebff8da3c7ef379ba4"
+  integrity sha512-uvrPpYVaqMyj4tOEqVWToRmrPJNgX8G+71un3FHHSEOGkB7+InDVGqP4EA3LPkYuSrk8rR7quBmH1ptXB3Vjbw==
   dependencies:
     "@grpc/grpc-js" "^1.6.7"
     google-protobuf "^3.20.1"
