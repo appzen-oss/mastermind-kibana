@@ -10,12 +10,12 @@
     "@jridgewell/gen-mapping" "^0.1.0"
     "@jridgewell/trace-mapping" "^0.3.9"
 
-"@az/app-switcher@2.11.4":
-  version "2.11.4"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/app-switcher/-/app-switcher-2.11.4.tgz#579a12b8994b5a76a487343524829f4fe475a60a"
-  integrity sha512-MMkPK0hwzZmrouYBSmvgejpnKRFTmxdCQnzk3BbXS7rxy4imjtBkezNcunpRndIwjWC3hkEcOO8AjgelyL+GGg==
+"@az/app-switcher@2.11.8":
+  version "2.11.8"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/app-switcher/-/app-switcher-2.11.8.tgz#a047c1506566a5d46be4b065b618b4364c1eff73"
+  integrity sha512-OfDCUzKjBlqqSgusA94TAWvMSwb4y3kqFxdr7osf0gNc3lEPx5yB20wwZAeh+IJrDIDP1644ZogD2sU5M+YzsA==
   dependencies:
-    "@az/common-configs" "^9.11.1"
+    "@az/common-configs" "^9.11.4"
     "@az/utility" "2.8.3"
     "@fortawesome/fontawesome-free-solid" "^5.0.13"
     "@fortawesome/fontawesome-svg-core" "^6.2.0"
@@ -33,10 +33,10 @@
     tslib "^2.4.0"
     utility-types "^3.10.0"
 
-"@az/common-configs@^9.11.1":
-  version "9.11.1"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/common-configs/-/common-configs-9.11.1.tgz#90a288fa1b175ab2a7e506cafd666582ec02ebeb"
-  integrity sha512-LcKAPL0/T78VzztK9D79H5F/gFIahVMaOubqMvvQ2vkqNPTldWwrBut/9jBaI/5iuW4PDUPoHjREgUeAfXYJzg==
+"@az/common-configs@^9.11.4":
+  version "9.11.4"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/common-configs/-/common-configs-9.11.4.tgz#9bdabdd5314cf6dbdcfefb109e639a75ec84de38"
+  integrity sha512-4UGosSOYutuU6fsWb4pDHMSEqmKeWIMfZEbYuWmPi1TghmU9VprpxCDy7wijaryJHbgQcow/BBlAR2brU53e3w==
   dependencies:
     lodash "^4.17.15"
 
@@ -2429,10 +2429,10 @@
   resolved "https://registry.yarnpkg.com/@elastic/eslint-plugin-eui/-/eslint-plugin-eui-0.0.2.tgz#56b9ef03984a05cc213772ae3713ea8ef47b0314"
   integrity sha512-IoxURM5zraoQ7C8f+mJb9HYSENiZGgRVcG4tLQxE61yHNNRDXtGDWTZh8N1KIHcsqN1CEPETjuzBXkJYF/fDiQ==
 
-"@elastic/eui@30.2.0-64":
-  version "30.2.0-64"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@elastic/eui/-/eui-30.2.0-64.tgz#7d0cef48e1cc929faf90717e3ac1e6303b370276"
-  integrity sha512-8GQrHhvIfMqu2Hcv/5/OBADcMFEoGIkUjq/oMM6HNe8Ep/jPjzaVgrmb1TKm6cbkOIDachbWNybDUJQ7/PhlCw==
+"@elastic/eui@30.2.0-66":
+  version "30.2.0-66"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@elastic/eui/-/eui-30.2.0-66.tgz#653f41c91fd00d310f8c0ec3b3db581666f18f94"
+  integrity sha512-24P1GazkJw0pz19tOv/woQFAFqzVTkrKP+IVU4RlFRdbZUIK14n0KToP1q1ZLUQ6qSIDx8HLQN0aggKIbNlRTg==
   dependencies:
     "@types/chroma-js" "^2.0.0"
     "@types/lodash" "^4.14.160"
