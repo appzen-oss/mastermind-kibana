@@ -111,6 +111,7 @@ export const TopNavigation = ({
 
   if (
     application.history.location.pathname === '/app/approval' ||
+    application.history.location.pathname === '/app/user' ||
     application.history.location.pathname.includes('/app/invoice/invoice_details')
   ) {
     mobileViewOptions = {
