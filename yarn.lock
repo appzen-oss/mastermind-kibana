@@ -10,12 +10,12 @@
     "@jridgewell/gen-mapping" "^0.1.0"
     "@jridgewell/trace-mapping" "^0.3.9"
 
-"@az/app-switcher@2.11.13":
-  version "2.11.13"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/app-switcher/-/app-switcher-2.11.13.tgz#2ba6c38288e3dc0c7e4a77532d8efcf4ea3ae041"
-  integrity sha512-Osnvu9BaolgNFHJrY6XX5DQpSnHvF8VkqtY/LDkHPQr/QxJR9qQqF98JBtsbNb89fLRTN6Jq6hfl9mb59M8Jtg==
+"@az/app-switcher@2.11.14":
+  version "2.11.14"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/app-switcher/-/app-switcher-2.11.14.tgz#a7baed54c7c0511e6d0c935ff3ce06f725612595"
+  integrity sha512-uma3uIGgIcn16GYJ7/rNzYC9n35EB9DgcRLr9RIwYjTUUCgdaD9HeNWP7RWgRb9jED4e1j1m9cXvtYMLE7p6uA==
   dependencies:
-    "@az/common-configs" "^9.11.5"
+    "@az/common-configs" "^9.11.6"
     "@az/utility" "2.8.3"
     "@fortawesome/fontawesome-free-solid" "^5.0.13"
     "@fortawesome/fontawesome-svg-core" "^6.2.0"
@@ -33,17 +33,10 @@
     tslib "^2.4.0"
     utility-types "^3.10.0"
 
-"@az/common-configs@^9.11.5":
-  version "9.11.5"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/common-configs/-/common-configs-9.11.5.tgz#e862e5de158ad5c5f0791283927fe03c8e812a03"
-  integrity sha512-WtkGnex1C8uAbkPjbJsvJnXJL8/ubYxE7d7CjEG+nFdKicvNWZMFI+ITCfo3EkUdW5s0gf9m5pLehnsrcUOzjQ==
-  dependencies:
-    lodash "^4.17.15"
-
-"@az/common-configs@^9.11.5":
-  version "9.11.5"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/common-configs/-/common-configs-9.11.5.tgz#e862e5de158ad5c5f0791283927fe03c8e812a03"
-  integrity sha512-WtkGnex1C8uAbkPjbJsvJnXJL8/ubYxE7d7CjEG+nFdKicvNWZMFI+ITCfo3EkUdW5s0gf9m5pLehnsrcUOzjQ==
+"@az/common-configs@^9.11.6":
+  version "9.11.6"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/common-configs/-/common-configs-9.11.6.tgz#4fe48efd2c0422650d0e2b92f33d753c558130f4"
+  integrity sha512-QDBkFW8GP0SPOU93SDjc8y22rCA7FVJO4PG3RzTJP0aT4a3rzicnrMWIR2OJ9ft/IuWUHLR/jP6OzFQZ5It2iw==
   dependencies:
     lodash "^4.17.15"
 
