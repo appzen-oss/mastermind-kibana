@@ -103,10 +103,10 @@ export const TopNavigation = ({
   const notificationsAPI = () => http.get('/api/mastermind_approver/notifications');
   const changePasswordAPI = (currentPassword: string, newPassword: string) =>
     http.post('/api/mastermind_security/change_password', {
-      query: {
+      body: JSON.stringify({
         currentPassword,
         newPassword,
-      },
+      }),
     });
 
   if (
