@@ -2125,6 +2125,13 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
+"@babel/runtime@^7.20.6":
+  version "7.25.4"
+  resolved "https://registry.npmjs.org/@babel/runtime/-/runtime-7.25.4.tgz#6ef37d678428306e7d75f054d5b1bdb8cf8aa8ee"
+  integrity sha512-DSgLeL/FNcpXuzav5wfYvHCGvynXkJbn3Zvc3823AEe9nPwW9IK4UoCSS5yGymmQzN0pCPvivtgS6/8U2kkm1w==
+  dependencies:
+    regenerator-runtime "^0.14.0"
+
 "@babel/template@^7.10.4", "@babel/template@^7.3.3", "@babel/template@^7.4.4":
   version "7.10.4"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.10.4.tgz#3251996c4200ebc71d1a8fc405fba940f36ba278"
@@ -8014,6 +8021,15 @@ am-i-a-dependency@1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/am-i-a-dependency/-/am-i-a-dependency-1.1.2.tgz#f9d3422304d6f642f821e4c407565035f6167f1f"
   integrity sha1-+dNCIwTW9kL4IeTEB1ZQNfYWfx8=
+
+amazon-quicksight-embedding-sdk@^2.8.0:
+  version "2.8.0"
+  resolved "https://registry.npmjs.org/amazon-quicksight-embedding-sdk/-/amazon-quicksight-embedding-sdk-2.8.0.tgz#01f3f12053887ff5e11f53b5fe0bac08821fa603"
+  integrity sha512-p1e2mRQfijwcwbrNXYXjScl1cYXKlo7HkmEKsbZCzqtipPkqmblSVEp4ZIKbASpwIjcLpZR325kAezmTYspdMw==
+  dependencies:
+    "@babel/runtime" "^7.20.6"
+    punycode "^2.1.1"
+    uuid "^9.0.0"
 
 amdefine@>=0.0.4:
   version "1.0.1"
@@ -26575,6 +26591,11 @@ regenerator-runtime@^0.13.1, regenerator-runtime@^0.13.3, regenerator-runtime@^0
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.5.tgz#d878a1d094b4306d10b9096484b33ebd55e26697"
   integrity sha512-ZS5w8CpKFinUzOwW3c83oPeVXoNsrLsaCoLtJvAClH135j/R77RuymhiSErhm2lKcwSCIpmvIWSbDkIfAqKQlA==
 
+regenerator-runtime@^0.14.0:
+  version "0.14.1"
+  resolved "https://registry.npmjs.org/regenerator-runtime/-/regenerator-runtime-0.14.1.tgz#356ade10263f685dda125100cd862c1db895327f"
+  integrity sha512-dYnhHh0nJoMfnkZs6GmmhFknAGRrLznOu5nc9ML+EJxGvrx6H7teuevqVqCuPcPK//3eDrrjQhehXVx9cnkGdw==
+
 regenerator-transform@^0.14.2:
   version "0.14.4"
   resolved "https://registry.yarnpkg.com/regenerator-transform/-/regenerator-transform-0.14.4.tgz#5266857896518d1616a78a0479337a30ea974cc7"
@@ -31156,6 +31177,11 @@ uuid@^8.0.0, uuid@^8.3.0:
   version "8.3.0"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.0.tgz#ab738085ca22dc9a8c92725e459b1d507df5d6ea"
   integrity sha512-fX6Z5o4m6XsXBdli9g7DtWgAx+osMsRRZFKma1mIUsLCz6vRvv+pz5VNbyu9UEDzpMWulZfvpgb/cmDXVulYFQ==
+
+uuid@^9.0.0:
+  version "9.0.1"
+  resolved "https://registry.npmjs.org/uuid/-/uuid-9.0.1.tgz#e188d4c8853cc722220392c424cd637f32293f30"
+  integrity sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==
 
 v8-compile-cache@^2.0.3, v8-compile-cache@^2.1.1:
   version "2.2.0"
