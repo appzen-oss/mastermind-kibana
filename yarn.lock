@@ -2436,10 +2436,10 @@
   resolved "https://registry.yarnpkg.com/@elastic/eslint-plugin-eui/-/eslint-plugin-eui-0.0.2.tgz#56b9ef03984a05cc213772ae3713ea8ef47b0314"
   integrity sha512-IoxURM5zraoQ7C8f+mJb9HYSENiZGgRVcG4tLQxE61yHNNRDXtGDWTZh8N1KIHcsqN1CEPETjuzBXkJYF/fDiQ==
 
-"@elastic/eui@30.2.0-85":
-  version "30.2.0-85"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@elastic/eui/-/eui-30.2.0-85.tgz#0a3bda245386d4ddee91c3ec16ecf7bf7555780c"
-  integrity sha512-GQ42XCVJoRyEs/wZJc93riPNEbxRlZXKgKowDpQQiyNmQSXyaBZC825No5NE7PBCnQpo4ddZVovznx23q9kRAw==
+"@elastic/eui@30.2.0-86":
+  version "30.2.0-86"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@elastic/eui/-/eui-30.2.0-86.tgz#d17ebfc560725cfbab417ed0d0423558ef42331d"
+  integrity sha512-ry6xEy50n0QYG65QuP384/iiQncUnr8oI3qvNAk8N7mZCu9MAozXU8M2zovHydc7mBUBFtC7cNcJLsgQMDH0+w==
   dependencies:
     "@types/chroma-js" "^2.0.0"
     "@types/is-hotkey" "^0.1.10"
@@ -2452,6 +2452,7 @@
     "@types/vfile-message" "^2.0.0"
     chroma-js "^2.1.0"
     classnames "^2.2.6"
+    dompurify "^3.1.7"
     escape-html "^1.0.3"
     highlight.js "^9.12.0"
     is-hotkey "^0.2.0"
@@ -13741,6 +13742,11 @@ dommatrix@^1.0.3:
   version "1.0.3"
   resolved "https://registry.npmjs.org/dommatrix/-/dommatrix-1.0.3.tgz#e7c18e8d6f3abdd1fef3dd4aa74c4d2e620a0525"
   integrity sha512-l32Xp/TLgWb8ReqbVJAFIvXmY7go4nTxxlWiAFyhoQw9RKEOHBZNnyGvJWqDVSPmq3Y9HlM4npqF/T6VMOXhww==
+
+dompurify@^3.1.7:
+  version "3.1.7"
+  resolved "https://registry.npmjs.org/dompurify/-/dompurify-3.1.7.tgz#711a8c96479fb6ced93453732c160c3c72418a6a"
+  integrity sha512-VaTstWtsneJY8xzy7DekmYWEOZcmzIe3Qb3zPd4STve1OBTa+e+WmS1ITQec1fZYXI3HCsOZZiSMpG6oxoWMWQ==
 
 domutils@1.1:
   version "1.1.6"
