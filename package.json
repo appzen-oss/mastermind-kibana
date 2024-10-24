@@ -102,7 +102,7 @@
     "yarn": "^1.21.1"
   },
   "dependencies": {
-    "@az/app-switcher": "^2.15.12",
+    "@az/app-switcher": "^2.15.13",
     "@az/common-configs": "^9.15.7",
     "@az/internal-protos": "1.7.18-dev",
     "@az/utility": "^2.8.3",
