@@ -104,7 +104,7 @@
   "dependencies": {
     "@az/common-configs": "^9.15.9",
     "@az/app-switcher": "^2.15.15",
-    "@az/internal-protos": "1.7.18-dev-nov-14-release-1",
+    "@az/internal-protos": "1.7.18-dev-nov-14-release-2",
     "@az/utility": "^2.8.3",
     "@babel/core": "^7.11.6",
     "@babel/runtime": "^7.11.2",
