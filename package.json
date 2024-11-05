@@ -104,7 +104,7 @@
   "dependencies": {
     "@az/common-configs": "^9.15.9",
     "@az/app-switcher": "^2.15.15",
-    "@az/internal-protos": "1.7.18-dev-activities-1",
+    "@az/internal-protos": "1.7.18-dev-nov-14-release-1",
     "@az/utility": "^2.8.3",
     "@babel/core": "^7.11.6",
     "@babel/runtime": "^7.11.2",
@@ -113,7 +113,7 @@
     "@elastic/datemath": "link:packages/elastic-datemath",
     "@elastic/elasticsearch": "7.10.0-rc.1",
     "@elastic/ems-client": "7.11.0",
-    "@elastic/eui": "30.2.0-88",
+    "@elastic/eui": "30.2.0-92",
     "@elastic/filesaver": "1.1.2",
     "@elastic/good": "8.1.1-kibana2",
     "@elastic/node-crypto": "1.2.1",

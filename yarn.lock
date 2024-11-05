@@ -40,10 +40,10 @@
   dependencies:
     lodash "^4.17.15"
 
-"@az/internal-protos@1.7.18-dev-activities-1":
-  version "1.7.18-dev-activities-1"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/internal-protos/-/internal-protos-1.7.18-dev-activities-1.tgz#4bfb7970a4e6e25837a99b89ff98730ab8a2de5f"
-  integrity sha512-Bi6ITpf0TcCaJJFkFZq15OQjvzjeiHkhFwQebpB6EjKYw3h7Go4+8VtA6eLRkIVpETD2Onzrqfdo3zxxYiRKLw==
+"@az/internal-protos@1.7.18-dev-nov-14-release-1":
+  version "1.7.18-dev-nov-14-release-1"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/internal-protos/-/internal-protos-1.7.18-dev-nov-14-release-1.tgz#e6107bbd5fe5290ea36e8353cb6e539e754f88e9"
+  integrity sha512-xRqpO8nInYDr6zkomZXSLmBFZsn5FdINfAiqdJDVlmwgQXBWvZV7jSc5z5LB2HTHIRbKwhepuSPWoDpyC/z3VQ==
   dependencies:
     "@grpc/grpc-js" "^1.6.7"
     google-protobuf "^3.20.1"
@@ -2436,10 +2436,10 @@
   resolved "https://registry.yarnpkg.com/@elastic/eslint-plugin-eui/-/eslint-plugin-eui-0.0.2.tgz#56b9ef03984a05cc213772ae3713ea8ef47b0314"
   integrity sha512-IoxURM5zraoQ7C8f+mJb9HYSENiZGgRVcG4tLQxE61yHNNRDXtGDWTZh8N1KIHcsqN1CEPETjuzBXkJYF/fDiQ==
 
-"@elastic/eui@30.2.0-88":
-  version "30.2.0-88"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@elastic/eui/-/eui-30.2.0-88.tgz#1efca53d5ff7603ad4452f1529614085d7ea8dbb"
-  integrity sha512-RHu1AYu0qH4aZUB+dQABfNFp4UYquApdDytvVB4QkHpzbKmyBEWkElcpf/8DfU1BT/P6Ir4AbwXuloaCQVwhHw==
+"@elastic/eui@30.2.0-92":
+  version "30.2.0-92"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@elastic/eui/-/eui-30.2.0-92.tgz#1b5945ccab7c1e9dea2dd2198695408748cd3255"
+  integrity sha512-b7HfKp9l70x89WN7avDyKVUzhL16u2EE9FIuvwXNbKQWJl0DjoLJjpfSgEChDda1faVR/MbJYEKRVTqICyV/5Q==
   dependencies:
     "@types/chroma-js" "^2.0.0"
     "@types/is-hotkey" "^0.1.10"
