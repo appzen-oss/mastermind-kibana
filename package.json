@@ -102,8 +102,8 @@
     "yarn": "^1.21.1"
   },
   "dependencies": {
-    "@az/common-configs": "9.17.0",
-    "@az/app-switcher": "2.16.1",
+    "@az/common-configs": "9.15.16",
+    "@az/app-switcher": "2.15.29",
     "@az/internal-protos": "1.7.24",
     "@az/utility": "^2.8.3",
     "@babel/core": "^7.11.6",
