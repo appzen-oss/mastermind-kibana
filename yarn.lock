@@ -2436,10 +2436,10 @@
   resolved "https://registry.yarnpkg.com/@elastic/eslint-plugin-eui/-/eslint-plugin-eui-0.0.2.tgz#56b9ef03984a05cc213772ae3713ea8ef47b0314"
   integrity sha512-IoxURM5zraoQ7C8f+mJb9HYSENiZGgRVcG4tLQxE61yHNNRDXtGDWTZh8N1KIHcsqN1CEPETjuzBXkJYF/fDiQ==
 
-"@elastic/eui@30.2.0-113":
-  version "30.2.0-113"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@elastic/eui/-/eui-30.2.0-113.tgz#c49bd2edf20dcb45885049f5a7dfc58912f3b551"
-  integrity sha512-m0wE5T5e+/qMs/UsMhUaKXjy+X0QJX9Ppl4UVv8DZCD+cAtd49W7l6+K2jPP2nEypvoaSN0AcmDUwlEnzT0RBQ==
+"@elastic/eui@30.2.0-114":
+  version "30.2.0-114"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@elastic/eui/-/eui-30.2.0-114.tgz#d0123c39e972c5d6d2e8a29851a3c0d86a10a48d"
+  integrity sha512-25txSR5Qah01TUevfPpIsMHn1mqz3FmcA8n0Ct8QKQl+OpAtPkQgBt3M1VRiaHh3OMTEfT4iFnDjPwNmrGcImA==
   dependencies:
     "@types/chroma-js" "^2.0.0"
     "@types/is-hotkey" "^0.1.10"
