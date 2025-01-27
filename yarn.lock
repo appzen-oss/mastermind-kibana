@@ -10,12 +10,12 @@
     "@jridgewell/gen-mapping" "^0.1.0"
     "@jridgewell/trace-mapping" "^0.3.9"
 
-"@az/app-switcher@2.15.31":
-  version "2.15.31"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/app-switcher/-/app-switcher-2.15.31.tgz#a2dd684ad2131cc1a48d446552d1e4d00e1d845c"
-  integrity sha512-s54XANPRM3LPqZ7qXq8tPZCrlZBiGcEIEImCIifSEthQUxoHVCkGr3r/G7jntUg3Hxysqrrpm2saDAyrUSqm/A==
+"@az/app-switcher@2.15.32":
+  version "2.15.32"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/app-switcher/-/app-switcher-2.15.32.tgz#a53ce9ab7ecbb7e842882b0c67a18b5aec0b5f0f"
+  integrity sha512-1ld0q5yNHYh1pQSjU/4YPmqybF1p2IBMzorfrbX5RBiO1NL45/xDqgFYlapyFp5bQHGJRF2P7UJ9Lfxa4ByKPA==
   dependencies:
-    "@az/common-configs" "9.15.18"
+    "@az/common-configs" "9.15.19"
     "@az/utility" "2.8.3"
     "@fortawesome/fontawesome-free-solid" "^5.0.13"
     "@fortawesome/fontawesome-svg-core" "^6.2.0"
@@ -33,10 +33,10 @@
     tslib "^2.4.0"
     utility-types "^3.10.0"
 
-"@az/common-configs@9.15.18":
-  version "9.15.18"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/common-configs/-/common-configs-9.15.18.tgz#7817d3ee20cd839f4773cfca587d316238a19ced"
-  integrity sha512-HFyf93d9hsd3QOErwOBrzzpwWaJRa4/x/UF2+7YHU6BrICvpetIVbxYn8GGhC+VT6ugDiBHlwON2zoQxjMk1PA==
+"@az/common-configs@9.15.19":
+  version "9.15.19"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/common-configs/-/common-configs-9.15.19.tgz#62a1d6359dbc7b964fe6636b94932aa89bcb14bd"
+  integrity sha512-vF14Ccjj8FSKxaOvBfepGOP/c5NpwLkHQfOOMjIb4CdgrvzJpQDwV6PrCo8+NR/eUcO7SbNWzk7J0XmS7aKyKQ==
   dependencies:
     lodash "^4.17.15"
 
