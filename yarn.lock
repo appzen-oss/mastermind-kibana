@@ -2438,7 +2438,8 @@
 
 "@elastic/eui@30.2.0-107":
   version "30.2.0-107"
-  resolved "file:../mastermind_eui/elastic-eui-30.2.0-107-text-color-update-2.tgz#c5cdf51cf97b5d436f52012aca0a06b01ab25558"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@elastic/eui/-/eui-30.2.0-107.tgz#0bf25cffeafa9a9a619edcd9458682d3fbc1ed75"
+  integrity sha512-7gwkj3bhfjala4hTeWsHFcVj9P/D9r/4GG+OuGwZA6/DWH7Bb2ZaA7mWfqEhXraSube7p5q9b/mpWKzr8K6+5Q==
   dependencies:
     "@types/chroma-js" "^2.0.0"
     "@types/is-hotkey" "^0.1.10"
