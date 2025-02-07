@@ -10,12 +10,12 @@
     "@jridgewell/gen-mapping" "^0.1.0"
     "@jridgewell/trace-mapping" "^0.3.9"
 
-"@az/app-switcher@2.16.16":
-  version "2.16.16"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/app-switcher/-/app-switcher-2.16.16.tgz#80e72cf072bc930928b28ecf00bf61424a68d52e"
-  integrity sha512-ZU68e4mSOrh7ckkNgM4HXVuK84yJtpTENWYU7ofFgHOnuJv7oHGMhTWVQPs5HrEXiSoM5nYUTItrnqOaVmBLwg==
+"@az/app-switcher@2.16.18":
+  version "2.16.18"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/app-switcher/-/app-switcher-2.16.18.tgz#f71ef82ac502043c551e649f992e48ff77a344bc"
+  integrity sha512-f+xHVvBSiMql3gz0WVbPuMvuIfV0FvHIidkup43LAt3UIPCwaCztYr7GcDYKBIV6nqC9YjuyLdI+k1pJUdXaxw==
   dependencies:
-    "@az/common-configs" "9.17.13"
+    "@az/common-configs" "9.17.15"
     "@az/utility" "2.8.3"
     "@fortawesome/fontawesome-free-solid" "^5.0.13"
     "@fortawesome/fontawesome-svg-core" "^6.2.0"
@@ -33,17 +33,17 @@
     tslib "^2.4.0"
     utility-types "^3.10.0"
 
-"@az/common-configs@9.17.13":
-  version "9.17.13"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/common-configs/-/common-configs-9.17.13.tgz#2a98d856bf7e62724edefe56a9bb74b6162fd186"
-  integrity sha512-04hRwSJsSejLZCCN4MN11c75NIru2UCyNtcnppKDdtFTEAxVCqJNJu5gw/6rpu4aNKWDWuHORUXuOhronmpP3w==
+"@az/common-configs@9.17.15":
+  version "9.17.15"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/common-configs/-/common-configs-9.17.15.tgz#cabdb3f497c38c2ff5e86e7c216c1ff824be84ab"
+  integrity sha512-t54n5o+Hh6DOQTA0JWyWv4sPttXuAQS/mcVtHq4wTR0WYKeTfjtkgdQjLx0yOFnpGdRZIdB4noMR+HDG0Hl+ww==
   dependencies:
     lodash "^4.17.15"
 
-"@az/internal-protos@1.7.25-pg11-dev":
-  version "1.7.25-pg11-dev"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/internal-protos/-/internal-protos-1.7.25-pg11-dev.tgz#ff2f1c842ab1267f6d32ea8f292db2a1c279e609"
-  integrity sha512-A82FWShnYAfj3f1XMWditHVh8iWvgJE3u7VndIHb3jLsAW6RRx92sAegvhK5Q3UCo2ptW3z2blLBR9DGRoko6Q==
+"@az/internal-protos@1.7.25":
+  version "1.7.25"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/internal-protos/-/internal-protos-1.7.25.tgz#3551bb31a1d4d65968d6ecd95707e4f6115842c5"
+  integrity sha512-gkJnKau1ir1PL9Y1Q4Ju6uaKxvWu/44PmYUHsFafHhZkNvSLNqvZoSrrHFfIwmOeyQemMrk/BnwwRPe9A93OyA==
   dependencies:
     "@grpc/grpc-js" "^1.6.7"
     google-protobuf "^3.20.1"
