@@ -10,10 +10,10 @@
     "@jridgewell/gen-mapping" "^0.1.0"
     "@jridgewell/trace-mapping" "^0.3.9"
 
-"@az/app-switcher@2.17.4":
-  version "2.17.4"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/app-switcher/-/app-switcher-2.17.4.tgz#d45b3c989af3e0724f695bde534b6fcd9dcf5a27"
-  integrity sha512-XspfleXnpLjXtroxWg9lEmZuLD5EIRgry7ANUXLw35bEOecXq7j1A1ZLJtDUahc8CHcnI0udfjlegnn5E9m3/Q==
+"@az/app-switcher@2.17.5":
+  version "2.17.5"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/app-switcher/-/app-switcher-2.17.5.tgz#02d5dca2dc9ed3ab534cc66faa6cc7244dd23d9a"
+  integrity sha512-KKaE+MmJxFJehBKXhzL86ExoanfnPseUmJAbafh7bs9uFDZNfl2cRWICo8jRdJVnTDYR8hnkTXdaBVJqiFHFrQ==
   dependencies:
     "@az/common-configs" "9.18.2"
     "@az/utility" "2.8.3"
@@ -2436,10 +2436,10 @@
   resolved "https://registry.yarnpkg.com/@elastic/eslint-plugin-eui/-/eslint-plugin-eui-0.0.2.tgz#56b9ef03984a05cc213772ae3713ea8ef47b0314"
   integrity sha512-IoxURM5zraoQ7C8f+mJb9HYSENiZGgRVcG4tLQxE61yHNNRDXtGDWTZh8N1KIHcsqN1CEPETjuzBXkJYF/fDiQ==
 
-"@elastic/eui@30.2.0-118":
-  version "30.2.0-118"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@elastic/eui/-/eui-30.2.0-118.tgz#5c8d90eeecb57a1bed000a71efab1a47a19011c4"
-  integrity sha512-fkfsFnhp7aUH1phNkQJHwRQNKUaXNWokVwtXKq5qtRdBEs5cigi+32aj8Z5QUBjbgHbdRMY1KWieCo0+vVxc1Q==
+"@elastic/eui@30.2.0-123":
+  version "30.2.0-123"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@elastic/eui/-/eui-30.2.0-123.tgz#3de50d5efe26a4a843d3d5a343374f01231c5464"
+  integrity sha512-n2jrVzQpUNhZ8Cxy1nR01/L73ZaXeGZeeHO1kwrLM+a4jhhlGIb0GkEun+qVJxzHv04SYOq7RLaXpFBGSxtVyw==
   dependencies:
     "@types/chroma-js" "^2.0.0"
     "@types/is-hotkey" "^0.1.10"
