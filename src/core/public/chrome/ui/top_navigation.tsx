@@ -82,7 +82,6 @@ export const TopNavigation = ({
   const loadingCount = useObservable(loadingCount$, 0);
 
   let mobileViewOptions = {
-    hideProductSwitcher: false,
     useWebUserMenu: false,
   };
   const switchToAdminAPI = () => http.get(`/api/mastermind_security/switchadmin`);
@@ -114,7 +113,6 @@ export const TopNavigation = ({
     application.history.location.pathname.includes('/app/invoice/invoice_details')
   ) {
     mobileViewOptions = {
-      hideProductSwitcher: true,
       useWebUserMenu: false,
     };
   }
