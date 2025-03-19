@@ -10,13 +10,13 @@
     "@jridgewell/gen-mapping" "^0.1.0"
     "@jridgewell/trace-mapping" "^0.3.9"
 
-"@az/app-switcher@2.17.8":
-  version "2.17.8"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/app-switcher/-/app-switcher-2.17.8.tgz#c5158fa818f626d922211deac06c6e81570410b3"
-  integrity sha512-9x7GShnoytdsRIyBChq47K9k9NooTtqdfy9dqXnpa+zKSWHUlvDnAIi/cuivP59OXlFae7LTZEOgj0enVZJazQ==
+"@az/app-switcher@2.18.8":
+  version "2.18.8"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/app-switcher/-/app-switcher-2.18.8.tgz#12bb2cf06e72fea3d6291fde971288af2ca03754"
+  integrity sha512-mpMJN53WKwuVa4CuMmLP/8SVokLR10OthhqmYO7sIS0nhp+CL2o8L63SBWsS1ph+RZ3LIU6sT2rNvaccHw1JQg==
   dependencies:
-    "@az/common-configs" "9.18.4"
-    "@az/utility" "2.8.3"
+    "@az/common-configs" "9.19.4"
+    "@az/utility" "2.8.4"
     "@fortawesome/fontawesome-free-solid" "^5.0.13"
     "@fortawesome/fontawesome-svg-core" "^6.2.0"
     "@fortawesome/free-solid-svg-icons" "^6.2.0"
@@ -33,10 +33,10 @@
     tslib "^2.4.0"
     utility-types "^3.10.0"
 
-"@az/common-configs@9.18.4":
-  version "9.18.4"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/common-configs/-/common-configs-9.18.4.tgz#cc58364919534e9bd8cb7f2f5481fb99da10ca96"
-  integrity sha512-Guvd+W61wTeJC4ru8J59uqx53EMvmEoF8WRPWoNOaEOmpyZX2ZJFknbLLUN0LOjTu+mHfKONxZQhs2QFQlKd+Q==
+"@az/common-configs@9.19.4":
+  version "9.19.4"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/common-configs/-/common-configs-9.19.4.tgz#f933c4c055a3c8958fbd55388c6d441f67005ca3"
+  integrity sha512-v7rf8IrIfj7bUEewgb+aeO8Q6qiGiFhwidO/FNlWq8cPsYaICcbV2/xm6WBhXexh2yRXJp+G9rrvuliDS0Kx/w==
   dependencies:
     lodash "^4.17.21"
 
@@ -51,7 +51,16 @@
     grpc_tools_node_protoc_ts "^5.3.2"
     path "^0.12.7"
 
-"@az/utility@2.8.3", "@az/utility@^2.8.3":
+"@az/utility@2.8.4":
+  version "2.8.4"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/utility/-/utility-2.8.4.tgz#183a69768794b36d941204ecb1007ab8f20a664d"
+  integrity sha512-r58NK1v8v92cdJqB23hsIXND7bCalAIQy5H54ru3MYuQZBWdjnXf2t/ZmVrQWYXBaDY9IOFA8OQJo2ypLd7w/w==
+  dependencies:
+    exceljs "^4.3.0"
+    json2csv "^5.0.7"
+    lodash "^4.17.20"
+
+"@az/utility@^2.8.3":
   version "2.8.3"
   resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/utility/-/utility-2.8.3.tgz#66777aef15b5d590c26422267d20376169e7b04d"
   integrity sha512-5632G+1YYKtODleXKetfC02k277CyVc/LewZKvKsI+sreKhfEh0K6bq+0Z2T1jrchGfk9RlTmNlPXAoEHCmy7A==
