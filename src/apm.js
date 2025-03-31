@@ -17,17 +17,37 @@
  * under the License.
  */
 
-const tracer = require('dd-trace').init({
-  service: process.env.DD_SERVICE || 'kibana',
-  env: process.env.NODE_ENV || 'enft',
-  logInjection: true,
-  runtimeMetrics: true,
-  profiling: true,
-  // Configure the agent to send traces to the Datadog cluster agent
-  agent: {
-    host: process.env.DD_AGENT_HOST || 'localhost',
-    port: process.env.DD_TRACE_AGENT_PORT || 8126
-  }
-});
+let tracer;
 
-module.exports = tracer;
+module.exports = function (serviceName = 'kibana') {
+  try {
+    tracer = require('dd-trace').init({
+      service: process.env.DD_SERVICE || serviceName,
+      env: process.env.NODE_ENV || 'enft',
+      logInjection: true,
+      runtimeMetrics: true,
+      profiling: true,
+      // Configure the agent to send traces to the Datadog cluster agent
+      agent: {
+        host: process.env.DD_AGENT_HOST || 'localhost',
+        port: process.env.DD_TRACE_AGENT_PORT || 8126
+      },
+      // Add debug logging to help troubleshoot connection issues
+      debug: true,
+      // Add tags for better identification in Datadog UI
+      tags: {
+        'service.version': process.env.npm_package_version || 'unknown'
+      }
+    });
+
+    console.log('Datadog APM tracer initialized successfully');
+  } catch (error) {
+    console.error('Failed to initialize Datadog APM tracer:', error);
+    // Export a dummy tracer to prevent application crashes
+    tracer = {
+      trace: () => {},
+      wrap: (fn) => fn
+    };
+  }
+  return tracer;
+};
