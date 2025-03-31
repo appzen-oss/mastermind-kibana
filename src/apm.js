@@ -24,7 +24,7 @@ module.exports = function (serviceName = 'kibana') {
     tracer = require('dd-trace').init({
       service: process.env.DD_SERVICE || serviceName,
       env: process.env.NODE_ENV || 'enft',
-      logInjection: true,
+      logInjection: false,
       runtimeMetrics: true,
       profiling: true,
       // Configure the agent to send traces to the Datadog cluster agent
@@ -37,6 +37,13 @@ module.exports = function (serviceName = 'kibana') {
       // Add tags for better identification in Datadog UI
       tags: {
         'service.version': process.env.npm_package_version || 'unknown'
+      },
+      // Disable automatic instrumentation to prevent conflicts with Kibana
+      plugins: false,
+      // Configure trace propagation for Node.js 12 compatibility
+      experimental: {
+        traceId128bit: false,
+        tracePropagationStyle: 'datadog'
       }
     });
 
