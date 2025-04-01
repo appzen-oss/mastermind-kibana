@@ -26,11 +26,17 @@ module.exports = function (serviceName = 'kibana') {
       env: process.env.NODE_ENV || 'enft',
       logInjection: false,
       runtimeMetrics: true,
-      profiling: true,
+      profiling: false,
       // Configure the agent to send traces to the Datadog cluster agent
       agent: {
         host: process.env.DD_AGENT_HOST || 'localhost',
-        port: process.env.DD_TRACE_AGENT_PORT || 8126
+        port: process.env.DD_TRACE_AGENT_PORT || 8126,
+        retries: 3,
+        backoff: {
+          type: 'exponential',
+          base: 1000,
+          max: 5000
+        }
       },
       // Add debug logging to help troubleshoot connection issues
       debug: true,
@@ -44,16 +50,30 @@ module.exports = function (serviceName = 'kibana') {
       experimental: {
         traceId128bit: false,
         tracePropagationStyle: 'datadog'
+      },
+      // Disable telemetry to prevent task conflicts
+      telemetry: {
+        enabled: false
       }
+    });
+
+    // Export a dummy getConfig function to prevent the TypeError
+    tracer.getConfig = () => ({
+      service: process.env.DD_SERVICE || serviceName,
+      env: process.env.NODE_ENV || 'enft'
     });
 
     console.log('Datadog APM tracer initialized successfully');
   } catch (error) {
     console.error('Failed to initialize Datadog APM tracer:', error);
-    // Export a dummy tracer to prevent application crashes
+    // Export a dummy tracer with getConfig to prevent application crashes
     tracer = {
       trace: () => {},
-      wrap: (fn) => fn
+      wrap: (fn) => fn,
+      getConfig: () => ({
+        service: process.env.DD_SERVICE || serviceName,
+        env: process.env.NODE_ENV || 'enft'
+      })
     };
   }
   return tracer;
