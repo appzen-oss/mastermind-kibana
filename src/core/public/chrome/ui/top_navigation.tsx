@@ -85,7 +85,7 @@ export const TopNavigation = ({
     useWebUserMenu: false,
   };
   const switchToAdminAPI = () => http.get(`/api/mastermind_security/switchadmin`);
-  const userDetailsAPI = () => http.get(`/api/mastermind_security/user`);
+  const userDetailsAPI = () => http.get(`/api/mastermind_security/user_details`);
   const zendeskTokenAPI = () => http.get('/api/mastermind_security/zendeskToken');
   const switchToUserAPI = (userId: string, customerId: string) =>
     http.get(`/api/mastermind_security/switchuser`, {
