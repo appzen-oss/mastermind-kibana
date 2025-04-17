@@ -79,6 +79,12 @@ export const Template: FunctionComponent<Props> = ({
           sizes="180x180"
           href={`${uiPublicUrl}/favicons/apple-touch-icon.png`}
         />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href={`${uiPublicUrl}/favicons/favicon-32x32.png`}
+        />
         <link rel="manifest" href={`${uiPublicUrl}/favicons/manifest.json`} />
         <link
           rel="mask-icon"
