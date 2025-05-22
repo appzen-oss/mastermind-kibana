@@ -47,10 +47,10 @@
   dependencies:
     lodash "^4.17.21"
 
-"@az/internal-protos@1.7.34":
-  version "1.7.34"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/internal-protos/-/internal-protos-1.7.34.tgz#31a6327d12fc36ea2d1666cde8d36590b645d1c4"
-  integrity sha512-HIXe694NO83eNK2kW4q3TTRWX2eYJ1gqXANISz5y0uAqbGVqM0jquh/1DmDCiGPd559EtcbamrLnRioFvD4glw==
+"@az/internal-protos@1.7.35-dev-automation-dual-write-v2":
+  version "1.7.35-dev-automation-dual-write-v2"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/internal-protos/-/internal-protos-1.7.35-dev-automation-dual-write-v2.tgz#d09139834cd4648f7909d0c1844e3f6147ca97dc"
+  integrity sha512-qbQUWCcMx0n0vtsRq+odSzZ1eLjeY1Uv1gKV/DmEcVsdQYYQDpQw5ABsKPv6wkQze8+ccGZr5tiU+zqi9YXH1w==
   dependencies:
     "@grpc/grpc-js" "^1.6.7"
     google-protobuf "^3.20.1"
