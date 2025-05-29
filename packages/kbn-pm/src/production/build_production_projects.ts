@@ -55,8 +55,13 @@ export async function buildProductionProjects({
 
   for (const batch of batchedProjects) {
     for (const project of batch) {
-      await deleteTarget(project);
-      await buildProject(project);
+      // await deleteTarget(project);
+      if (!(await hasTarget(project))) {
+        log.info(`Target location not found for ${project.name}, building`);
+        await buildProject(project);
+      } else {
+        log.info(`Target location found for ${project.name}, skipping`);
+      }
       await copyToBuild(project, kibanaRoot, buildRoot);
     }
   }
@@ -102,6 +107,12 @@ async function deleteTarget(project: Project) {
   if (await isDirectory(targetDir)) {
     await del(targetDir, { force: true });
   }
+}
+
+async function hasTarget(project: Project) {
+  const targetDir = project.targetLocation;
+
+  return await isDirectory(targetDir);
 }
 
 async function buildProject(project: Project) {
