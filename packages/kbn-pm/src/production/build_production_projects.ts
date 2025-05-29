@@ -56,6 +56,12 @@ export async function buildProductionProjects({
   for (const batch of batchedProjects) {
     for (const project of batch) {
       // await deleteTarget(project);
+      // x-pack has a target folder which comes from yarn kbn bootstrap
+      // but the build created a "build" folder, which is different than all other packages
+      // check line 88, it's being built explicitly
+      if (project.name === 'x-pack') {
+        await deleteTarget(project);
+      }
       if (!(await hasTarget(project))) {
         log.info(`Target location not found for ${project.name}, building`);
         await buildProject(project);
