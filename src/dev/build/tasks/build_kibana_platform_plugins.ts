@@ -40,6 +40,7 @@ export const BuildKibanaPlatformPlugins: Task = {
       watch: false,
       dist: true,
       includeCoreBundle: true,
+      filter: ['!mastermind*'],
     });
 
     const reporter = CiStatsReporter.fromEnv(log);
