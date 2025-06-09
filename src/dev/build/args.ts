@@ -44,6 +44,7 @@ export function readCliArgs(argv: string[]) {
       'silent',
       'debug',
       'help',
+      'build-kibana-plugins',
     ],
     alias: {
       v: 'verbose',
@@ -109,6 +110,7 @@ export function readCliArgs(argv: string[]) {
     createDockerPackage: isOsPackageDesired('docker'),
     createDockerUbiPackage: isOsPackageDesired('docker') && !Boolean(flags['skip-docker-ubi']),
     targetAllPlatforms: Boolean(flags['all-platforms']),
+    buildKibanaPlugins: Boolean(flags['build-kibana-plugins']),
   };
 
   return {

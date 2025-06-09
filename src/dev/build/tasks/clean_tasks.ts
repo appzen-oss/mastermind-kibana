@@ -26,9 +26,16 @@ export const Clean: GlobalTask = {
   description: 'Cleaning artifacts from previous builds',
 
   async run(config, log) {
+    const pluginsPaths = [
+      `!${config.resolveFromRepo('build/kibana')}`,
+      `${config.resolveFromRepo('build/kibana')}/*`,
+      `!${config.resolveFromRepo('build/kibana/x-pack')}`,
+      `!${config.resolveFromRepo('build/kibana/src')}`,
+    ];
     await deleteAll(
       [
-        config.resolveFromRepo('build'),
+        `${config.resolveFromRepo('build')}/*`,
+        ...pluginsPaths,
         config.resolveFromRepo('target'),
         config.resolveFromRepo('.node_binaries'),
       ],

@@ -58,6 +58,7 @@ if (showHelp) {
         --skip-node-download    {dim Reuse existing downloads of node.js}
         --verbose,-v            {dim Turn on verbose logging}
         --no-debug              {dim Turn off debug logging}
+        --build-kibana-plugins  {dim Build the kibana plugins}
     `) + '\n'
   );
   process.exit(1);

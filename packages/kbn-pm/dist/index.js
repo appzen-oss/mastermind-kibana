@@ -59658,8 +59658,21 @@ async function buildProductionProjects({
 
   for (const batch of batchedProjects) {
     for (const project of batch) {
-      await deleteTarget(project);
-      await buildProject(project);
+      // await deleteTarget(project);
+      // x-pack has a target folder which comes from yarn kbn bootstrap
+      // but the build created a "build" folder, which is different than all other packages
+      // check line 88, it's being built explicitly
+      if (project.name === 'x-pack') {
+        await deleteTarget(project);
+      }
+
+      if (!(await hasTarget(project))) {
+        _utils_log__WEBPACK_IMPORTED_MODULE_5__["log"].info(`Target location not found for ${project.name}, building`);
+        await buildProject(project);
+      } else {
+        _utils_log__WEBPACK_IMPORTED_MODULE_5__["log"].info(`Target location found for ${project.name}, skipping`);
+      }
+
       await copyToBuild(project, kibanaRoot, buildRoot);
     }
   }
@@ -59708,6 +59721,11 @@ async function deleteTarget(project) {
       force: true
     });
   }
+}
+
+async function hasTarget(project) {
+  const targetDir = project.targetLocation;
+  return await Object(_utils_fs__WEBPACK_IMPORTED_MODULE_4__["isDirectory"])(targetDir);
 }
 
 async function buildProject(project) {
