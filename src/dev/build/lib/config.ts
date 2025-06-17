@@ -28,6 +28,7 @@ interface Options {
   isRelease: boolean;
   targetAllPlatforms: boolean;
   versionQualifier?: string;
+  buildKibanaPlugins?: boolean;
 }
 
 interface Package {
@@ -40,7 +41,12 @@ interface Package {
 }
 
 export class Config {
-  static async create({ isRelease, targetAllPlatforms, versionQualifier }: Options) {
+  static async create({
+    isRelease,
+    targetAllPlatforms,
+    versionQualifier,
+    buildKibanaPlugins,
+  }: Options) {
     const pkgPath = resolve(__dirname, '../../../../package.json');
     const pkg: Package = loadJsonFile.sync(pkgPath);
 
@@ -54,7 +60,8 @@ export class Config {
         versionQualifier,
         pkg,
       }),
-      isRelease
+      isRelease,
+      buildKibanaPlugins
     );
   }
 
@@ -64,7 +71,8 @@ export class Config {
     private readonly nodeVersion: string,
     private readonly repoRoot: string,
     private readonly versionInfo: VersionInfo,
-    public readonly isRelease: boolean
+    public readonly isRelease: boolean,
+    private readonly buildKibanaPlugins?: boolean
   ) {}
 
   /**
@@ -169,5 +177,12 @@ export class Config {
    */
   resolveFromTarget(...subPaths: string[]) {
     return resolve(this.repoRoot, 'target', ...subPaths);
+  }
+
+  /**
+   * Get whether to build Kibana plugins
+   */
+  getBuildKibanaPlugins() {
+    return !!this.buildKibanaPlugins;
   }
 }
