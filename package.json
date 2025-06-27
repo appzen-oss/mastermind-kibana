@@ -103,7 +103,7 @@
   },
   "dependencies": {
     "@az/common-configs": "9.19.4",
-    "@az/app-switcher": "2.21.2",
+    "@az/app-switcher": "2.21.3",
     "@az/internal-protos": "1.7.38",
     "@az/utility": "^2.8.3",
     "@babel/core": "^7.11.6",
