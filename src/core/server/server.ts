@@ -115,8 +115,11 @@ export class Server {
 
   public async setup() {
     this.log.debug('setting up server');
-    console.log('isDDTraceInitialized', this.isDDTraceInitialized);
-    this.setupDDTrace();
+    const isDDTraceEnabled = process.env.DATADOG_TRACE_ENABLED?.toLowerCase() === 'true';
+    console.log('isDDTraceEnabled ', isDDTraceEnabled, process.env.DATADOG_TRACE_ENABLED);
+    if (isDDTraceEnabled) {
+      this.setupDDTrace();
+    }
     const setupTransaction = apm.startTransaction('server_setup', 'kibana_platform');
 
     const environmentSetup = await this.environment.setup();
