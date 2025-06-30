@@ -339,8 +339,7 @@ export class Server {
     process.emitWarning = function (warning, name, code) {
       if (
         typeof warning === 'string' &&
-        (warning.includes('dd-trace@v2.x release line reached end of life') ||
-          (warning.includes('dd-trace') && warning.includes('end of life')))
+        warning.includes('dd-trace@v2.x release line reached end of life')
       ) {
         return; // Ignore dd-trace EOL warnings
       }
@@ -349,11 +348,7 @@ export class Server {
     const tracerInit = tracer.init({
       plugins: true,
     });
+    // eslint-disable-next-line no-console
     console.log('tracer.init', tracerInit);
-
-    // Restore original warning handler after a brief delay
-    setTimeout(() => {
-      process.emitWarning = originalEmitWarning;
-    }, 1000);
   }
 }
