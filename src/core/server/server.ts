@@ -18,6 +18,7 @@
  */
 
 import apm from 'elastic-apm-node';
+import { tracer } from 'dd-trace';
 import { config as pathConfig } from '@kbn/utils';
 import { mapToObject } from '@kbn/std';
 import { ConfigService, Env, RawConfigurationProvider, coreDeprecationProvider } from './config';
@@ -81,6 +82,7 @@ export class Server {
   #pluginsInitialized?: boolean;
   private coreStart?: InternalCoreStart;
   private readonly logger: LoggerFactory;
+  private isDDTraceInitialized = false;
 
   constructor(
     rawConfigProvider: RawConfigurationProvider,
@@ -113,6 +115,10 @@ export class Server {
 
   public async setup() {
     this.log.debug('setting up server');
+    const isDDTraceEnabled = process.env.DATADOG_TRACE_ENABLED?.toLowerCase() === 'true';
+    if (isDDTraceEnabled) {
+      this.setupDDTrace();
+    }
     const setupTransaction = apm.startTransaction('server_setup', 'kibana_platform');
 
     const environmentSetup = await this.environment.setup();
@@ -322,5 +328,24 @@ export class Server {
       }
       await this.configService.setSchema(descriptor.path, descriptor.schema);
     }
+  }
+  private setupDDTrace() {
+    if (this.isDDTraceInitialized) {
+      return;
+    }
+    this.isDDTraceInitialized = true;
+    const originalEmitWarning = process.emitWarning;
+    process.emitWarning = function (warning, name, code) {
+      if (
+        typeof warning === 'string' &&
+        warning.includes('dd-trace@v2.x release line reached end of life')
+      ) {
+        return; // Ignore dd-trace EOL warnings
+      }
+      return originalEmitWarning.call(this, warning, name, code);
+    };
+    tracer.init({
+      plugins: true,
+    });
   }
 }
