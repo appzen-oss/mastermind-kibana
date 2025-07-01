@@ -116,7 +116,6 @@ export class Server {
   public async setup() {
     this.log.debug('setting up server');
     const isDDTraceEnabled = process.env.DATADOG_TRACE_ENABLED?.toLowerCase() === 'true';
-    console.log('isDDTraceEnabled ', isDDTraceEnabled, process.env.DATADOG_TRACE_ENABLED);
     if (isDDTraceEnabled) {
       this.setupDDTrace();
     }
@@ -348,7 +347,5 @@ export class Server {
     const tracerInit = tracer.init({
       plugins: true,
     });
-    // eslint-disable-next-line no-console
-    console.log('tracer.init', tracerInit);
   }
 }
