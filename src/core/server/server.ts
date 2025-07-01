@@ -344,7 +344,7 @@ export class Server {
       }
       return originalEmitWarning.call(this, warning, name, code);
     };
-    const tracerInit = tracer.init({
+    tracer.init({
       plugins: true,
     });
   }
