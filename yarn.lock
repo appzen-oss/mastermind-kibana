@@ -10,12 +10,12 @@
     "@jridgewell/gen-mapping" "^0.1.0"
     "@jridgewell/trace-mapping" "^0.3.9"
 
-"@az/app-switcher@2.21.5":
-  version "2.21.5"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/app-switcher/-/app-switcher-2.21.5.tgz#603be98055ccfa15c0131925854ce637739be38f"
-  integrity sha512-LrkJxqVfwng4h+OEaT8aag2N66O3VzY/5CoMxPBNoA2ORpMN0jpcOVC4ugP/IXlpNigTI6MP08khw548kYy6Nw==
+"@az/app-switcher@2.22.1":
+  version "2.22.1"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/app-switcher/-/app-switcher-2.22.1.tgz#10470f64dab4425a44ef494a17561a53b9336583"
+  integrity sha512-KFyW41Br2is361BcT99mlFfPq9/sunDvlfn7T54De/kLwGt/ctoEuGW0n4C+HhNp+dEfviur/O4c9iEfr9dmog==
   dependencies:
-    "@az/common-configs" "9.22.0"
+    "@az/common-configs" "9.23.0"
     "@az/utility" "2.8.4"
     "@fortawesome/fontawesome-free-solid" "^5.0.13"
     "@fortawesome/fontawesome-svg-core" "^6.2.0"
@@ -40,10 +40,10 @@
   dependencies:
     lodash "^4.17.21"
 
-"@az/common-configs@9.22.0":
-  version "9.22.0"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/common-configs/-/common-configs-9.22.0.tgz#500c583c2549fb49c167a2a108f3a85e2b837dab"
-  integrity sha512-DbIP8A3bQ7KLgQ4oWX2pVZSWHCHr7AJFRPU/npgV8t3bd3JDu69hpLd1DENbZ2mjvi0sQlge0lTqC7GyfEyEEg==
+"@az/common-configs@9.23.0":
+  version "9.23.0"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/common-configs/-/common-configs-9.23.0.tgz#eeab58250b047b9877a0dcdfa9511159bbb0183e"
+  integrity sha512-PHrQMLMa6o9VXgYWKlJ5qhMgW55/0wrTeSmfccuFKobTvzrSXECweZTEMss1Wr6SnqtVi/VwwgOIdtHtdMNR0w==
   dependencies:
     lodash "^4.17.21"
 
