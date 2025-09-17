@@ -94,7 +94,8 @@ export class Reporter {
           this.reportApplicationUsage();
 
           // We also want to send the report now because intervals and timeouts be stalled when too long in the "hidden" state
-          this.sendReports();
+          // commenting this out, as it runs in a loop and causes the page to freeze on closing another tab
+          // this.sendReports();
         }
       });
     }
