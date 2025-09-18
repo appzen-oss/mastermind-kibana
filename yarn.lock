@@ -10,12 +10,12 @@
     "@jridgewell/gen-mapping" "^0.1.0"
     "@jridgewell/trace-mapping" "^0.3.9"
 
-"@az/app-switcher@2.23.2":
-  version "2.23.2"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/app-switcher/-/app-switcher-2.23.2.tgz#abc33095370aad41eccd9016075268b551696390"
-  integrity sha512-bzUALPK8wy2wcuNRzvGhiN/o5WksiOgyBC1OIcbR2mpfey2FLDp9GPZVCRc8ER+4UqSQvhjoLTbT45McFJgzwg==
+"@az/app-switcher@2.24.2":
+  version "2.24.2"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/app-switcher/-/app-switcher-2.24.2.tgz#64c08bd0e281c44b25afd0c5d7f356fdcc7bf283"
+  integrity sha512-/6BzLbYBMgyFSH8z4pLk+aOk0wB5KUoKwZ7mpyrvDR5Z7WSVuve9KZnz/KUPMNNn03OdxMg0DBBGGuKtcbEE0g==
   dependencies:
-    "@az/common-configs" "9.24.0"
+    "@az/common-configs" "9.25.1"
     "@az/utility" "2.8.7"
     "@fortawesome/fontawesome-free-solid" "^5.0.13"
     "@fortawesome/fontawesome-svg-core" "^6.2.0"
@@ -33,17 +33,10 @@
     tslib "^2.4.0"
     utility-types "^3.10.0"
 
-"@az/common-configs@9.19.4":
-  version "9.19.4"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/common-configs/-/common-configs-9.19.4.tgz#f933c4c055a3c8958fbd55388c6d441f67005ca3"
-  integrity sha512-v7rf8IrIfj7bUEewgb+aeO8Q6qiGiFhwidO/FNlWq8cPsYaICcbV2/xm6WBhXexh2yRXJp+G9rrvuliDS0Kx/w==
-  dependencies:
-    lodash "^4.17.21"
-
-"@az/common-configs@9.24.0":
-  version "9.24.0"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/common-configs/-/common-configs-9.24.0.tgz#e52f04c694c1f3d8877f63220429ce92a8f9d3a9"
-  integrity sha512-F4htbRwv5G6ZCh8qcWQUdn4Lpv74Ehy2KSE2sqSg73gGYlBfbfrxqyqSnbRMsvXCciPdlei3UCpobg4XM86nZw==
+"@az/common-configs@9.25.1":
+  version "9.25.1"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/common-configs/-/common-configs-9.25.1.tgz#a075d8432b50b78841f78d797a6dadbfe61cb55b"
+  integrity sha512-uvoaiXlY2t27BYH9c1IuKqV1t6I7o5rXF7feiuV1mKLalkbgbwRPAn7MZNpRUEdb1DgCIrdQUg2PVFPfiC1Acw==
   dependencies:
     lodash "^4.17.21"
 
