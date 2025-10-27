@@ -10,12 +10,12 @@
     "@jridgewell/gen-mapping" "^0.1.0"
     "@jridgewell/trace-mapping" "^0.3.9"
 
-"@az/app-switcher@2.24.8":
-  version "2.24.8"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/app-switcher/-/app-switcher-2.24.8.tgz#da50055896e978c27d4b062ef7c2e9c981892df5"
-  integrity sha512-jz20PxHhzDp+vD78ccRQB7upHQ49tSUznJlWfYdDvUhyopZmDZZwxW4W1G4OG983VTP03EUv1P9oCMYd9P97ig==
+"@az/app-switcher@2.25.6":
+  version "2.25.6"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/app-switcher/-/app-switcher-2.25.6.tgz#743d01b093e6ef91d01afe42ce62a2a32b262266"
+  integrity sha512-3t2XwneRvBjETP0Ms4qoHyj+6KmDmpz4FhtKa9ZFC7qBF8w+wmvrD4GrdGrArJqzXym6QoEaDiZ8Z7lDqwu66g==
   dependencies:
-    "@az/common-configs" "9.25.1"
+    "@az/common-configs" "9.26.0"
     "@az/utility" "2.8.7"
     "@fortawesome/fontawesome-free-solid" "^5.0.13"
     "@fortawesome/fontawesome-svg-core" "^6.2.0"
@@ -40,10 +40,17 @@
   dependencies:
     lodash "^4.17.21"
 
-"@az/internal-protos@1.7.41-dev.FY26CRT-R5.internal-proto-release-branch.v4":
-  version "1.7.41-dev.FY26CRT-R5.internal-proto-release-branch.v4"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/internal-protos/-/internal-protos-1.7.41-dev.FY26CRT-R5.internal-proto-release-branch.v4.tgz#2c89a21a4fbb50f7184907fbc9c25c30e259030c"
-  integrity sha512-nS2e0UZ6RKjcc8mf8v4BE4w050pxFnOwzmG1oRyK6JpcigKbjOUe2EMNu3w26SubgvZIG/+elnTkzNQlYDwV6g==
+"@az/common-configs@9.26.0":
+  version "9.26.0"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/common-configs/-/common-configs-9.26.0.tgz#b76d62e8a4bcf8a33df185f3e30c15be685577c1"
+  integrity sha512-3UamYRCw8ZnKCainKvqPPPVroxTMpakgN47T8ColjFjQQpgZM4vrU73Pjy7cWsL8+sMvU/e4PIBHpu5CIFH9WA==
+  dependencies:
+    lodash "^4.17.21"
+
+"@az/internal-protos@1.7.42-dev.user-groups-dev-protos-branch.v3":
+  version "1.7.42-dev.user-groups-dev-protos-branch.v3"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/internal-protos/-/internal-protos-1.7.42-dev.user-groups-dev-protos-branch.v3.tgz#bc6a989e085e753acd83f9cbee593dad4872d691"
+  integrity sha512-3/pqjDFm60w0tzPyfsedAnSbNrvIYC0mJrICEQ2tMlB/ZTZAQK1H4HHT3IBkCFdtkyQdEHxsfUokT2H01hjaFg==
   dependencies:
     "@grpc/grpc-js" "^1.6.7"
     google-protobuf "^3.20.1"
@@ -2480,10 +2487,10 @@
   resolved "https://registry.yarnpkg.com/@elastic/eslint-plugin-eui/-/eslint-plugin-eui-0.0.2.tgz#56b9ef03984a05cc213772ae3713ea8ef47b0314"
   integrity sha512-IoxURM5zraoQ7C8f+mJb9HYSENiZGgRVcG4tLQxE61yHNNRDXtGDWTZh8N1KIHcsqN1CEPETjuzBXkJYF/fDiQ==
 
-"@elastic/eui@30.2.0-145":
-  version "30.2.0-145"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@elastic/eui/-/eui-30.2.0-145.tgz#d391b9317e394c57f863b12f00ca06e8a92dcae7"
-  integrity sha512-1B427/oB/9k/8SddF5B6FXIGQKlg7/sN+qC0yVccZ2nEY3x2QkXIcCFPpChQHwZX1lcY8luqd3DsN9YDzwHVsg==
+"@elastic/eui@30.2.0-148":
+  version "30.2.0-148"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@elastic/eui/-/eui-30.2.0-148.tgz#0c97c156c021ab848f089ba662f80ae714404c40"
+  integrity sha512-rh1LQ1+ZJQUBB1DBWA9ot8htzIlJwquJJq/0Uz9gRBFzYUCHcvo+WHBMxi9mnbOYiP5dcoxnVaFCd8mtjccimg==
   dependencies:
     "@types/chroma-js" "^2.0.0"
     "@types/is-hotkey" "^0.1.10"
