@@ -42,15 +42,15 @@
 
 "@az/common-configs@9.26.0":
   version "9.26.0"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/common-configs/-/common-configs-9.26.0.tgz#b76d62e8a4bcf8a33df185f3e30c15be685577c1"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/common-configs/-/common-configs-9.26.0.tgz#b76d62e8a4bcf8a33df185f3e30c15be685577c1"
   integrity sha512-3UamYRCw8ZnKCainKvqPPPVroxTMpakgN47T8ColjFjQQpgZM4vrU73Pjy7cWsL8+sMvU/e4PIBHpu5CIFH9WA==
   dependencies:
     lodash "^4.17.21"
 
-"@az/internal-protos@1.7.41-dev.FY26CRT-R5.internal-proto-release-branch.v4":
-  version "1.7.41-dev.FY26CRT-R5.internal-proto-release-branch.v4"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/internal-protos/-/internal-protos-1.7.41-dev.FY26CRT-R5.internal-proto-release-branch.v4.tgz#2c89a21a4fbb50f7184907fbc9c25c30e259030c"
-  integrity sha512-nS2e0UZ6RKjcc8mf8v4BE4w050pxFnOwzmG1oRyK6JpcigKbjOUe2EMNu3w26SubgvZIG/+elnTkzNQlYDwV6g==
+"@az/internal-protos@1.7.42-dev.FY26CRT-R6.internal-proto-release-branch.v8":
+  version "1.7.42-dev.FY26CRT-R6.internal-proto-release-branch.v8"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/internal-protos/-/internal-protos-1.7.42-dev.FY26CRT-R6.internal-proto-release-branch.v8.tgz#abb631027b809ffc4ddeb195d6a842007f8a5f99"
+  integrity sha512-3TZf98Ay4Do8D8vl5WkTxOQ6e+y3fuK3+PhrtAvfO9vqJ0siRg/4b9lVFjD5oiQHE+nt/3IkCJQXeM1CZ+1nfw==
   dependencies:
     "@grpc/grpc-js" "^1.6.7"
     google-protobuf "^3.20.1"
@@ -2496,10 +2496,10 @@
   resolved "https://registry.yarnpkg.com/@elastic/eslint-plugin-eui/-/eslint-plugin-eui-0.0.2.tgz#56b9ef03984a05cc213772ae3713ea8ef47b0314"
   integrity sha512-IoxURM5zraoQ7C8f+mJb9HYSENiZGgRVcG4tLQxE61yHNNRDXtGDWTZh8N1KIHcsqN1CEPETjuzBXkJYF/fDiQ==
 
-"@elastic/eui@30.2.0-143":
-  version "30.2.0-143"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@elastic/eui/-/eui-30.2.0-143.tgz#483a793e43b546c28903c2062641bcdc90e52e0b"
-  integrity sha512-UV6/j8Tk1WWRBc2v1rtYPurSXaTxii0TukVWiknZaFwJOXKlIXsHPfdfHVuzZufFdhoV424B7KKQ4npxMIO7Mg==
+"@elastic/eui@30.2.0-149":
+  version "30.2.0-149"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@elastic/eui/-/eui-30.2.0-149.tgz#3de973e1f42e4503685496ce9b8b170f22f4dc11"
+  integrity sha512-AkCVoNxQuCLz4C62qG2tZF10LEO4jGUSgGIuZ+XP/IF1zPKof+wrQL1iY0UtDc4B9beposnaYE3wUo/Tv4NwIA==
   dependencies:
     "@types/chroma-js" "^2.0.0"
     "@types/is-hotkey" "^0.1.10"
