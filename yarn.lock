@@ -10,13 +10,13 @@
     "@jridgewell/gen-mapping" "^0.1.0"
     "@jridgewell/trace-mapping" "^0.3.9"
 
-"@az/app-switcher@2.25.6":
-  version "2.25.6"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/app-switcher/-/app-switcher-2.25.6.tgz#743d01b093e6ef91d01afe42ce62a2a32b262266"
-  integrity sha512-3t2XwneRvBjETP0Ms4qoHyj+6KmDmpz4FhtKa9ZFC7qBF8w+wmvrD4GrdGrArJqzXym6QoEaDiZ8Z7lDqwu66g==
+"@az/app-switcher@2.25.11":
+  version "2.25.11"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/app-switcher/-/app-switcher-2.25.11.tgz#f96030b5b6d20210d509ff21655f4823a9c00b58"
+  integrity sha512-yxIRuUa3JWCfc00OFOQ6roLMTE9SzW4YEKEDFQ5NKhzgMS7e6trWn5FYai118Sh/OPG8ZR0WfluxQITfXgD3ow==
   dependencies:
     "@az/common-configs" "9.26.0"
-    "@az/utility" "2.8.7"
+    "@az/utility" "2.8.8"
     "@fortawesome/fontawesome-free-solid" "^5.0.13"
     "@fortawesome/fontawesome-svg-core" "^6.2.0"
     "@fortawesome/free-solid-svg-icons" "^6.2.0"
@@ -58,7 +58,16 @@
     grpc_tools_node_protoc_ts "^5.3.2"
     path "^0.12.7"
 
-"@az/utility@2.8.7", "@az/utility@^2.8.7":
+"@az/utility@2.8.8":
+  version "2.8.8"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/utility/-/utility-2.8.8.tgz#e488a33b1dcc376c741f140d63461b6ea992b8cb"
+  integrity sha512-NSDCNztL90k252a8wHelEq3GIycuPfhbAkyLM4B4YH5hFAsLfMwoUXwjXeGvCVdJVzh2eiWL/c5ZIkwhSoI4OA==
+  dependencies:
+    exceljs "^4.3.0"
+    json2csv "^5.0.7"
+    lodash "^4.17.21"
+
+"@az/utility@^2.8.7":
   version "2.8.7"
   resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/utility/-/utility-2.8.7.tgz#50ed43716bae54a3344e13928a4af68e26813d47"
   integrity sha512-en65A/TxM6Ma01jUV+O/dt9Q2GdQLP9Cvf3j+6mlciyMD5PFo6w414qJ+QMaMYpO9vN1FvzzVuTCVgFqec99PQ==
