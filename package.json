@@ -103,7 +103,7 @@
   },
   "dependencies": {
     "@az/common-configs": "9.25.1",
-    "@az/app-switcher": "2.26.2",
+    "@az/app-switcher": "2.26.3",
     "@az/internal-protos": "1.7.43-dev.FY26CRT-R7.internal-proto-release-branch.v6",
     "@az/utility": "^2.8.7",
     "@babel/core": "^7.11.6",
