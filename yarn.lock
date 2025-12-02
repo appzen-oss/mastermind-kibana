@@ -47,16 +47,17 @@
   dependencies:
     lodash "^4.17.21"
 
-"@az/internal-protos@1.7.43-dev.FY26CRT-R7.internal-proto-release-branch.v7":
-  version "1.7.43-dev.FY26CRT-R7.internal-proto-release-branch.v7"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/internal-protos/-/internal-protos-1.7.43-dev.FY26CRT-R7.internal-proto-release-branch.v7.tgz#abcb377cc395ea0e9470a3cc2f2a94d97b33c45f"
-  integrity sha512-E0a4WE1xq96psUZMpvLWRyF881qax0TzvzUPZ82l7JxRk2xurNfBmrmI/cYjqhURM2SxXaMci/fYMwBuwdDeIg==
+"@az/internal-protos@1.7.43-dev.FY26CRT-R7.internal-proto-release-branch.v9":
+  version "1.7.43-dev.FY26CRT-R7.internal-proto-release-branch.v9"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/internal-protos/-/internal-protos-1.7.43-dev.FY26CRT-R7.internal-proto-release-branch.v9.tgz#5609b5622919528cdfacc3e95241be82792643e3"
+  integrity sha512-FhbRQxUCek3wAvY7PFgv7J9jG1Xo8guT7WF0W7ABxRZn/2N9BpuN4l66gNOg8f2OuVtTdQV/X3su7SyrR7Llcw==
   dependencies:
     "@grpc/grpc-js" "^1.6.7"
     google-protobuf "^3.20.1"
     grpc-tools "^1.11.2"
     grpc_tools_node_protoc_ts "^5.3.2"
     path "^0.12.7"
+    rxjs "^7.8.2"
 
 "@az/utility@2.8.8":
   version "2.8.8"
@@ -27740,6 +27741,13 @@ rxjs@^6.3.3, rxjs@^6.4.0, rxjs@^6.5.1, rxjs@^6.5.3, rxjs@^6.5.5, rxjs@^6.6.0:
   dependencies:
     tslib "^1.9.0"
 
+rxjs@^7.8.1, rxjs@^7.8.2:
+  version "7.8.2"
+  resolved "https://registry.npmjs.org/rxjs/-/rxjs-7.8.2.tgz#955bc473ed8af11a002a2be52071bf475638607b"
+  integrity sha512-dhKf903U/PQZY6boNNtAGdWbG85WAbjT/1xYoZIC7FAY0yWapOBQVsVrDl58W86//e1VpMNBtRV4MaXfdMySFA==
+  dependencies:
+    tslib "^2.1.0"
+
 safe-buffer@5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.1.1.tgz#893312af69b2123def71f57889001671eeb2c853"
@@ -30550,7 +30558,7 @@ tslib@^2.0.0:
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.0.1.tgz#410eb0d113e5b6356490eec749603725b021b43e"
   integrity sha512-SgIkNheinmEBgx1IUNirK0TUD4X9yjjBRTqqjggWCU3pUEqIk3/Uwl3yRixYKT6WjQuGiwDv4NomL3wqRCj+CQ==
 
-tslib@^2.4.0:
+tslib@^2.1.0, tslib@^2.4.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.4.0.tgz#7cecaa7f073ce680a05847aa77be941098f36dc3"
   integrity sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==

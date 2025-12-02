@@ -104,7 +104,7 @@
   "dependencies": {
     "@az/common-configs": "9.25.1",
     "@az/app-switcher": "2.26.3",
-    "@az/internal-protos": "1.7.43-dev.FY26CRT-R7.internal-proto-release-branch.v7",
+    "@az/internal-protos": "1.7.43-dev.FY26CRT-R7.internal-proto-release-branch.v9",
     "@az/utility": "^2.8.7",
     "@babel/core": "^7.11.6",
     "@babel/runtime": "^7.11.2",
@@ -318,7 +318,7 @@
     "request": "^2.88.0",
     "require-in-the-middle": "^5.0.2",
     "rison-node": "1.0.2",
-    "rxjs": "^6.5.5",
+    "rxjs": "^7.8.1",
     "sanitize-html": "^2.6.1",
     "seedrandom": "^3.0.5",
     "semver": "^7.5.2",
