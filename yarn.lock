@@ -2499,7 +2499,8 @@
 
 "@elastic/eui@30.2.0-152":
   version "30.2.0-152"
-  resolved "file:../mastermind_eui/elastic-eui-30.2.0-152-fix-9.tgz#a6d4cdbe529073e2c46737a88fe40408c92efd8d"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@elastic/eui/-/eui-30.2.0-152.tgz#eba5e318a8dbf818b5c36d97af40fdcd8d259cd0"
+  integrity sha512-iP/qn1uf9qWXQP6wODk33FXSGwX5WnD50JjzqVIjSFRtQaDzg04z7z0NuCnkQnpUrx1DwJh1LEHETkNRLvizew==
   dependencies:
     "@types/chroma-js" "^2.0.0"
     "@types/is-hotkey" "^0.1.10"
