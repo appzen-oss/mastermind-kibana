@@ -98,6 +98,21 @@ export const TopNavigation = ({
   const customerConfigAPI = () => http.get(`/api/mastermind_security/customer_config`);
   const appConfigAPI = () => http.get('/api/mastermind_security/app_config');
   const productsAPI = () => http.get('/api/mastermind_security/products');
+  const featureConfigAPI = async () => {
+    try {
+      const userDetails = await http.get(`/api/mastermind_security/user_details`);
+      const customerId = userDetails?.customerId;
+      if (!customerId) return [];
+      const response = await http.get('/api/mastermind_expense/console-rest-api', {
+        query: {
+          console_path: `console/rest/expenseservice/application/config/${customerId}`,
+        },
+      });
+      return response?.body || [];
+    } catch (error) {
+      return [];
+    }
+  };
   const notificationsAPI = () => http.get('/api/mastermind_approver/notifications');
   const changePasswordAPI = (currentPassword: string, newPassword: string) =>
     http.post('/api/mastermind_security/change_password', {
@@ -125,6 +140,7 @@ export const TopNavigation = ({
       logOutAPI={logoutAPI}
       appConfigAPI={appConfigAPI}
       customerConfigAPI={customerConfigAPI}
+      featureConfigAPI={featureConfigAPI}
       navigateToUrl={application.navigateToUrl}
       navigateToApp={application.navigateToApp}
       appTitle={appTitle}
