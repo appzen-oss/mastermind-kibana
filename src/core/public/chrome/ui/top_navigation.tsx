@@ -98,10 +98,8 @@ export const TopNavigation = ({
   const customerConfigAPI = () => http.get(`/api/mastermind_security/customer_config`);
   const appConfigAPI = () => http.get('/api/mastermind_security/app_config');
   const productsAPI = () => http.get('/api/mastermind_security/products');
-  const featureConfigAPI = async () => {
+  const featureConfigAPI = async (customerId?: string) => {
     try {
-      const userDetails = await http.get(`/api/mastermind_security/user_details`);
-      const customerId = userDetails?.customerId;
       if (!customerId) return [];
       const response = await http.get('/api/mastermind_expense/console-rest-api', {
         query: {
