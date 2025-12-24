@@ -10,12 +10,12 @@
     "@jridgewell/gen-mapping" "^0.1.0"
     "@jridgewell/trace-mapping" "^0.3.9"
 
-"@az/app-switcher@2.27.7":
-  version "2.27.7"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/app-switcher/-/app-switcher-2.27.7.tgz#604cc3deffb25e164d63c38262803d979167c873"
-  integrity sha512-Tt7NlgRjOdmq97pSrAtXZzZPOQy9lvtqg9wV5wytzoaXAGeiIIbad3qUsm2fOqqqBFOmCz9hMdYfcPjI3nrx8A==
+"@az/app-switcher@2.27.8":
+  version "2.27.8"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/app-switcher/-/app-switcher-2.27.8.tgz#3facf98b37fedc2248c6cc2b4f25733bc3125933"
+  integrity sha512-rKCFPbT7Jbrh23R+IEUJHRYMDPT/D62uZs5LRtKV9kWKdYnjqHwtb6Pe/4B9RDzIO9uLMMcP60mzi8m32T86Sw==
   dependencies:
-    "@az/common-configs" "9.28.0"
+    "@az/common-configs" "9.28.1"
     "@az/utility" "2.8.8"
     "@fortawesome/fontawesome-free-solid" "^5.0.13"
     "@fortawesome/fontawesome-svg-core" "^6.2.0"
@@ -33,17 +33,10 @@
     tslib "^2.4.0"
     utility-types "^3.10.0"
 
-"@az/common-configs@9.25.1":
-  version "9.25.1"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/common-configs/-/common-configs-9.25.1.tgz#a075d8432b50b78841f78d797a6dadbfe61cb55b"
-  integrity sha512-uvoaiXlY2t27BYH9c1IuKqV1t6I7o5rXF7feiuV1mKLalkbgbwRPAn7MZNpRUEdb1DgCIrdQUg2PVFPfiC1Acw==
-  dependencies:
-    lodash "^4.17.21"
-
-"@az/common-configs@9.28.0":
-  version "9.28.0"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/common-configs/-/common-configs-9.28.0.tgz#284557d08a068ed4f44efd28cf2a5eac54621edf"
-  integrity sha512-klRCn33ZxgxFmWrUDZnYvMZX9TzIZM2e5nJTK4yZKgb3/S9W+oKEFZK9vAzNtNz7xT7AGo2fO0WDhpa1GPMRCA==
+"@az/common-configs@9.28.1":
+  version "9.28.1"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/common-configs/-/common-configs-9.28.1.tgz#8f30d12a2959c15cff2fdfda27806003ff3914b3"
+  integrity sha512-eFz068EQJqJJZnLVtV1VwvpWKaFEd6KHFqxbFM5xdyB0cU0YpxWEoAgRYE85g1af7PKgKSavV9t2F/HnxF/Qzw==
   dependencies:
     lodash "^4.17.21"
 
@@ -27747,13 +27740,6 @@ rxjs@^6.6.7:
   dependencies:
     tslib "^1.9.0"
 
-rxjs@^7.8.2:
-  version "7.8.2"
-  resolved "https://registry.npmjs.org/rxjs/-/rxjs-7.8.2.tgz#955bc473ed8af11a002a2be52071bf475638607b"
-  integrity sha512-dhKf903U/PQZY6boNNtAGdWbG85WAbjT/1xYoZIC7FAY0yWapOBQVsVrDl58W86//e1VpMNBtRV4MaXfdMySFA==
-  dependencies:
-    tslib "^2.1.0"
-
 safe-buffer@5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.1.1.tgz#893312af69b2123def71f57889001671eeb2c853"
@@ -30564,7 +30550,7 @@ tslib@^2.0.0:
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.0.1.tgz#410eb0d113e5b6356490eec749603725b021b43e"
   integrity sha512-SgIkNheinmEBgx1IUNirK0TUD4X9yjjBRTqqjggWCU3pUEqIk3/Uwl3yRixYKT6WjQuGiwDv4NomL3wqRCj+CQ==
 
-tslib@^2.1.0, tslib@^2.4.0:
+tslib@^2.4.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.4.0.tgz#7cecaa7f073ce680a05847aa77be941098f36dc3"
   integrity sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==
