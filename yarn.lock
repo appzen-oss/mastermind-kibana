@@ -10,10 +10,10 @@
     "@jridgewell/gen-mapping" "^0.1.0"
     "@jridgewell/trace-mapping" "^0.3.9"
 
-"@az/app-switcher@2.27.9":
-  version "2.27.9"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/app-switcher/-/app-switcher-2.27.9.tgz#7bde9b4077a7d8045ddf556f7676f67fdc786044"
-  integrity sha512-qeMK+Q0u6iLjRAoHLYxVgFIYVZotPjItWNutAhTiiPLxTe0rmthcW53OIYrr3YhOTD8TYUaKq5cyMxSAgwRz3w==
+"@az/app-switcher@2.27.10":
+  version "2.27.10"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/app-switcher/-/app-switcher-2.27.10.tgz#fc918280904b7072910c3233ab5463672a5bcb88"
+  integrity sha512-jvumvWeya69X5WG2flVjR4b7tEFIMLmpf3BYtPqXV4T7FAJr3C6dfWy7NsvqVQH3CxNBqJCNzbJK99tVJARUTw==
   dependencies:
     "@az/common-configs" "9.28.1"
     "@az/utility" "2.8.8"
@@ -37,13 +37,6 @@
   version "9.28.1"
   resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/common-configs/-/common-configs-9.28.1.tgz#8f30d12a2959c15cff2fdfda27806003ff3914b3"
   integrity sha512-eFz068EQJqJJZnLVtV1VwvpWKaFEd6KHFqxbFM5xdyB0cU0YpxWEoAgRYE85g1af7PKgKSavV9t2F/HnxF/Qzw==
-  dependencies:
-    lodash "^4.17.21"
-
-"@az/common-configs@9.28.0":
-  version "9.28.0"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/common-configs/-/common-configs-9.28.0.tgz#284557d08a068ed4f44efd28cf2a5eac54621edf"
-  integrity sha512-klRCn33ZxgxFmWrUDZnYvMZX9TzIZM2e5nJTK4yZKgb3/S9W+oKEFZK9vAzNtNz7xT7AGo2fO0WDhpa1GPMRCA==
   dependencies:
     lodash "^4.17.21"
 
