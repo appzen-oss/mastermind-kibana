@@ -40,6 +40,13 @@
   dependencies:
     lodash "^4.17.21"
 
+"@az/common-configs@9.28.0":
+  version "9.28.0"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/common-configs/-/common-configs-9.28.0.tgz#284557d08a068ed4f44efd28cf2a5eac54621edf"
+  integrity sha512-klRCn33ZxgxFmWrUDZnYvMZX9TzIZM2e5nJTK4yZKgb3/S9W+oKEFZK9vAzNtNz7xT7AGo2fO0WDhpa1GPMRCA==
+  dependencies:
+    lodash "^4.17.21"
+
 "@az/internal-protos@1.7.45-dev-FY26CRT-R8-v1":
   version "1.7.45-dev-FY26CRT-R8-v1"
   resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/internal-protos/-/internal-protos-1.7.45-dev-FY26CRT-R8-v1.tgz#b7f6a086ac021fce97b899fc146ac04568745cf5"
