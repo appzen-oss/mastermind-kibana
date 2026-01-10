@@ -735,7 +735,7 @@
     "js-search": "^1.4.3",
     "jsdom": "13.1.0",
     "json-stringify-pretty-compact": "1.2.0",
-    "json5": "^1.0.1",
+    "json5": "^1.0.2",
     "jsondiffpatch": "0.4.1",
     "jsts": "^1.6.2",
     "kea": "^2.2.0",
