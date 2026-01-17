@@ -10,12 +10,12 @@
     "@jridgewell/gen-mapping" "^0.1.0"
     "@jridgewell/trace-mapping" "^0.3.9"
 
-"@az/app-switcher@2.26.3":
-  version "2.26.3"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/app-switcher/-/app-switcher-2.26.3.tgz#d40cd2a52b7e0016a82b73398234bb3124124bae"
-  integrity sha512-GDjrYMAHmVbIuey3QLP3OyfvJTrpsTRkJbZv5p/GdwcrdF8VVIZc0/iA+raMqQWnoj1pitCCGzBiinADH1hS/g==
+"@az/app-switcher@2.28.4":
+  version "2.28.4"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/app-switcher/-/app-switcher-2.28.4.tgz#a618f0324adfdae747707c125fb98d09551bcb94"
+  integrity sha512-tAZ1+yo31p51R5gGnC4hZKL7E5dIgoAa5gb//o2+4xsm83be6qoc7CrO9xA4FHBfpIQzTyz1XQPBocZo0MF5tg==
   dependencies:
-    "@az/common-configs" "9.27.0"
+    "@az/common-configs" "9.29.0"
     "@az/utility" "2.8.8"
     "@fortawesome/fontawesome-free-solid" "^5.0.13"
     "@fortawesome/fontawesome-svg-core" "^6.2.0"
