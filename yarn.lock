@@ -47,10 +47,10 @@
   dependencies:
     lodash "^4.17.21"
 
-"@az/internal-protos@1.7.46-dev-FY27CRT-R1-fraud-pack":
-  version "1.7.46-dev-FY27CRT-R1-fraud-pack"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/internal-protos/-/internal-protos-1.7.46-dev-FY27CRT-R1-fraud-pack.tgz#2595310dd2beaf87e7641c70aacd8408d319dc2d"
-  integrity sha512-f6oKFROqjoqFrZ/XW5UfhlhERQc5pJz/ALuINNVZwOY55eUgk/sbynmkdOgcKIRKuIld+RFu4StAv2toi1RxMA==
+"@az/internal-protos@1.7.46-dev-FY27CRT-R1-fraud-pack-v2":
+  version "1.7.46-dev-FY27CRT-R1-fraud-pack-v2"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/internal-protos/-/internal-protos-1.7.46-dev-FY27CRT-R1-fraud-pack-v2.tgz#65aab60435b62adbc1cd1a66d7692f2239d0c33f"
+  integrity sha512-ZAWxoflHNPV5aXXtoHHzQLTOJXul9MXTrf5mlb1OvayC7kuAh0f2CcE+2zDMXBbqOuXnYb0IvQliqLvHLy6mgg==
   dependencies:
     "@grpc/grpc-js" "^1.6.7"
     google-protobuf "^3.20.1"
