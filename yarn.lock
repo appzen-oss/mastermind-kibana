@@ -1573,8 +1573,7 @@
     uuid "^3.3.2"
 
 "@elastic/datemath@link:packages/elastic-datemath":
-  version "0.0.0"
-  uid ""
+  version "5.0.3"
 
 "@elastic/elasticsearch@7.10.0-rc.1":
   version "7.10.0-rc.1"
@@ -1597,8 +1596,7 @@
     semver "7.3.2"
 
 "@elastic/eslint-config-kibana@link:packages/elastic-eslint-config-kibana":
-  version "0.0.0"
-  uid ""
+  version "0.15.0"
 
 "@elastic/eslint-plugin-eui@0.0.2":
   version "0.0.2"
@@ -1726,7 +1724,6 @@
 
 "@elastic/safer-lodash-set@link:packages/elastic-safer-lodash-set":
   version "0.0.0"
-  uid ""
 
 "@elastic/ui-ace@0.2.3":
   version "0.2.3"
@@ -2877,132 +2874,149 @@
   integrity sha512-dfLbk+PwWvFzSxwk3n5ySL0hfBog779o8h68wK/7/APo/7cgyWp5jcXockbxdk5kFRkbeXWm4Fbi9FrdN381sA==
 
 "@kbn/ace@link:packages/kbn-ace":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
 
 "@kbn/analytics@link:packages/kbn-analytics":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
 
 "@kbn/apm-config-loader@link:packages/kbn-apm-config-loader":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
+  dependencies:
+    "@elastic/safer-lodash-set" "link:packages/elastic-safer-lodash-set"
+    "@kbn/utils" "link:packages/kbn-utils"
 
 "@kbn/babel-code-parser@link:packages/kbn-babel-code-parser":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
+  dependencies:
+    "@kbn/babel-preset" "link:packages/kbn-babel-preset"
 
 "@kbn/babel-preset@link:packages/kbn-babel-preset":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
 
 "@kbn/config-schema@link:packages/kbn-config-schema":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
 
 "@kbn/config@link:packages/kbn-config":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
+  dependencies:
+    "@elastic/safer-lodash-set" "link:packages/elastic-safer-lodash-set"
+    "@kbn/config-schema" "link:packages/kbn-config-schema"
+    "@kbn/logging" "link:packages/kbn-logging"
+    "@kbn/std" "link:packages/kbn-std"
 
 "@kbn/dev-utils@link:packages/kbn-dev-utils":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
+  dependencies:
+    "@kbn/utils" "link:packages/kbn-utils"
 
 "@kbn/es-archiver@link:packages/kbn-es-archiver":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
+  dependencies:
+    "@kbn/dev-utils" "link:packages/kbn-dev-utils"
+    "@kbn/test" "link:packages/kbn-test"
+    "@kbn/utils" "link:packages/kbn-utils"
 
 "@kbn/es@link:packages/kbn-es":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
+  dependencies:
+    "@kbn/dev-utils" "link:packages/kbn-dev-utils"
 
 "@kbn/eslint-import-resolver-kibana@link:packages/kbn-eslint-import-resolver-kibana":
-  version "0.0.0"
-  uid ""
+  version "2.0.0"
 
 "@kbn/eslint-plugin-eslint@link:packages/kbn-eslint-plugin-eslint":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
 
 "@kbn/expect@link:packages/kbn-expect":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
 
 "@kbn/i18n@link:packages/kbn-i18n":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
 
 "@kbn/interpreter@link:packages/kbn-interpreter":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
+  dependencies:
+    "@kbn/i18n" "link:packages/kbn-i18n"
 
 "@kbn/legacy-logging@link:packages/kbn-legacy-logging":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
+  dependencies:
+    "@kbn/utils" "link:packages/kbn-utils"
 
 "@kbn/logging@link:packages/kbn-logging":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
+  dependencies:
+    "@kbn/std" "link:packages/kbn-std"
 
 "@kbn/monaco@link:packages/kbn-monaco":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
 
 "@kbn/optimizer@link:packages/kbn-optimizer":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
+  dependencies:
+    "@kbn/babel-preset" "link:packages/kbn-babel-preset"
+    "@kbn/config" "link:packages/kbn-config"
+    "@kbn/dev-utils" "link:packages/kbn-dev-utils"
+    "@kbn/std" "link:packages/kbn-std"
+    "@kbn/ui-shared-deps" "link:packages/kbn-ui-shared-deps"
 
 "@kbn/plugin-generator@link:packages/kbn-plugin-generator":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
+  dependencies:
+    "@kbn/dev-utils" "link:packages/kbn-dev-utils"
 
 "@kbn/plugin-helpers@link:packages/kbn-plugin-helpers":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
+  dependencies:
+    "@kbn/dev-utils" "link:packages/kbn-dev-utils"
+    "@kbn/optimizer" "link:packages/kbn-optimizer"
 
 "@kbn/pm@link:packages/kbn-pm":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
+  dependencies:
+    "@kbn/utils" "link:packages/kbn-utils"
 
 "@kbn/release-notes@link:packages/kbn-release-notes":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
+  dependencies:
+    "@kbn/dev-utils" "link:packages/kbn-dev-utils"
+    "@kbn/utils" "link:packages/kbn-utils"
 
 "@kbn/std@link:packages/kbn-std":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
 
 "@kbn/storybook@link:packages/kbn-storybook":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
 
 "@kbn/telemetry-tools@link:packages/kbn-telemetry-tools":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
 
 "@kbn/test-subj-selector@link:packages/kbn-test-subj-selector":
-  version "0.0.0"
-  uid ""
+  version "0.2.1"
 
 "@kbn/test@link:packages/kbn-test":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
+  dependencies:
+    "@kbn/es" "link:packages/kbn-es"
+    "@kbn/i18n" "link:packages/kbn-i18n"
+    "@kbn/optimizer" "link:packages/kbn-optimizer"
 
 "@kbn/ui-framework@link:packages/kbn-ui-framework":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
 
 "@kbn/ui-shared-deps@link:packages/kbn-ui-shared-deps":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
+  dependencies:
+    "@kbn/i18n" "link:packages/kbn-i18n"
+    "@kbn/monaco" "link:packages/kbn-monaco"
 
 "@kbn/utility-types@link:packages/kbn-utility-types":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
 
 "@kbn/utils@link:packages/kbn-utils":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
+  dependencies:
+    "@kbn/config-schema" "link:packages/kbn-config-schema"
 
 "@mapbox/extent@0.4.0":
   version "0.4.0"
@@ -29421,9 +29435,9 @@ typescript@4.1.2, typescript@^3.0.3, typescript@^3.2.2, typescript@^3.3.3333, ty
   integrity sha512-thGloWsGH3SOxv1SoY7QojKi0tc+8FnOmiarEGMbd/lar7QOEd3hvlx3Fp5y6FlDUGl9L+pd4n2e+oToGMmhRQ==
 
 ua-parser-js@^0.7.18:
-  version "0.7.22"
-  resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.22.tgz#960df60a5f911ea8f1c818f3747b99c6e177eae3"
-  integrity sha512-YUxzMjJ5T71w6a8WWVcMGM6YWOTX27rCoIQgLXiWaxqXSx9D7DNjiGWn1aJIRSQ5qr0xuhra77bSIh6voR/46Q==
+  version "0.7.33"
+  resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.33.tgz#1d04acb4ccef9293df6f70f2c3d22f3030d8b532"
+  integrity sha512-s8ax/CeZdK9R/56Sui0WM6y9OFREJarMRHqLB2EwkovemBxNQ+Bqu8GAsUnVcXKgphb++ghr/B2BZx4mahujPw==
 
 uc.micro@^1.0.1, uc.micro@^1.0.5:
   version "1.0.5"
