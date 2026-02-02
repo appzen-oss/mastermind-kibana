@@ -111,6 +111,7 @@
     "@az/utility": "^2.8.7",
     "@babel/core": "^7.11.6",
     "@babel/runtime": "^7.11.2",
+    "@datadog/browser-rum": "^6.26.0",
     "@draft-js-plugins/editor": "^4.1.1",
     "@draft-js-plugins/mention": "^5.1.0",
     "@elastic/datemath": "link:packages/elastic-datemath",

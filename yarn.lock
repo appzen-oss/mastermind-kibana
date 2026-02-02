@@ -1449,6 +1449,26 @@
     enabled "2.0.x"
     kuler "^2.0.0"
 
+"@datadog/browser-core@6.26.0":
+  version "6.26.0"
+  resolved "https://registry.npmjs.org/@datadog/browser-core/-/browser-core-6.26.0.tgz#59a39c93478e0989aab89c02814c02c970b0a26c"
+  integrity sha512-F0KDzcmhpXPO3lr7uIMOc7t3rdvWqL3Jg/YQbODplwDGZYh99rtfU6M/6onDuImr4tsbiGtBJVcGdDj3rmJibQ==
+
+"@datadog/browser-rum-core@6.26.0":
+  version "6.26.0"
+  resolved "https://registry.npmjs.org/@datadog/browser-rum-core/-/browser-rum-core-6.26.0.tgz#45fe525b7ccc774d5f172dfd4735939490ea654d"
+  integrity sha512-2JFFGZ2TUoaWiSVBSBFJoy0j9QAqHSg8Kv6goRJc0XLK6OTNsStPZMVzRNKa4qtbsYQmRtdgFqo33JQEEXziGA==
+  dependencies:
+    "@datadog/browser-core" "6.26.0"
+
+"@datadog/browser-rum@^6.26.0":
+  version "6.26.0"
+  resolved "https://registry.npmjs.org/@datadog/browser-rum/-/browser-rum-6.26.0.tgz#7bf0d961b460037e17f1cf4cfa5303400f660118"
+  integrity sha512-4UtsEh5cgeYX5g60cVxviOc/4mZgECoIbsJEtMln88YoXxbgzqoSCoR3XssmNEv7NhG17OJjyXsuxtItg+kQIA==
+  dependencies:
+    "@datadog/browser-core" "6.26.0"
+    "@datadog/browser-rum-core" "6.26.0"
+
 "@datadog/native-appsec@^3.2.0":
   version "3.2.0"
   resolved "https://registry.npmjs.org/@datadog/native-appsec/-/native-appsec-3.2.0.tgz#ddeca06cbaba9c6905903d09d18013f81eedc8c3"

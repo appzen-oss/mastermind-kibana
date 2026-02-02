@@ -20,6 +20,7 @@
 import { i18n } from '@kbn/i18n';
 import { CoreSystem } from './core_system';
 import { ApmSystem } from './apm_system';
+import { initializeDatadogRUM } from '../utils/setup_rum';
 
 /** @internal */
 export async function __kbnBootstrap__() {
@@ -29,6 +30,10 @@ export async function __kbnBootstrap__() {
 
   let i18nError: Error | undefined;
   const apmSystem = new ApmSystem(injectedMetadata.vars.apmConfig, injectedMetadata.basePath);
+
+  if (process.env.NODE_ENV === 'production') {
+    initializeDatadogRUM(injectedMetadata.vars.datadogRum);
+  }
 
   await Promise.all([
     // eslint-disable-next-line no-console
