@@ -32,7 +32,12 @@ export async function __kbnBootstrap__() {
   const apmSystem = new ApmSystem(injectedMetadata.vars.apmConfig, injectedMetadata.basePath);
 
   if (process.env.NODE_ENV === 'production') {
-    initializeDatadogRUM(injectedMetadata.vars.datadogRum);
+    try {
+      initializeDatadogRUM(injectedMetadata.vars.datadogRum);
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('Failed to initialize Datadog RUM', error);
+    }
   }
 
   await Promise.all([
