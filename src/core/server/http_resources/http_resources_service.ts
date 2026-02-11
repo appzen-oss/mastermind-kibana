@@ -30,6 +30,7 @@ import {
 import { Logger } from '../logging';
 import { InternalRenderingServiceSetup } from '../rendering';
 import { CoreService } from '../../types';
+import { getDatadogRumConfig } from '../datadog_rum';
 
 import {
   InternalHttpResourcesSetup,
@@ -88,6 +89,9 @@ export class HttpResourcesService implements CoreService<InternalHttpResourcesSe
       async renderCoreApp(options: HttpResourcesRenderOptions = {}) {
         const body = await deps.rendering.render(request, context.core.uiSettings.client, {
           includeUserSettings: true,
+          vars: {
+            datadogRum: getDatadogRumConfig(),
+          },
         });
 
         return response.ok({
@@ -98,6 +102,9 @@ export class HttpResourcesService implements CoreService<InternalHttpResourcesSe
       async renderAnonymousCoreApp(options: HttpResourcesRenderOptions = {}) {
         const body = await deps.rendering.render(request, context.core.uiSettings.client, {
           includeUserSettings: false,
+          vars: {
+            datadogRum: getDatadogRumConfig(),
+          },
         });
 
         return response.ok({
