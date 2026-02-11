@@ -105,7 +105,7 @@
     "yarn": "^1.21.1"
   },
   "dependencies": {
-    "@az/app-switcher": "2.28.10",
+    "@az/app-switcher": "2.28.11",
     "@az/common-configs": "9.29.1",
     "@az/internal-protos": "1.7.46-dev-FY27CRT-R1-fraud-pack-v2",
     "@az/utility": "^2.8.7",
