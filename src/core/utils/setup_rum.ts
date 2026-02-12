@@ -26,6 +26,29 @@ interface DatadogRumConfig {
   enabled?: boolean;
 }
 
+const THIRD_PARTY_SERVICES = ['logrocket', 'heapanalytics', 'intercom', 'zendesk'];
+
+function shouldTraceUrl(url: string): boolean {
+  try {
+    const urlObj = new URL(url);
+    const hostname = urlObj.hostname.toLowerCase();
+
+    if (!hostname.includes('appzen.com')) {
+      return false;
+    }
+
+    for (const service of THIRD_PARTY_SERVICES) {
+      if (hostname.includes(service)) {
+        return false;
+      }
+    }
+
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 export function initializeDatadogRUM(rumConfig?: DatadogRumConfig) {
   if (!rumConfig?.enabled || !rumConfig?.applicationId || !rumConfig?.clientToken) {
     return;
@@ -44,7 +67,12 @@ export function initializeDatadogRUM(rumConfig?: DatadogRumConfig) {
     trackResources: true,
     trackLongTasks: true,
     defaultPrivacyLevel: 'mask-user-input',
-    allowedTracingUrls: [{ match: /https:\/\/.*\.appzen\.com/, propagatorTypes: ['datadog'] }],
+    allowedTracingUrls: [
+      {
+        match: shouldTraceUrl,
+        propagatorTypes: ['datadog'],
+      },
+    ],
     enableExperimentalFeatures: ['feature_flags'],
   });
 
