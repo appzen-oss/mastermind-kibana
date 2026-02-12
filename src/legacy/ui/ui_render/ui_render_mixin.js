@@ -22,6 +22,7 @@ import * as UiSharedDeps from '@kbn/ui-shared-deps';
 import { KibanaRequest } from '../../../core/server';
 import { AppBootstrap } from './bootstrap';
 import { getApmConfig } from '../apm';
+import { getDatadogRumConfig } from '../datadog_rum';
 
 /**
  * @typedef {import('../../server/kbn_server').default} KbnServer
@@ -161,6 +162,7 @@ export function uiRenderMixin(kbnServer, server, config) {
     );
     const vars = {
       apmConfig: getApmConfig(h.request.path),
+      datadogRum: getDatadogRumConfig(),
     };
     const content = await rendering.render(h.request, uiSettings, {
       includeUserSettings: true,

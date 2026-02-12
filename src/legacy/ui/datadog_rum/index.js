@@ -17,16 +17,6 @@
  * under the License.
  */
 
-/**
- * Gets Datadog RUM configuration from environment variables.
- * This runs on the server and is injected into the frontend via injectedMetadata.
- *
- * Environment Variables:
- * - DATADOG_RUM_ENABLED: "true" to enable RUM tracking
- * - DATADOG_RUM_APPLICATION_ID: Your Datadog RUM application ID
- * - DATADOG_RUM_CLIENT_TOKEN: Your Datadog RUM client token
- * - DATADOG_RUM_SITE: Your Datadog site (defaults to datadoghq.com)
- */
 export function getDatadogRumConfig() {
   return {
     enabled: process.env.DATADOG_RUM_ENABLED?.toLowerCase() === 'true',
