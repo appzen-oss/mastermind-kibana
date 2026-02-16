@@ -24,6 +24,7 @@ interface DatadogRumConfig {
   clientToken?: string;
   site?: string;
   enabled?: boolean;
+  environment?: string;
 }
 
 const THIRD_PARTY_SERVICES = ['logrocket', 'heapanalytics', 'intercom', 'zendesk'];
@@ -59,7 +60,7 @@ export function initializeDatadogRUM(rumConfig?: DatadogRumConfig) {
     clientToken: rumConfig.clientToken,
     site: rumConfig.site || 'datadoghq.com',
     service: 'kibana',
-    env: process.env.NODE_ENV || 'development',
+    env: rumConfig.environment || 'production',
     version: '8.0.0',
     sessionSampleRate: 100,
     sessionReplaySampleRate: 20,

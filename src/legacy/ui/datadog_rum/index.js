@@ -23,5 +23,6 @@ export function getDatadogRumConfig() {
     applicationId: process.env.DATADOG_RUM_APPLICATION_ID,
     clientToken: process.env.DATADOG_RUM_CLIENT_TOKEN,
     site: process.env.DATADOG_RUM_SITE || 'datadoghq.com',
+    environment: process.env.DATADOG_RUM_ENVIRONMENT || 'production',
   };
 }
