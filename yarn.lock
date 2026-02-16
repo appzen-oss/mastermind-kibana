@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@az/app-switcher@2.29.2":
-  version "2.29.2"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/app-switcher/-/app-switcher-2.29.2.tgz#1d2fc59e2ef472487b8e819f4ec6546c38bdfc7c"
-  integrity sha512-MKH9oLGxZZVVa4lOtAaBywRcuuN6AhImOTgISdzq1VsF7m1xTBSFkXY1DjEauTilNDqxcg5Y1lYFvr5Lq7DYRw==
+"@az/app-switcher@2.29.4":
+  version "2.29.4"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/app-switcher/-/app-switcher-2.29.4.tgz#4f46ef752c8daf57deda4784261d094735e15159"
+  integrity sha512-xyc+DO26bQC3bUJ7w8+HrMsrKOCvqa52ph0lECPcfeoCwst+Y1fH4V3a0BdsgzZSzkMBw21vzuqjCK/5g4R++g==
   dependencies:
     "@az/common-configs" "9.30.0"
     "@az/utility" "2.8.8"
