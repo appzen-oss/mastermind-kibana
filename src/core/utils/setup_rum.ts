@@ -25,6 +25,7 @@ interface DatadogRumConfig {
   site?: string;
   enabled?: boolean;
   environment?: string;
+  deploymentTag?: string;
 }
 
 const THIRD_PARTY_SERVICES = ['logrocket', 'heapanalytics', 'intercom', 'zendesk'];
@@ -76,6 +77,9 @@ export function initializeDatadogRUM(rumConfig?: DatadogRumConfig) {
     ],
     enableExperimentalFeatures: ['feature_flags'],
   });
+
+  datadogRum.setGlobalContextProperty('deployment_tag', rumConfig.deploymentTag);
+  (window as any).__DATADOG_RUM_INSTANCE__ = datadogRum;
 
   datadogRum.startSessionReplayRecording();
 }

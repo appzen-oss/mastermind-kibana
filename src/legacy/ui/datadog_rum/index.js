@@ -24,5 +24,6 @@ export function getDatadogRumConfig() {
     clientToken: process.env.DATADOG_RUM_CLIENT_TOKEN,
     site: process.env.DATADOG_RUM_SITE || 'datadoghq.com',
     environment: process.env.DATADOG_RUM_ENVIRONMENT || 'production',
+    deploymentTag: process.env.DATADOG_RUM_DEPLOYED_TAG || 'unknown',
   };
 }
