@@ -20,13 +20,6 @@
     styled-components "^5.3.11"
     tslib "^2.4.0"
 
-"@az/common-configs@9.29.1":
-  version "9.29.1"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/common-configs/-/common-configs-9.29.1.tgz#d80bf4c51461d2f312a379af54673694633c7156"
-  integrity sha512-x9uk3MSSsiyoYQVc+rdSfQErUjmXHbQlB0q0vwRPiIH3iOYEytRFcOgKoQP4G6ICIgyLHr0mZ+vo3bku+G691Q==
-  dependencies:
-    lodash "^4.17.21"
-
 "@az/common-configs@9.30.0":
   version "9.30.0"
   resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/common-configs/-/common-configs-9.30.0.tgz#9c0adce6ce07502219bc2d31e3c5a0c43ee5d15c"
