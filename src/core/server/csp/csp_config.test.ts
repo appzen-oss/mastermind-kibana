@@ -36,11 +36,12 @@ describe('CspConfig', () => {
   test('DEFAULT', () => {
     expect(CspConfig.DEFAULT).toMatchInlineSnapshot(`
       CspConfig {
-        "header": "script-src 'unsafe-eval' 'self'; worker-src blob: 'self'; style-src 'unsafe-inline' 'self'",
+        "header": "script-src 'unsafe-eval' 'self'; worker-src blob: 'self'; style-src 'unsafe-inline' 'self'; connect-src 'self' https://telemetry.elastic.co https://telemetry-staging.elastic.co",
         "rules": Array [
           "script-src 'unsafe-eval' 'self'",
           "worker-src blob: 'self'",
           "style-src 'unsafe-inline' 'self'",
+          "connect-src 'self' https://telemetry.elastic.co https://telemetry-staging.elastic.co",
         ],
         "strict": true,
         "warnLegacyBrowsers": true,
@@ -51,11 +52,12 @@ describe('CspConfig', () => {
   test('defaults from config', () => {
     expect(new CspConfig()).toMatchInlineSnapshot(`
       CspConfig {
-        "header": "script-src 'unsafe-eval' 'self'; worker-src blob: 'self'; style-src 'unsafe-inline' 'self'",
+        "header": "script-src 'unsafe-eval' 'self'; worker-src blob: 'self'; style-src 'unsafe-inline' 'self'; connect-src 'self' https://telemetry.elastic.co https://telemetry-staging.elastic.co",
         "rules": Array [
           "script-src 'unsafe-eval' 'self'",
           "worker-src blob: 'self'",
           "style-src 'unsafe-inline' 'self'",
+          "connect-src 'self' https://telemetry.elastic.co https://telemetry-staging.elastic.co",
         ],
         "strict": true,
         "warnLegacyBrowsers": true,
@@ -66,11 +68,12 @@ describe('CspConfig', () => {
   test('creates from partial config', () => {
     expect(new CspConfig({ strict: false, warnLegacyBrowsers: false })).toMatchInlineSnapshot(`
       CspConfig {
-        "header": "script-src 'unsafe-eval' 'self'; worker-src blob: 'self'; style-src 'unsafe-inline' 'self'",
+        "header": "script-src 'unsafe-eval' 'self'; worker-src blob: 'self'; style-src 'unsafe-inline' 'self'; connect-src 'self' https://telemetry.elastic.co https://telemetry-staging.elastic.co",
         "rules": Array [
           "script-src 'unsafe-eval' 'self'",
           "worker-src blob: 'self'",
           "style-src 'unsafe-inline' 'self'",
+          "connect-src 'self' https://telemetry.elastic.co https://telemetry-staging.elastic.co",
         ],
         "strict": false,
         "warnLegacyBrowsers": false,

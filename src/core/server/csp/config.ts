@@ -34,6 +34,7 @@ export const config = {
         `script-src 'unsafe-eval' 'self'`,
         `worker-src blob: 'self'`,
         `style-src 'unsafe-inline' 'self'`,
+        `connect-src 'self' https://telemetry.elastic.co https://telemetry-staging.elastic.co`,
       ],
     }),
     strict: schema.boolean({ defaultValue: true }),
