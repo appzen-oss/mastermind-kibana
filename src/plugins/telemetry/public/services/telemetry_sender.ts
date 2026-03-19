@@ -44,6 +44,10 @@ export class TelemetrySender {
   };
 
   private shouldSendReport = (): boolean => {
+    if (this.telemetryService.config.sendUsageFrom !== 'browser') {
+      return false;
+    }
+
     // check if opt-in for telemetry is enabled
     if (this.telemetryService.getIsOptedIn()) {
       if (!this.lastReported) {

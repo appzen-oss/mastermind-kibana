@@ -78,6 +78,16 @@ describe('TelemetrySender', () => {
   });
 
   describe('shouldSendReport', () => {
+    it('returns false when sendUsageFrom is server', () => {
+      const telemetryService = mockTelemetryService({ config: { sendUsageFrom: 'server' } });
+      telemetryService.getIsOptedIn = jest.fn().mockReturnValue(true);
+      const telemetrySender = new TelemetrySender(telemetryService);
+      const shouldSendRerpot = telemetrySender['shouldSendReport']();
+
+      expect(telemetryService.getIsOptedIn).not.toBeCalled();
+      expect(shouldSendRerpot).toBe(false);
+    });
+
     it('returns false whenever optIn is false', () => {
       const telemetryService = mockTelemetryService();
       telemetryService.getIsOptedIn = jest.fn().mockReturnValue(false);
