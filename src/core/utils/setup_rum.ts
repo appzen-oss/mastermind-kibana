@@ -30,6 +30,20 @@ interface DatadogRumConfig {
 
 const THIRD_PARTY_SERVICES = ['logrocket', 'heapanalytics', 'intercom', 'zendesk'];
 
+const EXCLUDED_ACTIVITY_DOMAINS = [
+  'logrocket',
+  'lr-intake.com',
+  'lr-in.com',
+  'lr-ingest.io',
+  'heapanalytics.com',
+  'intercom.io',
+  'intercomcdn.com',
+  'zendesk.com',
+  'zdassets.com',
+  'browser-intake-datadoghq.com',
+  'googleapis.com',
+];
+
 function shouldTraceUrl(url: string): boolean {
   try {
     const urlObj = new URL(url);
@@ -46,6 +60,15 @@ function shouldTraceUrl(url: string): boolean {
     }
 
     return true;
+  } catch {
+    return false;
+  }
+}
+
+function isExcludedActivityUrl(url: string): boolean {
+  try {
+    const hostname = new URL(url).hostname.toLowerCase();
+    return EXCLUDED_ACTIVITY_DOMAINS.some((domain) => hostname.includes(domain));
   } catch {
     return false;
   }
@@ -75,6 +98,7 @@ export function initializeDatadogRUM(rumConfig?: DatadogRumConfig) {
         propagatorTypes: ['datadog'],
       },
     ],
+    excludedActivityUrls: [isExcludedActivityUrl],
     enableExperimentalFeatures: ['feature_flags'],
   });
 
