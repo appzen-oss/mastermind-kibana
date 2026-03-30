@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@az/app-switcher@2.29.18-dev-inbox-settings-nav-v1":
-  version "2.29.18-dev-inbox-settings-nav-v1"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/app-switcher/-/app-switcher-2.29.18-dev-inbox-settings-nav-v1.tgz#470c538e5ec71ef973d895f9054a31b0bb39085d"
-  integrity sha512-7g2tzV6MQFXfaCT9FVMKnDw9cCgyUsD9sSnz2n1kp2McTbRNZ0ju/bT/cs4FgHs7uPMuA6/twZXK1zdEYD/0GA==
+"@az/app-switcher@2.29.22":
+  version "2.29.22"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/app-switcher/-/app-switcher-2.29.22.tgz#d83954219080648310d6a2ef90aae2054b01dc92"
+  integrity sha512-Tb9wPYQH6Ee2R+HZmtXceM9yAY/8lVdqCk5EzPYXvPtOae8QyE85EPh+0kq/ZBvDxoYFhRFQexAEdZlAZR9qLw==
   dependencies:
     "@az/common-configs" "9.30.0"
     "@az/utility" "2.8.8"
