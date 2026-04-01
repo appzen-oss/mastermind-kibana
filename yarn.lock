@@ -2,12 +2,12 @@
 # yarn lockfile v1
 
 
-"@az/app-switcher@2.29.18-dev-inbox-settings-nav-v1":
-  version "2.29.18-dev-inbox-settings-nav-v1"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/app-switcher/-/app-switcher-2.29.18-dev-inbox-settings-nav-v1.tgz#470c538e5ec71ef973d895f9054a31b0bb39085d"
-  integrity sha512-7g2tzV6MQFXfaCT9FVMKnDw9cCgyUsD9sSnz2n1kp2McTbRNZ0ju/bT/cs4FgHs7uPMuA6/twZXK1zdEYD/0GA==
+"@az/app-switcher@2.30.0-dev.8-logrocket":
+  version "2.30.0-dev.8-logrocket"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/app-switcher/-/app-switcher-2.30.0-dev.8-logrocket.tgz#e322df9d7f4c591330ee9b99bf78be565f6c8323"
+  integrity sha512-lNiQmml+cQineuw5kt02E7NqB0V9lS8XKtIUehZ2A5q4DPCAJc9JcJ5bTbJ0qQXS4gc5df8xLcExebUDPy8UEQ==
   dependencies:
-    "@az/common-configs" "9.30.0"
+    "@az/common-configs" "9.31.0"
     "@az/utility" "2.8.8"
     "@fortawesome/fontawesome-free-solid" "^5.0.13"
     "@fortawesome/fontawesome-svg-core" "^6.2.0"
@@ -16,7 +16,6 @@
     "@material-ui/core" "^4.2.1"
     "@material-ui/icons" "^4.2.1"
     classnames "2.2.6"
-    logrocket "^6.0.0"
     styled-components "^5.3.11"
     tslib "^2.4.0"
 
@@ -24,6 +23,13 @@
   version "9.30.0"
   resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/common-configs/-/common-configs-9.30.0.tgz#9c0adce6ce07502219bc2d31e3c5a0c43ee5d15c"
   integrity sha512-LPejGSsSZBfltUz1LTdg83cThsyoSVGGrhphlklW6Gfc0wwJZd6UmhXJK4KjUvifVbBPMk5aTxdfjSUNVeqrVA==
+  dependencies:
+    lodash "^4.17.21"
+
+"@az/common-configs@9.31.0":
+  version "9.31.0"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/common-configs/-/common-configs-9.31.0.tgz#9d0d507a30cc384155f85c356737af8e15b6ab16"
+  integrity sha512-E2hDaThiP4nPFQf9wJYrgQIf1O/UvuRF1CzpN9pypW9D2+mvURxBaHLzSfHRtE8/6grZaH8gxJRS5DEDH4uM0g==
   dependencies:
     lodash "^4.17.21"
 
@@ -20792,15 +20798,10 @@ loglevelnext@^1.0.1:
     es6-symbol "^3.1.1"
     object.assign "^4.1.0"
 
-logrocket@^2.1.2:
-  version "2.1.2"
-  resolved "https://registry.npmjs.org/logrocket/-/logrocket-2.1.2.tgz#5f6360c81c01797d67905de4851d54534deb9d0a"
-  integrity sha512-voHZcZYtXIh0oIT6I/9szdDSauKR98uGlVxovD6oIggm7nqdic5d1/dqRUhokXiXXtLkF7pr6QUrtwIwTETjIw==
-
-logrocket@^6.0.0:
-  version "6.0.2"
-  resolved "https://registry.yarnpkg.com/logrocket/-/logrocket-6.0.2.tgz#44b1255da4ea07a3cffe1744a58fa0f3bbb254d5"
-  integrity sha512-eKqWr/xJO+t7uddzv+pkFT68URqrmBaPta1PKbkOGM0QJ1fFjCNBR4AyWpLUeymSH/rRufuJenvQmN0uDvAb7Q==
+logrocket@^10.1.0:
+  version "10.1.1"
+  resolved "https://registry.npmjs.org/logrocket/-/logrocket-10.1.1.tgz#73a1cfbc2a22b666d5b9ecbeb135dc33ed12af19"
+  integrity sha512-Yv3ociIxbYxyY5sevTHS+I4ngtvQK6SGeeOBgg/X2R1hyqeHOPXTmrNUSu1+bG9g96VF0aR0rcyNwXDfuUFAtQ==
 
 lolex@^4.2.0:
   version "4.2.0"
