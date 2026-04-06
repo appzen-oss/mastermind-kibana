@@ -77,7 +77,7 @@ function usingWorkerProc<T>(
           ...(inspectFlag && config.inspectWorkers
             ? [`${inspectFlag}=${inspectPortCounter++}`]
             : []),
-          ...(config.maxWorkerCount <= 3 ? ['--max-old-space-size=2048'] : []),
+          '--max-old-space-size=4096',
         ],
         buffer: false,
         stderr: 'pipe',
