@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@az/app-switcher@2.30.2":
-  version "2.30.2"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/app-switcher/-/app-switcher-2.30.2.tgz#ff0407ee0a6c9496cba573e132c5a1b9a5ad12ff"
-  integrity sha512-LEm1uU/P3RWuAqeDFaQIXRsweMCwH/oTSeCGDhD5wNa5deVaYynueZAKXxl3dJcevoXih0qgR3Q2QSkiwIpmtg==
+"@az/app-switcher@2.30.3":
+  version "2.30.3"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/app-switcher/-/app-switcher-2.30.3.tgz#b244658ef63263c6e18ca125ea02700a220afba2"
+  integrity sha512-o+cbny2034lPCCSEB5x2MFALM2OGFHQH1hjFJMVQsTbv4CLZKJlJ36POyuCU9ndVnhZJQ+S0VI/prBit3lMnmQ==
   dependencies:
     "@az/common-configs" "9.31.0"
     "@az/utility" "2.8.8"
@@ -16,7 +16,6 @@
     "@material-ui/core" "^4.2.1"
     "@material-ui/icons" "^4.2.1"
     classnames "2.2.6"
-    logrocket "^6.0.0"
     styled-components "^5.3.11"
     tslib "^2.4.0"
 
@@ -20799,15 +20798,10 @@ loglevelnext@^1.0.1:
     es6-symbol "^3.1.1"
     object.assign "^4.1.0"
 
-logrocket@^2.1.2:
-  version "2.1.2"
-  resolved "https://registry.npmjs.org/logrocket/-/logrocket-2.1.2.tgz#5f6360c81c01797d67905de4851d54534deb9d0a"
-  integrity sha512-voHZcZYtXIh0oIT6I/9szdDSauKR98uGlVxovD6oIggm7nqdic5d1/dqRUhokXiXXtLkF7pr6QUrtwIwTETjIw==
-
-logrocket@^6.0.0:
-  version "6.0.2"
-  resolved "https://registry.yarnpkg.com/logrocket/-/logrocket-6.0.2.tgz#44b1255da4ea07a3cffe1744a58fa0f3bbb254d5"
-  integrity sha512-eKqWr/xJO+t7uddzv+pkFT68URqrmBaPta1PKbkOGM0QJ1fFjCNBR4AyWpLUeymSH/rRufuJenvQmN0uDvAb7Q==
+logrocket@^10.1.0:
+  version "10.1.1"
+  resolved "https://registry.npmjs.org/logrocket/-/logrocket-10.1.1.tgz#73a1cfbc2a22b666d5b9ecbeb135dc33ed12af19"
+  integrity sha512-Yv3ociIxbYxyY5sevTHS+I4ngtvQK6SGeeOBgg/X2R1hyqeHOPXTmrNUSu1+bG9g96VF0aR0rcyNwXDfuUFAtQ==
 
 lolex@^4.2.0:
   version "4.2.0"
