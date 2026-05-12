@@ -2,12 +2,12 @@
 # yarn lockfile v1
 
 
-"@az/app-switcher@2.30.5":
-  version "2.30.5"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/app-switcher/-/app-switcher-2.30.5.tgz#5eb18afd05ef9f9ae3d08b4bfd8cbcb52c6f6398"
-  integrity sha512-7UiTG1t+G0KJ8JNYD/UB93wB+8jB46UronO4EwXvJkmRlDmHHvdUPvaX5RjM95JA0884mhbB6etxY+2KfiMFyg==
+"@az/app-switcher@2.31.1-rule-engine-dev":
+  version "2.31.1-rule-engine-dev"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/app-switcher/-/app-switcher-2.31.1-rule-engine-dev.tgz#02b9d52957e1d2127093b269feae5859356b5803"
+  integrity sha512-p8VWVLPd72NwejA1Qo47nw0szR86YbYMoDo6lIc8pR07qe6CdVXEq6wC26V9x44gHXkMLUwDfpP09tKNB7IYRw==
   dependencies:
-    "@az/common-configs" "9.31.0"
+    "@az/common-configs" "9.33.0"
     "@az/utility" "2.8.8"
     "@fortawesome/fontawesome-free-solid" "^5.0.13"
     "@fortawesome/fontawesome-svg-core" "^6.2.0"
@@ -26,10 +26,10 @@
   dependencies:
     lodash "^4.17.21"
 
-"@az/common-configs@9.31.0":
-  version "9.31.0"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/common-configs/-/common-configs-9.31.0.tgz#9d0d507a30cc384155f85c356737af8e15b6ab16"
-  integrity sha512-E2hDaThiP4nPFQf9wJYrgQIf1O/UvuRF1CzpN9pypW9D2+mvURxBaHLzSfHRtE8/6grZaH8gxJRS5DEDH4uM0g==
+"@az/common-configs@9.33.0":
+  version "9.33.0"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/common-configs/-/common-configs-9.33.0.tgz#96e8276682dacfdd4a6d665189b9b88af54107f1"
+  integrity sha512-Vu0EFi4xsAVKIbEDX6cCTo6RuG2rsli2BjsqV4DZaIZfQT55TuNZ92PdQwriKiFMjfDXRPEqDFY5GqXcscAa/A==
   dependencies:
     lodash "^4.17.21"
 
