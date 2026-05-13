@@ -105,7 +105,7 @@
     "yarn": "^1.21.1"
   },
   "dependencies": {
-    "@az/app-switcher": "2.31.1-rule-engine-dev",
+    "@az/app-switcher": "2.31.4",
     "@az/common-configs": "9.30.0",
     "@az/internal-protos": "1.7.54-dev-FY27CRT-R4-v7",
     "@az/utility": "^2.8.7",
