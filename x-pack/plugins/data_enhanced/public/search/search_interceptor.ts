@@ -67,7 +67,6 @@ export class EnhancedSearchInterceptor extends SearchInterceptor {
     return pollSearch(search, { ...options, abortSignal: combinedSignal }).pipe(
       tap((response) => (id = response.id)),
       catchError((e: AbortError) => {
-        if (id) this.deps.http.delete(`/internal/search/${strategy}/${id}`);
         return throwError(this.handleSearchError(e, timeoutSignal, options));
       }),
       finalize(() => {
