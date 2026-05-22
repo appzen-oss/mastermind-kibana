@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@az/app-switcher@2.30.5":
-  version "2.30.5"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/app-switcher/-/app-switcher-2.30.5.tgz#5eb18afd05ef9f9ae3d08b4bfd8cbcb52c6f6398"
-  integrity sha512-7UiTG1t+G0KJ8JNYD/UB93wB+8jB46UronO4EwXvJkmRlDmHHvdUPvaX5RjM95JA0884mhbB6etxY+2KfiMFyg==
+"@az/app-switcher@2.30.7":
+  version "2.30.7"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/app-switcher/-/app-switcher-2.30.7.tgz#0ad8a383b782637765ea0f69be73dba2db739227"
+  integrity sha512-eZU5Kes/Ew2lORcEkXzNSNH9PZsFe/Co8JYWYsBZjoQwZJV/ibekT2OmhGLZ2WUuBrGtJneetBzIpR8TASqeww==
   dependencies:
     "@az/common-configs" "9.31.0"
     "@az/utility" "2.8.8"
@@ -19,17 +19,17 @@
     styled-components "^5.3.11"
     tslib "^2.4.0"
 
-"@az/common-configs@9.30.0":
-  version "9.30.0"
-  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-all/@az/common-configs/-/common-configs-9.30.0.tgz#9c0adce6ce07502219bc2d31e3c5a0c43ee5d15c"
-  integrity sha512-LPejGSsSZBfltUz1LTdg83cThsyoSVGGrhphlklW6Gfc0wwJZd6UmhXJK4KjUvifVbBPMk5aTxdfjSUNVeqrVA==
-  dependencies:
-    lodash "^4.17.21"
-
 "@az/common-configs@9.31.0":
   version "9.31.0"
   resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/common-configs/-/common-configs-9.31.0.tgz#9d0d507a30cc384155f85c356737af8e15b6ab16"
   integrity sha512-E2hDaThiP4nPFQf9wJYrgQIf1O/UvuRF1CzpN9pypW9D2+mvURxBaHLzSfHRtE8/6grZaH8gxJRS5DEDH4uM0g==
+  dependencies:
+    lodash "^4.17.21"
+
+"@az/common-configs@9.32.0":
+  version "9.32.0"
+  resolved "https://nexus.mgmt.dev.appzen.com/repository/npm-appzen/@az/common-configs/-/common-configs-9.32.0.tgz#ac219407fcd0c40c45e54564a873ecfc8754d20f"
+  integrity sha512-/Ldy8/7l51yXkxi5x7Lgal7SLqTAk8FhVbOJsbi5B5O5BqMAEGsg7vQsoBhdO2gxAVZiz/RV4l5Bo3qCnYtkWg==
   dependencies:
     lodash "^4.17.21"
 
