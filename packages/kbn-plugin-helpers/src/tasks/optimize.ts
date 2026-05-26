@@ -33,16 +33,28 @@ export async function optimize({ log, plugin, sourceDir, buildDir }: BuildContex
     return;
   }
 
+  if (process.env.SKIP_UI_BUILD === 'true' || process.env.SKIP_UI_BUILD === '1') {
+    log.warning(
+      'SKIP_UI_BUILD is set — skipping @kbn/optimizer; resulting plugin will have no UI bundle'
+    );
+    return;
+  }
+
   log.info('running @kbn/optimizer');
   log.indent(2);
 
-  // build bundles into target
+  // build bundles into target. KBN_OPTIMIZER_THEMES (e.g. "v8light" or "v8light,v8dark")
+  // is honored here so dist builds can opt out of the v7 themes — by default dist forces "*"
+  // (all 4 themes), which is 99% of SCSS build time.
+  const themesEnv = process.env.KBN_OPTIMIZER_THEMES;
   const config = OptimizerConfig.create({
     repoRoot: REPO_ROOT,
     pluginPaths: [sourceDir],
     cache: false,
     dist: true,
     pluginScanDirs: [],
+    profileWebpack: !!process.env.KBN_OPTIMIZER_PROFILE,
+    ...(themesEnv ? { themes: themesEnv as any } : {}),
   });
 
   await runOptimizer(config).pipe(logOptimizerState(log, config)).toPromise();

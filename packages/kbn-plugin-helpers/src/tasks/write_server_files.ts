@@ -74,10 +74,15 @@ export async function writeServerFiles({
 
       const json = file.contents.toString('utf8');
       const manifest = JSON.parse(json);
+      // When SKIP_UI_BUILD is set, the optimize step is bypassed and no JS bundle is
+      // emitted. Flip ui:false in the manifest so Kibana doesn't try to load the
+      // missing bundle at startup.
+      const skipUi = process.env.SKIP_UI_BUILD === 'true' || process.env.SKIP_UI_BUILD === '1';
       file.contents = Buffer.from(
         JSON.stringify(
           {
             ...manifest,
+            ...(skipUi ? { ui: false } : {}),
             kibanaVersion,
           },
           null,
