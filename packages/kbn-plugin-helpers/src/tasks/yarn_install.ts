@@ -34,7 +34,22 @@ export async function yarnInstall({ log, buildDir, config }: BuildContext) {
   }
 
   log.info('running yarn to install dependencies');
-  await execa(winVersion('yarn'), ['install', '--production', '--pure-lockfile'], {
-    cwd: buildDir,
-  });
+  // --mutex file:... serializes parallel plugin builds that share a yarn cache.
+  // Without it, 9 plugin builds racing on the same /home/node/.cache/yarn/v6/
+  // directory can leave cache entries partially extracted (integrity manifest
+  // references files that aren't on disk), which makes subsequent installs fail
+  // with ENOENT on packages like exceljs. Becomes much more likely once
+  // optimize.ts is skipped via SKIP_UI_BUILD because every plugin then reaches
+  // this step within seconds of every other plugin.
+  await execa(
+    winVersion('yarn'),
+    [
+      'install',
+      '--production',
+      '--pure-lockfile',
+      '--mutex',
+      'file:/tmp/kbn-plugin-helpers-yarn.lock',
+    ],
+    { cwd: buildDir }
+  );
 }
