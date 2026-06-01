@@ -79,14 +79,33 @@ export function readCliArgs(argv: string[]) {
     };
   }
 
-  // In order to build a docker image we always need
-  // to generate all the platforms
-  if (flags.docker) {
+  // In order to build a docker image we normally need to generate all the platforms.
+  // KBN_BUILD_SINGLE_PLATFORM=true opts out: the docker image is built from only
+  // the host platform's archive (linux-x64 on Linux build hosts), which is the
+  // only thing the docker package actually consumes. Skips ~4 minutes of wasted
+  // platform-archive work for builds that only ship a Linux docker image.
+  //
+  // NOTE: the root package.json "build" script hardcodes `--all-platforms`, so by
+  // the time we get here flags['all-platforms'] is already true on a normal
+  // `yarn build`. KBN_BUILD_SINGLE_PLATFORM must therefore OVERRIDE the explicit
+  // flag (force it off), not merely skip the docker auto-promotion — otherwise the
+  // env var has no effect and all four platform archives are still produced.
+  const singlePlatform = process.env.KBN_BUILD_SINGLE_PLATFORM === 'true';
+  if (singlePlatform) {
+    flags['all-platforms'] = false;
+  } else if (flags.docker) {
     flags['all-platforms'] = true;
   }
 
   function isOsPackageDesired(name: string) {
-    if (flags['skip-os-packages'] || !flags['all-platforms']) {
+    if (flags['skip-os-packages']) {
+      return false;
+    }
+
+    // rpm/deb packages target specific platforms, so they require --all-platforms.
+    // Docker can be built single-platform when KBN_BUILD_SINGLE_PLATFORM is set —
+    // the resulting image is built from the host's platform archive only.
+    if (!flags['all-platforms'] && !(name === 'docker' && singlePlatform)) {
       return false;
     }
 
