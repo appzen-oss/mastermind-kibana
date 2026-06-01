@@ -84,8 +84,16 @@ export function readCliArgs(argv: string[]) {
   // the host platform's archive (linux-x64 on Linux build hosts), which is the
   // only thing the docker package actually consumes. Skips ~4 minutes of wasted
   // platform-archive work for builds that only ship a Linux docker image.
+  //
+  // NOTE: the root package.json "build" script hardcodes `--all-platforms`, so by
+  // the time we get here flags['all-platforms'] is already true on a normal
+  // `yarn build`. KBN_BUILD_SINGLE_PLATFORM must therefore OVERRIDE the explicit
+  // flag (force it off), not merely skip the docker auto-promotion — otherwise the
+  // env var has no effect and all four platform archives are still produced.
   const singlePlatform = process.env.KBN_BUILD_SINGLE_PLATFORM === 'true';
-  if (flags.docker && !singlePlatform) {
+  if (singlePlatform) {
+    flags['all-platforms'] = false;
+  } else if (flags.docker) {
     flags['all-platforms'] = true;
   }
 
