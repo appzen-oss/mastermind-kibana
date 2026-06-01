@@ -31,6 +31,12 @@ import { Task } from '../lib';
 export const BuildKibanaPlatformPlugins: Task = {
   description: 'Building distributable versions of Kibana platform plugins',
   async run(_, log, build) {
+    // KBN_OPTIMIZER_THEMES (e.g. "v7light" or "v7light,v8light") is honored here
+    // so the core bundle compiles SCSS for one theme instead of all four. The env
+    // var is otherwise ignored by OptimizerConfig.parseOptions when dist:true is
+    // set (the default forces "*"). When the env var is unset we fall back to
+    // the default — all 4 themes, preserving original behavior.
+    const themesEnv = process.env.KBN_OPTIMIZER_THEMES;
     const config = OptimizerConfig.create({
       repoRoot: REPO_ROOT,
       outputRoot: build.resolvePath(),
@@ -41,6 +47,7 @@ export const BuildKibanaPlatformPlugins: Task = {
       dist: true,
       includeCoreBundle: true,
       filter: _.getBuildKibanaPlugins() ? [] : ['core'],
+      ...(themesEnv ? { themes: themesEnv as any } : {}),
     });
 
     const reporter = CiStatsReporter.fromEnv(log);
