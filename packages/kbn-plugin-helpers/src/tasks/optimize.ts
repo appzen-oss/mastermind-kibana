@@ -36,13 +36,17 @@ export async function optimize({ log, plugin, sourceDir, buildDir }: BuildContex
   log.info('running @kbn/optimizer');
   log.indent(2);
 
-  // build bundles into target
+  // build bundles into target. KBN_OPTIMIZER_THEMES (e.g. "v7light") is honored here
+  // so dist builds compile SCSS for the configured theme(s) instead of all four —
+  // dist otherwise forces "*". When the env var is unset, behavior is unchanged.
+  const themesEnv = process.env.KBN_OPTIMIZER_THEMES;
   const config = OptimizerConfig.create({
     repoRoot: REPO_ROOT,
     pluginPaths: [sourceDir],
     cache: false,
     dist: true,
     pluginScanDirs: [],
+    ...(themesEnv ? { themes: themesEnv as any } : {}),
   });
 
   await runOptimizer(config).pipe(logOptimizerState(log, config)).toPromise();
