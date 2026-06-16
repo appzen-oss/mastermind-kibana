@@ -26,6 +26,11 @@ export type CapabilitiesResolver = (
   applications: string[]
 ) => Promise<Capabilities>;
 
+const VALID_APPLICATION_ID = /^[a-zA-Z0-9:._-]+$/;
+
+const filterValidApplications = (applications: string[]): string[] =>
+  applications.filter((app) => VALID_APPLICATION_ID.test(app));
+
 export const getCapabilitiesResolver = (
   capabilities: () => Capabilities,
   switchers: () => CapabilitiesSwitcher[]
@@ -44,7 +49,7 @@ export const resolveCapabilities = async (
 ): Promise<Capabilities> => {
   const mergedCaps = cloneDeep({
     ...capabilities,
-    navLinks: applications.reduce(
+    navLinks: filterValidApplications(applications).reduce(
       (acc, app) => ({
         ...acc,
         [app]: true,

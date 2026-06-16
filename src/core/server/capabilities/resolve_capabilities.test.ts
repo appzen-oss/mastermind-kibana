@@ -135,6 +135,27 @@ describe('resolveCapabilities', () => {
     });
   });
 
+  it('adds the requested applications to the navLinks', async () => {
+    const result = await resolveCapabilities(defaultCaps, [], request, [
+      'kibana:dashboard',
+      'my_app',
+    ]);
+    expect(result.navLinks).toEqual({
+      'kibana:dashboard': true,
+      my_app: true,
+    });
+  });
+
+  it('filters out applications containing invalid characters', async () => {
+    const result = await resolveCapabilities(defaultCaps, [], request, [
+      'valid_app',
+      'invoice<script>alert(1)</script>x',
+    ]);
+    expect(result.navLinks).toEqual({
+      valid_app: true,
+    });
+  });
+
   it('ignores any capability type mutation from the switcher', async () => {
     const caps = {
       ...defaultCaps,
