@@ -83,6 +83,10 @@ export class Server {
   private coreStart?: InternalCoreStart;
   private readonly logger: LoggerFactory;
   private isDDTraceInitialized = false;
+  private wantRuntimeMetrics = false;
+  private runtimeMetricsStarted = false;
+  // Resolved dd-trace Config, captured at init and reused for the deferred metrics.start().
+  private ddTraceConfig: any;
 
   constructor(
     rawConfigProvider: RawConfigurationProvider,
@@ -273,6 +277,10 @@ export class Server {
 
     await this.http.start();
 
+    // Runtime metrics start only now — after the synchronous bootstrap and once HTTP is
+    // listening — so a new pod's boot does not register as an event-loop stall.
+    this.startDeferredRuntimeMetrics();
+
     startTransaction?.end();
     return this.coreStart;
   }
@@ -290,6 +298,16 @@ export class Server {
     await this.metrics.stop();
     await this.status.stop();
     await this.logging.stop();
+
+    if (this.runtimeMetricsStarted) {
+      try {
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
+        require('dd-trace/packages/dd-trace/src/metrics').stop();
+        this.runtimeMetricsStarted = false;
+      } catch {
+        // best-effort teardown; never throw from stop()
+      }
+    }
   }
 
   private registerCoreContext(coreSetup: InternalCoreSetup) {
@@ -344,8 +362,62 @@ export class Server {
       }
       return originalEmitWarning.call(this, warning, name, code);
     };
+
+    // Resolve the dd-trace config once so we honour however runtime metrics are enabled
+    // (DD_RUNTIME_METRICS_ENABLED / DD_TAGS / DD_SERVICE, etc.). APM tracing starts now,
+    // but runtime.node.* collection is DEFERRED until the pod finishes booting (end of
+    // start()). Kibana's synchronous bootstrap (plugin load, saved-object migrations) blocks
+    // the event loop for seconds; if the runtime-metrics histogram were recording during that
+    // window, runtime.node.event_loop.delay.max spikes on every new pod and produces
+    // deploy-time false alerts. See startDeferredRuntimeMetrics().
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      const DDConfig = require('dd-trace/packages/dd-trace/src/config');
+      this.ddTraceConfig = new DDConfig({ plugins: true });
+      this.wantRuntimeMetrics = Boolean(this.ddTraceConfig.runtimeMetrics);
+    } catch (e) {
+      this.wantRuntimeMetrics = false;
+      // eslint-disable-next-line no-console
+      console.log(
+        JSON.stringify({
+          level: 'error',
+          event: 'DD_TRACE_CONFIG_RESOLVE_FAILED',
+          'error.message': String((e as Error)?.message ?? e),
+        })
+      );
+    }
+
     tracer.init({
       plugins: true,
+      runtimeMetrics: false, // deferred; started manually in startDeferredRuntimeMetrics()
     });
+  }
+
+  /**
+   * Start dd-trace runtime metrics (runtime.node.*) only after the synchronous bootstrap is
+   * done and the HTTP server is accepting traffic. Deferring collection keeps the event-loop
+   * metric reflecting serving-time loop health only (the pod is not in the serving rotation
+   * during boot), which lets a single, non-`by host` Datadog monitor work without a new-group
+   * grace period. Fail-safe: any error here never affects boot or APM tracing.
+   */
+  private startDeferredRuntimeMetrics() {
+    if (!this.isDDTraceInitialized || !this.wantRuntimeMetrics || this.runtimeMetricsStarted) {
+      return;
+    }
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      const runtimeMetrics = require('dd-trace/packages/dd-trace/src/metrics');
+      runtimeMetrics.start(this.ddTraceConfig);
+      this.runtimeMetricsStarted = true;
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.log(
+        JSON.stringify({
+          level: 'error',
+          event: 'DD_RUNTIME_METRICS_DEFERRED_START_FAILED',
+          'error.message': String((e as Error)?.message ?? e),
+        })
+      );
+    }
   }
 }
