@@ -41,6 +41,7 @@ const EXCLUDED_ACTIVITY_DOMAINS = [
   'zendesk.com',
   'zdassets.com',
   'browser-intake-datadoghq.com',
+  'browser-intake-datadoghq.eu',
   'googleapis.com',
 ];
 
